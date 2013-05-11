@@ -1,0 +1,20 @@
+Package: pkgname
+Version: 0.5-1
+Date: 2013-04-01
+Title: My First Collection of Functions
+Authors@R: c(person("Yi Liu", "Author and Developer", role = c("aut", "cre"), email = "liu.yi.pei@gmail.com"),
+             person("Richard Olshen", "Author", role = "aut", email = "olshen@stanford.edu"),
+             person("Andrew Fire", "Author", role = "ctb", email = "afire@stanford.edu"),
+             person("Scott Boyd", "Author", role = "ctb", email = "sboyd1@stanford.edu"))
+Author: Yi Liu, Richard Olshen, Andrew Fire, Scott Boyd
+Maintainer: Joe Developer <Joe.Developer@some.domain.net>
+Depends: R (>= 2.12.0), nlme, VGAM, MASS, expm, Matrix
+Suggests: MASS, Matrix, expm, VGAM
+Description: We provide an unbiased clonality estimator that
+             takes full advantage of the multi-biological-replicate
+             structure of modern sequencing experiments; it also
+             circumvents the issue that your clonal coverage is
+             , generally speaking, well below 0.1%.
+License: GPL (>= 2)
+URL: http://www.r-project.org, http://www.another.url
+BugReports: http://pkgname.bugtracker.url
