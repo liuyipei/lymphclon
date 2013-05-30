@@ -6,11 +6,12 @@
 Estimates the clonality score from replicate of abundances data
 }
 \description{
-There are an enormous number of clones(species) distributed in a highly unequal distribution. The experimenters collect a small number of very coarse samplings, and perform noisy measurements on the samplings, leading to abundance estimations for the indiviudal biological replicates. The goal of this package is to estimate the probability that two random cells belong to the same clone. 
+There are an enormous number of clones(species) distributed in a highly unequal distribution. The experimenters collect a small number of very coarse samplings, and perform noisy measurements on the samplings, leading to abundance estimations for the indiviudal biological replicates. The goal of this package is to estimate the probability that two random cells belong to the same clone. Clonality estimation arises as a naturally interesting question when trying to understand the diversity of B cell populations, T cell populations, microbial populations, cancer cell subclones, and artificial biologicl libraries, and also broader ecological settings.
 
-It provides two functions; one computes the estimate, given replicate of abundances; the other function generates reasonable simulation data (for B or T cell lymphocyte setting), for evaluation purposes.
+This package provides two primary functions; one computes the clonality score estimate (probability that two random individuals belong to the same clone), given replicate of abundances; it also infers the underlying clonal distribution, which may be of interest in diagnostic and scientific settings. 
 
-This package was written for clonality quantification in the lymphocyte repertoires, as measured by blood-draw and PCR/sequencing; however it can be directly reused for broader ecological applications.
+The other function generates reasonable simulation data, for evaluation purposes. The default behavior of this function generates a very large number of classes, which is suitable for B and T cell settings. It can be easily repurposed for other applications. The simulation assumes random sampling, amplifying, and sequencing of individual cells; this is implemented by introducing sparse sampling of individual cells, followed by introduction of log-normal error, and finally unbiased "rounding" by use of a poisson distribution.
+
 }
 \details{
 \tabular{ll}{
@@ -20,11 +21,6 @@ Version: \tab 1.0\cr
 Date: \tab 2013-04-24\cr
 License: \tab LGPL-2 \cr
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
-This package provides two functions; one computes the estimate, given replicate of abundances; the other function generates reasonable simulation data (for B or T cell lymphocyte setting), for evaluation purposes.
-infer.clonality: infers the clonality score, given replicate of abundances data
-simulate.clonality.data: generates simulated data, primarily for evaluation purposes
 }
 \author{
 Author and Maintainer: Yi Liu <liuyipei@stanford.edu>

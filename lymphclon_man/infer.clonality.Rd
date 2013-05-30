@@ -11,7 +11,8 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 \usage{
 infer.clonality(
   read.count.matrix, 
-  regularization.clones = matrix(0, 0, ncol(read.count.matrix)))
+  regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
+  estimate.abundances = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +23,9 @@ A matrix of read frequences, where each row corresponds to a distinct clone, and
   \item{regularization.clones}{
 %%     ~~Describe \code{regularization.clones} here~~
 A matrix of regularzation (i.e. "virtual") data to be appended to the bottom of the read.count.matrix. For example, this could be the vertical concatentation of an indentiy matrix the size of the number of replicates, with a row of 1s. Deafault value is no regularization (i.e. empty matrix). This is recommended if the data sampling is exceptionally sparse.
+}
+\item{estimate.abundances}{
+A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.
 }
 }
 \details{

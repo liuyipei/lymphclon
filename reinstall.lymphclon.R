@@ -1,3 +1,3 @@
 remove.packages('lymphclon')
-install.packages('lymphclon_0.5-1.tar.gz', type = 'source')
-library(lymphclon)
+install.packages('lymphclon_1.0.tar.gz', repos = NULL, type = 'source')
+
