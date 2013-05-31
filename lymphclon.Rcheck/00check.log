@@ -1,6 +1,6 @@
-* using log directory ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck’
-* using R version 2.15.1 (2012-06-22)
-* using platform: i386-apple-darwin9.8.0 (32-bit)
+* using log directory ‘/home/yi/gitrepos/lymphclon/lymphclon.Rcheck’
+* using R version 2.15.2 (2012-10-26)
+* using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * checking for file ‘lymphclon/DESCRIPTION’ ... OK
 * this is package ‘lymphclon’ version ‘1.0.1’
@@ -16,6 +16,7 @@
 * checking for sufficient/correct file permissions ... OK
 * checking DESCRIPTION meta-information ... OK
 * checking top-level files ... OK
+* checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
 * checking R files for non-ASCII characters ... OK
@@ -25,6 +26,7 @@
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
 * checking for unstated dependencies in R code ... OK
 * checking S3 generic/method consistency ... WARNING
 simulate:
@@ -65,9 +67,12 @@ Extensions’ manual.
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
 * checking examples ... OK
-* checking PDF version of manual ... OK
-WARNING: There were 2 warnings.
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+* checking PDF version of manual without hyperrefs or index ... OK
+WARNING: There were 3 warnings.
 NOTE: There were 2 notes.
 See
-  ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck/00check.log’
+  ‘/home/yi/gitrepos/lymphclon/lymphclon.Rcheck/00check.log’
 for details.

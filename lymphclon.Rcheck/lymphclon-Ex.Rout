@@ -1,8 +1,8 @@
 
-R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -82,11 +82,29 @@ The following object(s) are masked from ‘package:Matrix’:
 > my.data<-simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > infer.clonality(my.data$read.count.matrix)
-Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur",
- target signature "dsyMatrix#missing".
+Note: Method with signature ‘symmetricMatrix#missing’ chosen for function ‘Schur’,
+ target signature ‘dsyMatrix#missing’.
  "dsyMatrix#ANY" would also be valid
- simple.precision.clonality rao.blackwell.mvg.clonality 
-                  0.1136572                   0.1332613 
+$simple.precision.clonality
+[1] 0.1136572
+
+$mle.unconditioned.clonality
+          [,1]
+[1,] 0.1332613
+
+$rao.blackwell.mvg.clonality
+           [,1]
+[1,] 0.05317025
+
+[[4]]
+            [,1]        [,2]        [,3]       [,4]        [,5]        [,6]
+[1,]  0.02832132 17.20240629  0.51132968 1.96099036  0.61809905 11.57044610
+[2,] 17.20240629  0.02575885  0.61483101 2.52959773 13.23117004 13.85042838
+[3,]  0.51132968  0.61483101  0.31476140 0.03656759 -0.07189634  0.22559232
+[4,]  1.96099036  2.52959773  0.03656759 0.10314635  0.55772795  0.46502074
+[5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
+[6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
+
 > 
 > 
 > 
@@ -106,8 +124,26 @@ Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur
 > my.data<-simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > infer.clonality(my.data$read.count.matrix)
- simple.precision.clonality rao.blackwell.mvg.clonality 
-                  0.1136572                   0.1332613 
+$simple.precision.clonality
+[1] 0.1136572
+
+$mle.unconditioned.clonality
+          [,1]
+[1,] 0.1332613
+
+$rao.blackwell.mvg.clonality
+           [,1]
+[1,] 0.05317025
+
+[[4]]
+            [,1]        [,2]        [,3]       [,4]        [,5]        [,6]
+[1,]  0.02832132 17.20240629  0.51132968 1.96099036  0.61809905 11.57044610
+[2,] 17.20240629  0.02575885  0.61483101 2.52959773 13.23117004 13.85042838
+[3,]  0.51132968  0.61483101  0.31476140 0.03656759 -0.07189634  0.22559232
+[4,]  1.96099036  2.52959773  0.03656759 0.10314635  0.55772795  0.46502074
+[5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
+[6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
+
 > 
 > 
 > 
@@ -127,15 +163,33 @@ Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur
 > my.data<-simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > infer.clonality(my.data$read.count.matrix)
- simple.precision.clonality rao.blackwell.mvg.clonality 
-                  0.1136572                   0.1332613 
+$simple.precision.clonality
+[1] 0.1136572
+
+$mle.unconditioned.clonality
+          [,1]
+[1,] 0.1332613
+
+$rao.blackwell.mvg.clonality
+           [,1]
+[1,] 0.05317025
+
+[[4]]
+            [,1]        [,2]        [,3]       [,4]        [,5]        [,6]
+[1,]  0.02832132 17.20240629  0.51132968 1.96099036  0.61809905 11.57044610
+[2,] 17.20240629  0.02575885  0.61483101 2.52959773 13.23117004 13.85042838
+[3,]  0.51132968  0.61483101  0.31476140 0.03656759 -0.07189634  0.22559232
+[4,]  1.96099036  2.52959773  0.03656759 0.10314635  0.55772795  0.46502074
+[5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
+[6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
+
 > 
 > 
 > 
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.632 0.038 2.694 0 0 
+Time elapsed:  4.388 0.056 4.466 0 0 
 > grDevices::dev.off()
 null device 
           1 
