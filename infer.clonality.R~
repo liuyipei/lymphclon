@@ -217,8 +217,8 @@ if (estimate.abundances) {
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
-    mle.unconditioned.clonality = mle.unconditioned.clonality,
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
+    mle.unconditioned.clonality = mle.unconditioned.clonality,
     conditional.replicate.cov.matrix)
 }
 
