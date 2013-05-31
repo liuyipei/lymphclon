@@ -7,7 +7,8 @@ library(VGAM)
 infer.clonality <- function(
   read.count.matrix, 
   regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
-  estimate.abundances = F) {
+  estimate.abundances = F,
+  loo.squared.err.est = T) {
 
 replicates <- rbind(read.count.matrix, regularization.clones)
 n <- nrow(replicates)
@@ -19,8 +20,27 @@ for (i in 1:num.replicates)
 }
 
 clonality.matrix <- t(replicates) %*% replicates
-inv.eps.vec <- diag(ginv(clonality.matrix))
-epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
+
+if (loo.squared.err.est)
+{ # loo estimate is almost unbiased
+  loo.inv.eps.vec <- rep(0, num.replicates)
+  loo.eps.vec <- rep(0, num.replicates)
+  for (i in (1:num.replicates)) {
+    curr.inv.eps <- diag(ginv(clonality.matrix[-i, -i]))
+    loo.inv.eps.vec[-i] <- loo.inv.eps.vec[-i] + curr.inv.eps
+    loo.eps.vec[-i] <- loo.eps.vec[-i] + 1 / curr.inv.eps
+  }
+  loo.inv.eps.vec <- loo.inv.eps.vec / (num.replicates - 1)
+  loo.eps.vec <- loo.eps.vec / (num.replicates - 1)
+
+  epsilon.vec <- loo.eps.vec
+  inv.eps.vec <- loo.inv.eps.vec
+} else {
+  # less bias than loo, but more variance
+  inv.eps.vec <- diag(ginv(clonality.matrix))
+  epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
+}
+
 num.estimators <- num.replicates * (num.replicates - 1) / 2
 
 ## simple model where each read is independent
@@ -107,7 +127,9 @@ if (estimate.abundances) {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
-    estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec))
+    estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec),
+    estimated.squared.errs = epsilon.vec,
+    estimated.precisions = inv.eps.vec)
 } else {
   return.results <- c(
     simple.precision.clonality = simple.precision.clonality, 

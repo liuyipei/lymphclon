@@ -16,7 +16,7 @@ true.clone.prob <- unnorm.clone.prob / sum(unnorm.clone.prob)
 true.clonality <- sum(true.clone.prob * true.clone.prob)
 num.replicates <- length(num.cells.taken.vector)
 replicates <- matrix(0, n, num.replicates)
-
+replicate.squared.errs <- rep(NA, num.replicates)
 for (i in 1:num.replicates)
 {
 
@@ -36,10 +36,14 @@ for (i in 1:num.replicates)
   # table(sample.of.reads)
   # return the counts, rather than the abundance proportions
   replicates[, i] <- sample.of.reads # / sum(sample.of.reads)
+  replicate.squared.errs[i] <- 
+    sum(((sample.of.reads / sum(sample.of.reads)) - true.clone.prob) ^ 2)
 }
 simulated.data <- 
   list(read.count.matrix = replicates, 
        true.clone.prob = true.clone.prob, 
-       true.clonality = true.clonality)
+       true.clonality = true.clonality,
+       replicate.squared.errs = replicate.squared.errs)
+
 return(simulated.data)
 }

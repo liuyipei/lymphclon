@@ -3,7 +3,7 @@ source(file.path(R.home("share"), "R", "examples-header.R"))
 options(warn = 1)
 library('lymphclon')
 
-base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+assign(".oldSearch", search(), pos = 'CheckExEnv')
 cleanEx()
 nameEx("infer.clonality")
 ### * infer.clonality
@@ -63,8 +63,7 @@ infer.clonality(my.data$read.count.matrix)
 
 ### * <FOOTER>
 ###
-options(digits = 7L)
-base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
 grDevices::dev.off()
 ###
 ### Local variables: ***

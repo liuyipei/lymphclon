@@ -1,23 +1,21 @@
-* using log directory ‘/scail/u/liuyipei/gitdir/lymphclon/lymphclon.Rcheck’
-* using R version 3.0.1 (2013-05-16)
-* using platform: x86_64-pc-linux-gnu (64-bit)
+* using log directory ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck’
+* using R version 2.15.1 (2012-06-22)
+* using platform: i386-apple-darwin9.8.0 (32-bit)
 * using session charset: UTF-8
 * checking for file ‘lymphclon/DESCRIPTION’ ... OK
-* this is package ‘lymphclon’ version ‘0.5.23’
+* this is package ‘lymphclon’ version ‘1.0.1’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
 * checking if there is a namespace ... OK
 * checking for executable files ... OK
-* checking for hidden files and directories ... OK
-* checking for portable file names ... OK
-* checking for sufficient/correct file permissions ... OK
 * checking whether package ‘lymphclon’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
 * checking DESCRIPTION meta-information ... OK
 * checking top-level files ... OK
-* checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
 * checking R files for non-ASCII characters ... OK
@@ -27,7 +25,6 @@
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
-* checking loading without being on the library search path ... OK
 * checking for unstated dependencies in R code ... OK
 * checking S3 generic/method consistency ... WARNING
 simulate:
@@ -42,11 +39,11 @@ Extensions’ manual.
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
 * checking Rd files ... NOTE
-prepare_Rd: infer.clonality.Rd:31-33: Dropping empty section \details
-prepare_Rd: infer.clonality.Rd:49-51: Dropping empty section \note
-prepare_Rd: infer.clonality.Rd:46-48: Dropping empty section \author
-prepare_Rd: infer.clonality.Rd:43-45: Dropping empty section \references
-prepare_Rd: infer.clonality.Rd:55-57: Dropping empty section \seealso
+prepare_Rd: infer.clonality.Rd:35-37: Dropping empty section \details
+prepare_Rd: infer.clonality.Rd:53-55: Dropping empty section \note
+prepare_Rd: infer.clonality.Rd:50-52: Dropping empty section \author
+prepare_Rd: infer.clonality.Rd:47-49: Dropping empty section \references
+prepare_Rd: infer.clonality.Rd:59-61: Dropping empty section \seealso
 prepare_Rd: simulate.clonality.data.Rd:34-36: Dropping empty section \details
 prepare_Rd: simulate.clonality.data.Rd:53-55: Dropping empty section \note
 prepare_Rd: simulate.clonality.data.Rd:50-52: Dropping empty section \author
@@ -54,7 +51,7 @@ prepare_Rd: simulate.clonality.data.Rd:47-49: Dropping empty section \references
 prepare_Rd: simulate.clonality.data.Rd:59-61: Dropping empty section \seealso
 * checking Rd metadata ... OK
 * checking Rd cross-references ... WARNING
-Unknown package ‘<vegan>’ in Rd xrefs
+Unknown package(s) ‘<vegan>’ in Rd xrefs
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
 * checking Rd \usage sections ... NOTE
@@ -72,5 +69,5 @@ Extensions’ manual.
 WARNING: There were 2 warnings.
 NOTE: There were 2 notes.
 See
-  ‘/scail/u/liuyipei/gitdir/lymphclon/lymphclon.Rcheck/00check.log’
+  ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck/00check.log’
 for details.

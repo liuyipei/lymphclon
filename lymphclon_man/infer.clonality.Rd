@@ -12,7 +12,8 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 infer.clonality(
   read.count.matrix, 
   regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
-  estimate.abundances = F)
+  estimate.abundances = F,
+  loo.squared.err.est = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +27,9 @@ A matrix of regularzation (i.e. "virtual") data to be appended to the bottom of 
 }
 \item{estimate.abundances}{
 A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.
+}
+\item{loo.squared.err.est}{
+A boolean value defaulting to true. When estimating the squared errors and precisions associated with each replicate, we can use the maximum likelihood estimate (i.e. set loo.squared.err.est to false), or use an averaged leave-one-out estimate (i.e. set loo.squared.err.est to true). The leave-one-out estimate is slightly biased, and slightly slower to compute, but much less variance. Especially if there are at least three replicates, this value probably should be set to true.
 }
 }
 \details{
