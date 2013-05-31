@@ -39,11 +39,11 @@ Extensions’ manual.
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
 * checking Rd files ... NOTE
-prepare_Rd: infer.clonality.Rd:35-37: Dropping empty section \details
-prepare_Rd: infer.clonality.Rd:53-55: Dropping empty section \note
-prepare_Rd: infer.clonality.Rd:50-52: Dropping empty section \author
-prepare_Rd: infer.clonality.Rd:47-49: Dropping empty section \references
-prepare_Rd: infer.clonality.Rd:59-61: Dropping empty section \seealso
+prepare_Rd: infer.clonality.Rd:39-41: Dropping empty section \details
+prepare_Rd: infer.clonality.Rd:57-59: Dropping empty section \note
+prepare_Rd: infer.clonality.Rd:54-56: Dropping empty section \author
+prepare_Rd: infer.clonality.Rd:51-53: Dropping empty section \references
+prepare_Rd: infer.clonality.Rd:63-65: Dropping empty section \seealso
 prepare_Rd: simulate.clonality.data.Rd:34-36: Dropping empty section \details
 prepare_Rd: simulate.clonality.data.Rd:53-55: Dropping empty section \note
 prepare_Rd: simulate.clonality.data.Rd:50-52: Dropping empty section \author

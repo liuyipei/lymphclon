@@ -45,11 +45,11 @@ reg.100 <- stats::glm(correct.weights~estimated.weights+loo.weights-1, data = er
 reg.1k <- stats::glm(correct.weights~estimated.weights+loo.weights-1, data = err.table.1k)
 
 
-reg.1k <- stats::glm(correct.weights~estimated.weights-1, data = err.table.1k)
-reg.100 <- stats::glm(correct.weights~estimated.weights-1, data = err.table.100)
+reg.correct.1k <- stats::glm(correct.weights~estimated.weights-1, data = err.table.1k)
+reg.correct.100 <- stats::glm(correct.weights~estimated.weights-1, data = err.table.100)
 
-reg.1k <- stats::glm(correct.weights~loo.weights-1, data = err.table.1k)
-reg.100 <- stats::glm(correct.weights~loo.weights-1, data = err.table.100)
+reg.loo.1k <- stats::glm(correct.weights~loo.weights-1, data = err.table.1k)
+reg.loo.100 <- stats::glm(correct.weights~loo.weights-1, data = err.table.100)
 
 reg.1k <- stats::glm(correct.weights~j1-1, data = err.table.1k)
 reg.100 <- stats::glm(correct.weights~j1-1, data = err.table.100)

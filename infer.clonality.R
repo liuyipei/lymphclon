@@ -8,7 +8,8 @@ infer.clonality <- function(
   read.count.matrix, 
   regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
   estimate.abundances = F,
-  loo.squared.err.est = T) {
+  loo.squared.err.est = T,
+  use.squared.err.est = c()) {
 
 replicates <- rbind(read.count.matrix, regularization.clones)
 n <- nrow(replicates)
@@ -21,14 +22,17 @@ for (i in 1:num.replicates)
 
 clonality.matrix <- t(replicates) %*% replicates
 
-if (loo.squared.err.est)
-{ # loo estimate is almost unbiased
+if (length(use.squared.err.est) > 0){
+  epsilon.vec <- use.squared.err.est
+  inv.eps.vec <- 1 / use.squared.err.est
+} else if (loo.squared.err.est) { 
+  # loo estimate is almost unbiased
   loo.inv.eps.vec <- rep(0, num.replicates)
   loo.eps.vec <- rep(0, num.replicates)
   for (i in (1:num.replicates)) {
     curr.inv.eps <- diag(ginv(clonality.matrix[-i, -i]))
     loo.inv.eps.vec[-i] <- loo.inv.eps.vec[-i] + curr.inv.eps
-    loo.eps.vec[-i] <- loo.eps.vec[-i] + 1 / curr.inv.eps
+    loo.eps.vec[-i] <- loo.eps.vec[-i] + (1 / curr.inv.eps)
   }
   loo.inv.eps.vec <- loo.inv.eps.vec / (num.replicates - 1)
   loo.eps.vec <- loo.eps.vec / (num.replicates - 1)

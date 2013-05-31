@@ -135,7 +135,7 @@ Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.683 0.037 2.741 0 0 
+Time elapsed:  2.632 0.038 2.694 0 0 
 > grDevices::dev.off()
 null device 
           1 
