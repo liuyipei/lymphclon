@@ -12,8 +12,9 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 infer.clonality(
   read.count.matrix, 
   regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
+  variance.method = 'loo.2',
   estimate.abundances = F,
-  loo.squared.err.est = T,
+  loo.squared.err.est = c(),
   use.squared.err.est = c())
 }
 %- maybe also 'usage' for other objects documented here.
@@ -25,6 +26,17 @@ A matrix of read frequences, where each row corresponds to a distinct clone, and
   \item{regularization.clones}{
 %%     ~~Describe \code{regularization.clones} here~~
 A matrix of regularzation (i.e. "virtual") data to be appended to the bottom of the read.count.matrix. For example, this could be the vertical concatentation of an indentiy matrix the size of the number of replicates, with a row of 1s. Deafault value is no regularization (i.e. empty matrix). This is recommended if the data sampling is exceptionally sparse.
+}
+\item{variance.method}{
+The method is a code defaulting to "loo.2".
+usr.1: argument use.squared.err.est specifies 1st order variances
+usr.2: argument use.squared.err.est specifies 2nd order variances
+mle.1: use maximum likelihood estimate of 1st order variances
+mle.2: use maximum likelihood estimate of 2nd order variances
+loo.1: use leave-one-out estimate of 1st order variances
+loo.2: use leave-one-out estimate of 2nd order variances
+corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
+corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corpcor)
 }
 \item{estimate.abundances}{
 A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.

@@ -1,8 +1,8 @@
 
-R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -64,6 +64,8 @@ The following object(s) are masked from ‘package:Matrix’:
 
     expm
 
+Loading required package: corpcor
+Warning: package ‘corpcor’ was built under R version 2.15.3
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
 > cleanEx()
@@ -82,8 +84,8 @@ The following object(s) are masked from ‘package:Matrix’:
 > my.data<-simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > infer.clonality(my.data$read.count.matrix)
-Note: Method with signature ‘symmetricMatrix#missing’ chosen for function ‘Schur’,
- target signature ‘dsyMatrix#missing’.
+Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur",
+ target signature "dsyMatrix#missing".
  "dsyMatrix#ANY" would also be valid
 $simple.precision.clonality
 [1] 0.1136572
@@ -104,6 +106,9 @@ $rao.blackwell.mvg.clonality
 [4,]  1.96099036  2.52959773  0.03656759 0.10314635  0.55772795  0.46502074
 [5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
 [6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
+
+$variance.method
+[1] "loo.2"
 
 > 
 > 
@@ -144,6 +149,9 @@ $rao.blackwell.mvg.clonality
 [5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
 [6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
 
+$variance.method
+[1] "loo.2"
+
 > 
 > 
 > 
@@ -183,13 +191,16 @@ $rao.blackwell.mvg.clonality
 [5,]  0.61809905 13.23117004 -0.07189634 0.55772795  0.06655511 -3.50851414
 [6,] 11.57044610 13.85042838  0.22559232 0.46502074 -3.50851414  0.03725011
 
+$variance.method
+[1] "loo.2"
+
 > 
 > 
 > 
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.388 0.056 4.466 0 0 
+Time elapsed:  2.615 0.039 2.682 0 0 
 > grDevices::dev.off()
 null device 
           1 

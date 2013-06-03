@@ -3,12 +3,14 @@ library(expm)
 library(MASS)
 library(Matrix)
 library(VGAM)
+library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
   regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
+  variance.method = 'loo.2',
   estimate.abundances = F,
-  loo.squared.err.est = T,
+  loo.squared.err.est = c(),
   use.squared.err.est = c()) {
 
 replicates <- rbind(read.count.matrix, regularization.clones)
@@ -27,22 +29,59 @@ if (length(use.squared.err.est > 0)) {
   use.squared.err.est <- as.matrix(use.squared.err.est)
 }
 
-Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
+# usr.1: argument use.squared.err.est specifies 1st order variances
+# usr.2: argument use.squared.err.est specifies 2nd order variances
+# mle.1: use maximum likelihood estimate of 1st order variances
+# mle.2: use maximum likelihood estimate of 2nd order variances
+# loo.1: use leave-one-out estimate of 1st order variances
+# loo.2: use leave-one-out estimate of 2nd order variances
+# corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
+# corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corpcor)
+
 if (length(use.squared.err.est) == num.replicates) {
+  variance.method <- 'usr.1'
+} else if (length(use.squared.err.est) == num.replicates * num.replicates) {
+  variance.method <- 'usr.2'
+} else if (length(loo.squared.err.est) == 1) { 
+  variance.method <- ifelse(loo.squared.err.est, 'loo.2', 'mle.1')
+}
+
+Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
+ptinv.Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
+if (variance.method == 'usr.1') {
   epsilon.vec <- use.squared.err.est
   inv.eps.vec <- 1 / epsilon.vec
   diag(Lambda.matrix) <- inv.eps.vec
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
-} else if (length(use.squared.err.est) == num.replicates * num.replicates) {
+} else if (variance.method == 'usr.2') {
   # make this appear like Lambda
   epsilon.vec <- diag(use.squared.err.est)
   inv.eps.vec <- 1 / epsilon.vec
-
   Lambda.matrix <- -use.squared.err.est
   diag(Lambda.matrix) <- inv.eps.vec
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
-} else if (loo.squared.err.est) { 
-  # loo estimate is almost unbiased
+} else if (variance.method %in% c('mle.1', 'corpcor.1')) {
+  if (variance.method == 'mle.1') {
+    inv.eps.vec <- diag(ginv(clonality.matrix))
+  } else { 
+    # variance.method == 'corpcor.1'
+    capture.output(inv.eps.vec <- diag(invcov.shrink(clonality.matrix)))
+  }
+
+  epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
+  diag(Lambda.matrix) <- inv.eps.vec
+  diag(ptinv.Lambda.matrix) <- epsilon.vec
+} else if (variance.method %in% c('mle.2', 'corpcor.2')) { 
+  if (variance.method == 'mle.2') {
+    Lambda.matrix <- ginv(clonality.matrix)
+  } else {# variance.method == 'corpcor.2'
+    capture.output(Lambda.matrix <- invcov.shrink(clonality.matrix))
+  }
+ 
+  ptinv.Lambda.matrix <- 1 / Lambda.matrix
+  inv.eps.vec <- diag(Lambda.matrix)
+  epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
+} else if (variance.method %in% c('loo.1', 'loo.2')) { 
   loo.inv.eps.vec <- rep(0, num.replicates)
   loo.eps.vec <- rep(0, num.replicates)
 
@@ -67,15 +106,17 @@ if (length(use.squared.err.est) == num.replicates) {
   epsilon.vec <- loo.eps.vec
   inv.eps.vec <- loo.inv.eps.vec
 
-  Lambda.matrix <- loo.Lambda.matrix
-  ptinv.Lambda.matrix <- loo.ptinv.Lambda.matrix
-} else {
-  # old logic
-  inv.eps.vec <- diag(ginv(clonality.matrix))
-  epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
+  # "default" value if variance.method == loo.1  
+  diag(Lambda.matrix) <- diag(loo.Lambda.matrix)
+  diag(ptinv.Lambda.matrix) <- diag(loo.ptinv.Lambda.matrix)
 
-  diag(Lambda.matrix) <- inv.eps.vec
-  ptinv.Lambda.matrix <- 1 / Lambda.matrix
+  if (variance.method == 'loo.2') {
+    Lambda.matrix <- loo.Lambda.matrix
+    ptinv.Lambda.matrix <- loo.ptinv.Lambda.matrix
+  }
+} else {
+  print(sprintf('unknown variance method: %s\n', variance.method))
+  print(sprintf('list of valid methods: usr.1, usr.2, mle.1, mle.2, loo.1, loo.2, corpcor.1, corpcor.2'))
 }
 conditional.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
 diag(conditional.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
@@ -213,13 +254,15 @@ if (estimate.abundances) {
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
     estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec),
     estimated.squared.errs = epsilon.vec,
-    estimated.precisions = inv.eps.vec)
+    estimated.precisions = inv.eps.vec,
+    variance.method = variance.method)
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
     mle.unconditioned.clonality = mle.unconditioned.clonality,
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
-    conditional.replicate.cov.matrix)
+    conditional.replicate.cov.matrix,
+    variance.method = variance.method)
 }
 
 return (return.results)
