@@ -65,7 +65,7 @@ if (variance.method == 'usr.1') {
     inv.eps.vec <- diag(ginv(clonality.matrix))
   } else { 
     # variance.method == 'corpcor.1'
-    capture.output(inv.eps.vec <- diag(invcov.shrink(clonality.matrix)))
+    capture.output(inv.eps.vec <- diag(invcov.shrink(replicates) / n))
   }
 
   epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
@@ -75,7 +75,7 @@ if (variance.method == 'usr.1') {
   if (variance.method == 'mle.2') {
     Lambda.matrix <- ginv(clonality.matrix)
   } else {# variance.method == 'corpcor.2'
-    capture.output(Lambda.matrix <- invcov.shrink(clonality.matrix))
+    capture.output(Lambda.matrix <- invcov.shrink(replicates) / n)
   }
  
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
