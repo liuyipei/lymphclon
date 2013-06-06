@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9sbB7z/Rd2pdff9f3
-5c29412e/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpX2nVwk/Rd2pdf1032
+91072dc7b/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -114,8 +114,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9sbB7z/Rd2pdff9f3
-5c29412e/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpX2nVwk/Rd2pdf1032
+91072dc7b/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -220,7 +220,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82241 bytes).
+Output written on Rd2.pdf (6 pages, 82242 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -232,8 +232,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9sbB7z/Rd2pdff9f3
-5c29412e/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpX2nVwk/Rd2pdf1032
+91072dc7b/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -333,8 +333,8 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82546 bytes).
+Output written on Rd2.pdf (6 pages, 82548 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmp9sbB7z/Rd2pdff9f35c29412e'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpX2nVwk/Rd2pdf103291072dc7b'

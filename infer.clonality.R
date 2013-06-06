@@ -17,6 +17,7 @@ replicates <- rbind(read.count.matrix, regularization.clones)
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
 num.pairs <- num.replicates * (num.replicates - 1) / 2
+replicates.cov <- cov(replicates)
 
 for (i in 1:num.replicates)
 {
@@ -62,7 +63,7 @@ if (variance.method == 'usr.1') {
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
 } else if (variance.method %in% c('mle.1', 'corpcor.1')) {
   if (variance.method == 'mle.1') {
-    inv.eps.vec <- diag(ginv(clonality.matrix))
+    inv.eps.vec <- diag(ginv(replicates.cov) / n)
   } else { 
     # variance.method == 'corpcor.1'
     capture.output(inv.eps.vec <- diag(invcov.shrink(replicates) / n))
@@ -73,7 +74,7 @@ if (variance.method == 'usr.1') {
   diag(ptinv.Lambda.matrix) <- epsilon.vec
 } else if (variance.method %in% c('mle.2', 'corpcor.2')) { 
   if (variance.method == 'mle.2') {
-    Lambda.matrix <- ginv(clonality.matrix)
+    Lambda.matrix <- ginv(replicates.cov) / n
   } else {# variance.method == 'corpcor.2'
     capture.output(Lambda.matrix <- invcov.shrink(replicates) / n)
   }
@@ -88,7 +89,7 @@ if (variance.method == 'usr.1') {
   loo.Lambda.matrix <- matrix(data = 0, nrow = num.replicates, ncol = num.replicates)
   loo.ptinv.Lambda.matrix <- matrix(data = 0, nrow = num.replicates, ncol = num.replicates)  
   for (i in (1:num.replicates)) {
-    curr.sub.Lambda.matrix <- ginv(clonality.matrix[-i, -i])
+    curr.sub.Lambda.matrix <- ginv(replicates.cov[-i, -i]) / n
     loo.Lambda.matrix[-i, -i] <- loo.Lambda.matrix[-i, -i] + curr.sub.Lambda.matrix
     loo.ptinv.Lambda.matrix[-i, -i] <- loo.ptinv.Lambda.matrix[-i, -i] + (1 / curr.sub.Lambda.matrix)
 
