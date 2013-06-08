@@ -15,7 +15,8 @@ infer.clonality(
   variance.method = 'loo.2',
   estimate.abundances = F,
   loo.squared.err.est = c(),
-  use.squared.err.est = c())
+  use.squared.err.est = c(),
+  num.iterations = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -46,6 +47,9 @@ A boolean value defaulting to true. When estimating the squared errors and preci
 }
 \item{use.squared.err.est}{
 A vector defaulting to the empty vector. If a non-empty vector is provided, then this forces infer.clonality to use these values as the conditional variances of the respective replicates. If non-empty, then this vector should be positive, and of length equal to the number of replicates.
+}
+\item{num.iterations}{
+An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods.
 }
 }
 \details{

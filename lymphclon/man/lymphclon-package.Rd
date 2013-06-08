@@ -17,7 +17,7 @@ The other function generates reasonable simulation data, for evaluation purposes
 \tabular{ll}{
 Package: \tab lymphclon\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3\cr
+Version: \tab 1.0.4\cr
 Date: \tab 2013-06-04\cr
 License: \tab LGPL-2 \cr
 }

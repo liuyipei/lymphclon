@@ -11,20 +11,34 @@ infer.clonality <- function(
   variance.method = 'loo.2',
   estimate.abundances = F,
   loo.squared.err.est = c(),
-  use.squared.err.est = c()) {
+  use.squared.err.est = c(),
+  num.iterations = 1) {
 
+# normalize replicates, and get clonality matrix once
 replicates <- rbind(read.count.matrix, regularization.clones)
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
-num.pairs <- num.replicates * (num.replicates - 1) / 2
-replicates.cov <- cov(replicates)
-
 for (i in 1:num.replicates)
 {
     replicates[, i] <- read.count.matrix[, i] / sum(read.count.matrix[, i])
 }
-
 clonality.matrix <- t(replicates) %*% replicates
+
+num.pairs <- num.replicates * (num.replicates - 1) / 2
+#replicates.cov <- cov(replicates)
+#replicates.cov <- t(replicates) %*% replicates
+
+## simple model where each read is independent
+reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
+simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
+  matrix(reads.per.replicate, ncol = num.replicates)
+simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
+simple.precision.clonality <- sum(simple.precision.weights * clonality.matrix) / sum(simple.precision.weights)
+
+curr.clonality.score.estimate <- simple.precision.clonality
+rb.iter.estimates <- c()
+for (curr.iter.number in 1:num.iterations) {
+replicates.cov <- (clonality.matrix - as.numeric(curr.clonality.score.estimate)) / n
 
 if (length(use.squared.err.est > 0)) {
   use.squared.err.est <- as.matrix(use.squared.err.est)
@@ -122,17 +136,9 @@ if (variance.method == 'usr.1') {
 conditional.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
 diag(conditional.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
 
-num.estimators <- num.replicates * (num.replicates - 1) / 2
+#print('conditional.replicate.cov.matrix filled')
 
-## simple model where each read is independent
-reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
-simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
-  matrix(reads.per.replicate, ncol = num.replicates)
-simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
-simple.precision.clonality <- sum(simple.precision.weights * clonality.matrix) / sum(simple.precision.weights)
-#print(simple.precision.weights)
-#print(clonality.matrix)
-#print(simple.precision.weights * clonality.matrix)
+num.estimators <- num.replicates * (num.replicates - 1) / 2
 
 estimators.rownums <- diag(c(1:num.replicates)) %*% matrix(1, num.replicates, num.replicates)
 estimators.colnums <- t(estimators.rownums)
@@ -168,7 +174,8 @@ for (r in 2:num.replicates) {
   }
 }
 
-debug.data <- c()
+# debug.data <- c()
+#print('about to fill out full.cov')
 full.cov <- matrix(data = 0, nrow = num.estimators, ncol = num.estimators)
 # (n choose 2) by (n choose 2)
 for (r1 in 2:num.replicates) {
@@ -184,15 +191,16 @@ for (r1 in 2:num.replicates) {
           conditional.replicate.cov.matrix[c1, c2])
         set.count <- sum(!is.na(curr.cov.components))
         curr.cov.components[is.na(curr.cov.components)] <- 0
-        debug.data <- rbind(debug.data, c(curr.indx1, curr.indx2, r1, c1, r2, c2, 
-          set.count, sum(curr.cov.components)))
+        # debug.data <- rbind(debug.data, c(curr.indx1, curr.indx2, r1, c1, r2, c2, set.count, sum(curr.cov.components)))
         full.cov[curr.indx1, curr.indx2] <- sum(curr.cov.components)
       }
     }
   }
 }
+#print('full.cov filled')
 
-if (T) {
+mle.unconditioned.clonality = NA
+if (F) {
 #### OLD LOGIC
 estimator.table.raw <- data.frame(theta = estimators.vec, rn = rownums.vec, cn = colnums.vec)
 
@@ -247,6 +255,11 @@ root.prec.matrix <- sqrtm(ginv(cov.matrix))
 numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
 denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
 rao.blackwell.mvg.clonality <- abs(numerator / denominator)
+curr.clonality.score.estimate <- (rao.blackwell.mvg.clonality + curr.clonality.score.estimate) / 2 # update
+# curr.clonality.score.estimate <- rao.blackwell.mvg.clonality # update
+# print(sprintf('iteration %d, %f', curr.iter.number, curr.clonality.score.estimate))
+rb.iter.estimates <- append(rb.iter.estimates, curr.clonality.score.estimate)
+} #for (curr.iter.number in 1: num.iterations)
 
 if (estimate.abundances) {
   return.results <- list(
@@ -256,14 +269,16 @@ if (estimate.abundances) {
     estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec),
     estimated.squared.errs = epsilon.vec,
     estimated.precisions = inv.eps.vec,
-    variance.method = variance.method)
+    variance.method = variance.method,
+    rb.iter.estimates = rb.iter.estimates)
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
     mle.unconditioned.clonality = mle.unconditioned.clonality,
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
     conditional.replicate.cov.matrix,
-    variance.method = variance.method)
+    variance.method = variance.method,
+    rb.iter.estimates = rb.iter.estimates)
 }
 
 return (return.results)
