@@ -203,7 +203,7 @@ $rb.iter.estimates
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.567 0.036 2.63 0 0 
+Time elapsed:  2.539 0.035 2.599 0 0 
 > grDevices::dev.off()
 null device 
           1 

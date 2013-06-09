@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpszyEok/Rd2pdf143e
-7c54b393/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp3Dhntu/Rd2pdf1cdc
+5072c6d2/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -102,7 +102,7 @@ live/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (5 pages, 71396 bytes).
+Output written on Rd2.pdf (5 pages, 71466 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -114,8 +114,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpszyEok/Rd2pdf143e
-7c54b393/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp3Dhntu/Rd2pdf1cdc
+5072c6d2/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -220,7 +220,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82520 bytes).
+Output written on Rd2.pdf (6 pages, 82598 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -232,8 +232,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpszyEok/Rd2pdf143e
-7c54b393/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp3Dhntu/Rd2pdf1cdc
+5072c6d2/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -333,8 +333,8 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82834 bytes).
+Output written on Rd2.pdf (6 pages, 82907 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpszyEok/Rd2pdf143e7c54b393'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmp3Dhntu/Rd2pdf1cdc5072c6d2'
