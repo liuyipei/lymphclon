@@ -1,0 +1,73 @@
+
+R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> package.skeleton(name = 'lymphclon', code_files = c('infer.clonality.R', 'simulate.clonality.data.R'))
+Loading required package: Matrix
+Loading required package: lattice
+
+Attaching package: ‘expm’
+
+The following object(s) are masked from ‘package:Matrix’:
+
+    expm
+
+Loading required package: splines
+Loading required package: stats4
+
+Attaching package: ‘VGAM’
+
+The following object(s) are masked from ‘package:stats4’:
+
+    coef
+
+The following object(s) are masked from ‘package:splines’:
+
+    bs, ns
+
+The following object(s) are masked from ‘package:MASS’:
+
+    huber
+
+The following object(s) are masked from ‘package:stats’:
+
+    case.names, coef, coefficients, df.residual, dfbeta, fitted,
+    fitted.values, formula, hatvalues, poly, residuals, variable.names,
+    weights
+
+The following object(s) are masked from ‘package:base’:
+
+    identity, scale.default
+
+Creating directories ...
+Creating DESCRIPTION ...
+Creating NAMESPACE ...
+Creating Read-and-delete-me ...
+Copying code files ...
+Making help files ...
+Done.
+Further steps are described in './lymphclon/Read-and-delete-me'.
+Warning message:
+package ‘corpcor’ was built under R version 2.15.3 
+> 
+> proc.time()
+   user  system elapsed 
+  2.144   0.051   2.200 

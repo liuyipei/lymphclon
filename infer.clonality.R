@@ -35,7 +35,8 @@ simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %
 simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
 simple.precision.clonality <- sum(simple.precision.weights * clonality.matrix) / sum(simple.precision.weights)
 
-curr.clonality.score.estimate <- simple.precision.clonality
+#curr.clonality.score.estimate <- simple.precision.clonality
+curr.clonality.score.estimate <- 0
 rb.iter.estimates <- c()
 for (curr.iter.number in 1:num.iterations) {
 replicates.cov <- (clonality.matrix - as.numeric(curr.clonality.score.estimate)) / n
