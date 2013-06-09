@@ -1,5 +1,5 @@
 Package: lymphclon
-Version: 1.0.5
+Version: 1.0.6
 Date: 2013-06-09
 Title: Estimating the Clonality Score, a Measure of Conincidences with Replicated Abundances, with Applications in the Study of Lymphocytes
 Authors@R: c(person("Yi Liu", "Author and Developer", role = c("aut", "cre"), email = "liuyipei@stanford.edu"),

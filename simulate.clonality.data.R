@@ -39,7 +39,7 @@ for (i in 1:num.replicates)
   replicates[, i] <- sample.of.reads # / sum(sample.of.reads)
   replicate.errs[, i] <- sample.of.reads / sum(sample.of.reads) - true.clone.prob
   replicate.squared.errs[i] <- sum(replicate.errs[, i] ^ 2)
-  cov.of.errs <- t(replicate.errs) %*% replicate.errs
+  grahm.errs <- t(replicate.errs) %*% replicate.errs
 }
 
 simulated.data <- 
@@ -47,7 +47,7 @@ simulated.data <-
        true.clone.prob = true.clone.prob, 
        true.clonality = true.clonality,
        replicate.squared.errs = replicate.squared.errs,
-       cov.of.errs = cov.of.errs)
+       grahm.errs = grahm.errs)
 
 return(simulated.data)
 }

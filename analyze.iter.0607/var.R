@@ -81,6 +81,7 @@ mean.err2.table <- ddply(num.table, .(power),
 
 err2.rat.table <- mean.err2.table$bln.err2 / mean.err2.table[, grep('err2', colnames(mean.err2.table))]
 log.err2.rats <- apply(log(err2.rat.table[, grep('err2', colnames(err2.rat.table))]),2,mean)
+sort(log.err2.rats)
 
 meth.to.plot <- 'mle2.1'
 

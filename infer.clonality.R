@@ -14,7 +14,7 @@ infer.clonality <- function(
   use.squared.err.est = c(),
   num.iterations = 1) {
 
-# normalize replicates, and get clonality matrix once
+# normalize replicates, and get rep.grahm.matrix once
 replicates <- rbind(read.count.matrix, regularization.clones)
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
@@ -22,7 +22,7 @@ for (i in 1:num.replicates)
 {
     replicates[, i] <- read.count.matrix[, i] / sum(read.count.matrix[, i])
 }
-clonality.matrix <- t(replicates) %*% replicates
+rep.grahm.matrix <- t(replicates) %*% replicates
 
 num.pairs <- num.replicates * (num.replicates - 1) / 2
 #replicates.cov <- cov(replicates)
@@ -33,13 +33,16 @@ reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
 simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
   matrix(reads.per.replicate, ncol = num.replicates)
 simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
-simple.precision.clonality <- sum(simple.precision.weights * clonality.matrix) / sum(simple.precision.weights)
+simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
 
 #curr.clonality.score.estimate <- simple.precision.clonality
 curr.clonality.score.estimate <- 0
 rb.iter.estimates <- c()
 for (curr.iter.number in 1:num.iterations) {
-replicates.cov <- (clonality.matrix - as.numeric(curr.clonality.score.estimate)) / n
+replicates.cov <- (rep.grahm.matrix # grahm.matrix
+  - as.numeric(curr.clonality.score.estimate) # convert grahm into E(cov)
+  + diag(rep(curr.clonality.score.estimate, num.replicates))  # regularization term
+  ) / n
 
 if (length(use.squared.err.est > 0)) {
   use.squared.err.est <- as.matrix(use.squared.err.est)
@@ -68,7 +71,7 @@ if (variance.method == 'usr.1') {
   epsilon.vec <- use.squared.err.est
   inv.eps.vec <- 1 / epsilon.vec
   diag(Lambda.matrix) <- inv.eps.vec
-  ptinv.Lambda.matrix <- 1 / Lambda.matrix
+  diag(ptinv.Lambda.matrix) <- 1 / diag(Lambda.matrix)
 } else if (variance.method == 'usr.2') {
   # make this appear like Lambda
   epsilon.vec <- diag(use.squared.err.est)
@@ -143,8 +146,8 @@ num.estimators <- num.replicates * (num.replicates - 1) / 2
 
 estimators.rownums <- diag(c(1:num.replicates)) %*% matrix(1, num.replicates, num.replicates)
 estimators.colnums <- t(estimators.rownums)
-lowtri.indx <- as.vector(lower.tri(clonality.matrix))
-estimators.vec <- as.vector(clonality.matrix)[lowtri.indx]
+lowtri.indx <- as.vector(lower.tri(rep.grahm.matrix))
+estimators.vec <- as.vector(rep.grahm.matrix)[lowtri.indx]
 rownums.vec <- as.vector(estimators.rownums)[lowtri.indx]
 colnums.vec <- as.vector(estimators.colnums)[lowtri.indx]
 
@@ -171,7 +174,7 @@ estimator.vec.forcov <- rep(0, num.pairs)
 for (r in 2:num.replicates) {
   for (c in 1:(r-1)) {
     curr.indx <- row.col.to.indx(r, c) 
-    estimator.vec.forcov[curr.indx] <- clonality.matrix[r, c]
+    estimator.vec.forcov[curr.indx] <- rep.grahm.matrix[r, c]
   }
 }
 
@@ -238,7 +241,7 @@ for (r in 2:num.replicates) {
     # could have been "++1" instead, but this code clarifies the intended use case for row.col.to.indx
     curr.indx <- row.col.to.indx(r, c) 
     cov.matrix[curr.indx, curr.indx] <- epsilon.vec[r] + epsilon.vec[c]
-    estimator.vec.forcov[curr.indx] <- clonality.matrix[r, c]
+    estimator.vec.forcov[curr.indx] <- rep.grahm.matrix[r, c]
   }
 }
 root.prec.matrix <- sqrtm(ginv(cov.matrix))

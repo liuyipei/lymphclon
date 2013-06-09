@@ -46,7 +46,7 @@ answer.opt1 <- infer.clonality(read.count.matrix = x,
   use.squared.err.est = sim.data$replicate.squared.errs)
 answer.opt2 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'usr.2',
-  use.squared.err.est = sim.data$cov.of.errs)
+  use.squared.err.est = sim.data$grahm.errs)
 
 answer.mle1 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'mle.1', num.iterations = num.iterations)
