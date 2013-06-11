@@ -3,7 +3,7 @@
 * using platform: i386-apple-darwin9.8.0 (32-bit)
 * using session charset: UTF-8
 * checking for file ‘lymphclon/DESCRIPTION’ ... OK
-* this is package ‘lymphclon’ version ‘1.0.8’
+* this is package ‘lymphclon’ version ‘1.0.9’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -56,7 +56,18 @@ prepare_Rd: simulate.clonality.data.Rd:59-61: Dropping empty section \seealso
 * checking Rd cross-references ... WARNING
 Unknown package(s) ‘<vegan>’ in Rd xrefs
 * checking for missing documentation entries ... OK
-* checking for code/documentation mismatches ... OK
+* checking for code/documentation mismatches ... WARNING
+Codoc mismatches from documentation object 'infer.clonality':
+infer.clonality
+  Code: function(read.count.matrix, variance.method = "mle.1",
+                 estimate.abundances = F, loo.squared.err.est = c(),
+                 use.squared.err.est = c(), num.iterations = 1)
+  Docs: function(read.count.matrix, variance.method = "loo.2",
+                 estimate.abundances = F, loo.squared.err.est = c(),
+                 use.squared.err.est = c(), num.iterations = 1)
+  Mismatches in argument default values:
+    Name: 'variance.method' Code: "mle.1" Docs: "loo.2"
+
 * checking Rd \usage sections ... NOTE
 S3 methods shown with full name in documentation object 'simulate.clonality.data':
   ‘simulate.clonality.data’
@@ -69,7 +80,7 @@ Extensions’ manual.
 * checking for unstated dependencies in examples ... OK
 * checking examples ... OK
 * checking PDF version of manual ... OK
-WARNING: There were 3 warnings.
+WARNING: There were 4 warnings.
 NOTE: There were 2 notes.
 See
   ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck/00check.log’

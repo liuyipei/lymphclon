@@ -7,7 +7,7 @@ library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
-  variance.method = 'loo.2',
+  variance.method = 'mle.1',
   estimate.abundances = F,
   loo.squared.err.est = c(),
   use.squared.err.est = c(),
@@ -35,16 +35,15 @@ rb.iter.estimates <- c()
 
 for (curr.iter.number in 1:num.iterations) {
 
-#replicates.cov <- (rep.grahm.matrix # grahm.matrix
-#  - as.numeric(curr.clonality.score.estimate) # convert grahm into E(cov)
-#  + diag(rep(curr.clonality.score.estimate, num.replicates))  # regularization term
-#  ) / n
-
-# as of june 10
-replicates.cov <- (diag(diag(rep.grahm.matrix))
-  + curr.clonality.score.estimate 
-# commenting line below disables regularization
-  - diag(rep(curr.clonality.score.estimate, num.replicates)) 
+replicates.cov.diagonals <- 
+  ifelse(
+    diag(rep.grahm.matrix) > curr.clonality.score.estimate,
+    diag(rep.grahm.matrix), 
+    2 * curr.clonality.score.estimate - diag(rep.grahm.matrix))
+      
+replicates.cov <- 
+  (diag(replicates.cov.diagonals)
+  + curr.clonality.score.estimate
   ) / n
 
 if (length(use.squared.err.est > 0)) {
