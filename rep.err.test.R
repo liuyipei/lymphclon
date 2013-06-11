@@ -53,3 +53,20 @@ reg.loo.100 <- stats::glm(correct.weights~loo.weights-1, data = err.table.100)
 
 reg.1k <- stats::glm(correct.weights~j1-1, data = err.table.1k)
 reg.100 <- stats::glm(correct.weights~j1-1, data = err.table.100)
+
+
+####
+source('infer.clonality.R')
+source('simulate.clonality.data.R')
+do.one.test<-function(blah){
+curr.data <- simulate.clonality.data(n=1000)
+curr.true <- curr.data$true.clonality
+curr.answer <- infer.clonality(curr.data$read.count.matrix, variance.method <- 'mle.1', 
+  num.iterations = 4)
+curr.err <- c(curr.answer$simple.precision.clonality, curr.answer$rb.iter.estimates) - curr.true
+return(curr.err)
+}
+all.results <- t(sapply(1:100, do.one.test))
+apply(all.results^2,2,mean)
+apply(all.results,2,mean)
+#do.one.test(1)

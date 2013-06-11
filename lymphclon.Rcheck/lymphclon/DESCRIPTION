@@ -1,5 +1,5 @@
 Package: lymphclon
-Version: 1.0.7
+Version: 1.0.8
 Date: 2013-06-09
 Title: Estimating the Clonality Score, a Measure of Conincidences with
         Replicated Abundances, with Applications in the Study of
@@ -19,4 +19,4 @@ Description: We provide a clonality score estimator that takes full advantage of
 License: LGPL-2
 URL: http://www.r-project.org, http://www.another.url
 BugReports: http://pkgname.bugtracker.url
-Built: R 2.15.1; ; 2013-06-09 19:34:56 UTC; unix
+Built: R 2.15.1; ; 2013-06-11 02:40:21 UTC; unix

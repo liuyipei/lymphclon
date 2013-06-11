@@ -7,7 +7,6 @@ library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
-  regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
   variance.method = 'loo.2',
   estimate.abundances = F,
   loo.squared.err.est = c(),
@@ -15,18 +14,14 @@ infer.clonality <- function(
   num.iterations = 1) {
 
 # normalize replicates, and get rep.grahm.matrix once
-replicates <- rbind(read.count.matrix, regularization.clones)
+replicates <- as.matrix(rbind(read.count.matrix))
+
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
-for (i in 1:num.replicates)
-{
-    replicates[, i] <- read.count.matrix[, i] / sum(read.count.matrix[, i])
-}
+replicates <- t(t(replicates) / colSums(replicates))
 rep.grahm.matrix <- t(replicates) %*% replicates
 
 num.pairs <- num.replicates * (num.replicates - 1) / 2
-#replicates.cov <- cov(replicates)
-#replicates.cov <- t(replicates) %*% replicates
 
 ## simple model where each read is independent
 reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
@@ -35,13 +30,21 @@ simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %
 simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
 simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
 
-#curr.clonality.score.estimate <- simple.precision.clonality
-curr.clonality.score.estimate <- 0
+curr.clonality.score.estimate <- simple.precision.clonality
 rb.iter.estimates <- c()
+
 for (curr.iter.number in 1:num.iterations) {
-replicates.cov <- (rep.grahm.matrix # grahm.matrix
-  - as.numeric(curr.clonality.score.estimate) # convert grahm into E(cov)
-  + diag(rep(curr.clonality.score.estimate, num.replicates))  # regularization term
+
+#replicates.cov <- (rep.grahm.matrix # grahm.matrix
+#  - as.numeric(curr.clonality.score.estimate) # convert grahm into E(cov)
+#  + diag(rep(curr.clonality.score.estimate, num.replicates))  # regularization term
+#  ) / n
+
+# as of june 10
+replicates.cov <- (diag(diag(rep.grahm.matrix))
+  + curr.clonality.score.estimate 
+# commenting line below disables regularization
+  - diag(rep(curr.clonality.score.estimate, num.replicates)) 
   ) / n
 
 if (length(use.squared.err.est > 0)) {
@@ -259,8 +262,8 @@ root.prec.matrix <- sqrtm(ginv(cov.matrix))
 numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
 denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
 rao.blackwell.mvg.clonality <- abs(numerator / denominator)
-curr.clonality.score.estimate <- (rao.blackwell.mvg.clonality + curr.clonality.score.estimate) / 2 # update
-# curr.clonality.score.estimate <- rao.blackwell.mvg.clonality # update
+# curr.clonality.score.estimate <- (rao.blackwell.mvg.clonality + curr.clonality.score.estimate) / 2 # update
+curr.clonality.score.estimate <- as.numeric(rao.blackwell.mvg.clonality) # update
 # print(sprintf('iteration %d, %f', curr.iter.number, curr.clonality.score.estimate))
 rb.iter.estimates <- append(rb.iter.estimates, curr.clonality.score.estimate)
 } #for (curr.iter.number in 1: num.iterations)

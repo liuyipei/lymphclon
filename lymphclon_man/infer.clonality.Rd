@@ -11,7 +11,6 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 \usage{
 infer.clonality(
   read.count.matrix, 
-  regularization.clones = matrix(0, 0, ncol(read.count.matrix)),
   variance.method = 'loo.2',
   estimate.abundances = F,
   loo.squared.err.est = c(),
@@ -23,10 +22,6 @@ infer.clonality(
   \item{read.count.matrix}{
 %%     ~~Describe \code{read.count.matrix} here~~
 A matrix of read frequences, where each row corresponds to a distinct clone, and each column corresponds to a particular biological (rather than technical) replicate. All biological replicates should be drawn from the same person. Reads from technical replicates of the same underlying templates should be merged into a single column.
-}
-  \item{regularization.clones}{
-%%     ~~Describe \code{regularization.clones} here~~
-A matrix of regularzation (i.e. "virtual") data to be appended to the bottom of the read.count.matrix. For example, this could be the vertical concatentation of an indentiy matrix the size of the number of replicates, with a row of 1s. Deafault value is no regularization (i.e. empty matrix). This is recommended if the data sampling is exceptionally sparse.
 }
 \item{variance.method}{
 The method is a code defaulting to "loo.2".
