@@ -70,4 +70,4 @@ package ‘corpcor’ was built under R version 2.15.3
 > 
 > proc.time()
    user  system elapsed 
-  2.125   0.054   2.186 
+  2.161   0.056   2.226 
