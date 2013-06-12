@@ -33,18 +33,21 @@ simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) /
 curr.clonality.score.estimate <- simple.precision.clonality
 rb.iter.estimates <- c()
 
-for (curr.iter.number in 1:num.iterations) {
+replicates.off.diagonals <- 
+  (curr.clonality.score.estimate 
+  - diag(rep(curr.clonality.score.estimate, num.replicates))
+  ) / n
 
 replicates.cov.diagonals <- 
   ifelse(
     diag(rep.grahm.matrix) > curr.clonality.score.estimate,
     diag(rep.grahm.matrix), 
-    2 * curr.clonality.score.estimate - diag(rep.grahm.matrix))
-      
-replicates.cov <- 
-  (diag(replicates.cov.diagonals)
-  + curr.clonality.score.estimate
-  ) / n
+    2 * curr.clonality.score.estimate - diag(rep.grahm.matrix)) / n
+
+for (curr.iter.number in 1:num.iterations) {
+
+replicates.cov <- diag(replicates.cov.diagonals) 
+  + replicates.off.diagonals      
 
 if (length(use.squared.err.est > 0)) {
   use.squared.err.est <- as.matrix(use.squared.err.est)
@@ -261,9 +264,10 @@ root.prec.matrix <- sqrtm(ginv(cov.matrix))
 numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
 denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
 rao.blackwell.mvg.clonality <- abs(numerator / denominator)
-# curr.clonality.score.estimate <- (rao.blackwell.mvg.clonality + curr.clonality.score.estimate) / 2 # update
+
 curr.clonality.score.estimate <- as.numeric(rao.blackwell.mvg.clonality) # update
-# print(sprintf('iteration %d, %f', curr.iter.number, curr.clonality.score.estimate))
+replicates.cov.diagonals <- (epsilon.vec + curr.clonality.score.estimate) / n # updates quality estimate for constructing Lambda
+
 rb.iter.estimates <- append(rb.iter.estimates, curr.clonality.score.estimate)
 } #for (curr.iter.number in 1: num.iterations)
 

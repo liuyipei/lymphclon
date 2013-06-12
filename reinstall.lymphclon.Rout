@@ -42,4 +42,4 @@ Warning: package ‘corpcor’ was built under R version 2.15.3
 > 
 > proc.time()
    user  system elapsed 
-  6.089   0.217   6.394 
+  6.399   0.235   6.719 

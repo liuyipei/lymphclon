@@ -95,22 +95,22 @@ $mle.unconditioned.clonality
 
 $rao.blackwell.mvg.clonality
           [,1]
-[1,] 0.1158863
+[1,] 0.1160907
 
 [[4]]
-          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-[1,] 0.2091179        NA       NA        NA        NA        NA
-[2,]        NA 0.2646402       NA        NA        NA        NA
-[3,]        NA        NA 0.376316        NA        NA        NA
-[4,]        NA        NA       NA 0.1958992        NA        NA
-[5,]        NA        NA       NA        NA 0.2248636        NA
-[6,]        NA        NA       NA        NA        NA 0.2154669
+          [,1]     [,2]      [,3]      [,4]     [,5]      [,6]
+[1,] 0.1783893       NA        NA        NA       NA        NA
+[2,]        NA 0.235138        NA        NA       NA        NA
+[3,]        NA       NA 0.3479672        NA       NA        NA
+[4,]        NA       NA        NA 0.1647251       NA        NA
+[5,]        NA       NA        NA        NA 0.194569        NA
+[6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
 [1] "mle.1"
 
 $rb.iter.estimates
-[1] 0.1158863
+[1] 0.1160907
 
 > 
 > 
@@ -139,22 +139,22 @@ $mle.unconditioned.clonality
 
 $rao.blackwell.mvg.clonality
           [,1]
-[1,] 0.1158863
+[1,] 0.1160907
 
 [[4]]
-          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-[1,] 0.2091179        NA       NA        NA        NA        NA
-[2,]        NA 0.2646402       NA        NA        NA        NA
-[3,]        NA        NA 0.376316        NA        NA        NA
-[4,]        NA        NA       NA 0.1958992        NA        NA
-[5,]        NA        NA       NA        NA 0.2248636        NA
-[6,]        NA        NA       NA        NA        NA 0.2154669
+          [,1]     [,2]      [,3]      [,4]     [,5]      [,6]
+[1,] 0.1783893       NA        NA        NA       NA        NA
+[2,]        NA 0.235138        NA        NA       NA        NA
+[3,]        NA       NA 0.3479672        NA       NA        NA
+[4,]        NA       NA        NA 0.1647251       NA        NA
+[5,]        NA       NA        NA        NA 0.194569        NA
+[6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
 [1] "mle.1"
 
 $rb.iter.estimates
-[1] 0.1158863
+[1] 0.1160907
 
 > 
 > 
@@ -183,22 +183,22 @@ $mle.unconditioned.clonality
 
 $rao.blackwell.mvg.clonality
           [,1]
-[1,] 0.1158863
+[1,] 0.1160907
 
 [[4]]
-          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-[1,] 0.2091179        NA       NA        NA        NA        NA
-[2,]        NA 0.2646402       NA        NA        NA        NA
-[3,]        NA        NA 0.376316        NA        NA        NA
-[4,]        NA        NA       NA 0.1958992        NA        NA
-[5,]        NA        NA       NA        NA 0.2248636        NA
-[6,]        NA        NA       NA        NA        NA 0.2154669
+          [,1]     [,2]      [,3]      [,4]     [,5]      [,6]
+[1,] 0.1783893       NA        NA        NA       NA        NA
+[2,]        NA 0.235138        NA        NA       NA        NA
+[3,]        NA       NA 0.3479672        NA       NA        NA
+[4,]        NA       NA        NA 0.1647251       NA        NA
+[5,]        NA       NA        NA        NA 0.194569        NA
+[6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
 [1] "mle.1"
 
 $rb.iter.estimates
-[1] 0.1158863
+[1] 0.1160907
 
 > 
 > 
@@ -206,7 +206,7 @@ $rb.iter.estimates
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.545 0.037 2.611 0 0 
+Time elapsed:  2.54 0.037 2.601 0 0 
 > grDevices::dev.off()
 null device 
           1 

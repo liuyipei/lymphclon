@@ -59,7 +59,7 @@ reg.100 <- stats::glm(correct.weights~j1-1, data = err.table.100)
 source('infer.clonality.R')
 source('simulate.clonality.data.R')
 do.one.test<-function(blah){
-curr.data <- simulate.clonality.data(n=1000)
+curr.data <- simulate.clonality.data(n=1000, clonal.distribution.power = -0.4)
 curr.true <- curr.data$true.clonality
 curr.answer <- infer.clonality(curr.data$read.count.matrix, variance.method <- 'mle.1', 
   num.iterations = 4)
