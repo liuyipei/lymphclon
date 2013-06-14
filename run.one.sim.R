@@ -79,6 +79,7 @@ answer.reg1 <- infer.clonality(read.count.matrix = x,
   regularization.method = 'half.diag')
 answer.reg2 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'fpc.1', 
+  num.iterations = num.iterations,
   regularization.method = 'half.diag')
 
 simple.mean.abundances <- apply((x %*% diag(1/apply(x,2,sum)) ), 1,mean)
@@ -118,7 +119,10 @@ experiment.cols <-
     'mle1', 'mle1.abe2', 'mle2', 'mle2.abe2',
     'cpc1', 'cpc1.abe2', 'cpc2', 'cpc2.abe2',
     'idt1', 'idt1.abe2', 'idt2', 'idt2.abe2',
-    'reg1', 'reg1.abe2', 'reg2', 'reg2.abe2')
+    'reg1', 'reg1.abe2', 
+    paste('reg2', c(1:num.iterations), sep = '.'), 'reg2.abe2' # fpc.1
+    )
+
 experiment.values <- c(
   answer.opt1$rb.iter.estimates,
   sum((opt1.mean.abundances - sim.data$true.clone.prob)^2),
@@ -150,9 +154,9 @@ experiment.values <- c(
   answer.idt2$rb.iter.estimates,
   sum((idt2.mean.abundances - sim.data$true.clone.prob)^2),
 
-  answer.reg1$rb.iter.estimates,
+  as.numeric(answer.reg1$rb.iter.estimates),
   sum((reg1.mean.abundances - sim.data$true.clone.prob)^2),
-  answer.reg2$rb.iter.estimates,
+  as.numeric(answer.reg2$rb.iter.estimates),
   sum((reg2.mean.abundances - sim.data$true.clone.prob)^2)
   )
 names(experiment.values) <- experiment.cols
