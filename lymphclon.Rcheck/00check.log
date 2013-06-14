@@ -3,7 +3,7 @@
 * using platform: i386-apple-darwin9.8.0 (32-bit)
 * using session charset: UTF-8
 * checking for file ‘lymphclon/DESCRIPTION’ ... OK
-* this is package ‘lymphclon’ version ‘1.0.10’
+* this is package ‘lymphclon’ version ‘1.0.11’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -42,11 +42,11 @@ Extensions’ manual.
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
 * checking Rd files ... NOTE
-prepare_Rd: infer.clonality.Rd:50-52: Dropping empty section \details
-prepare_Rd: infer.clonality.Rd:68-70: Dropping empty section \note
-prepare_Rd: infer.clonality.Rd:65-67: Dropping empty section \author
-prepare_Rd: infer.clonality.Rd:62-64: Dropping empty section \references
-prepare_Rd: infer.clonality.Rd:74-76: Dropping empty section \seealso
+prepare_Rd: infer.clonality.Rd:54-56: Dropping empty section \details
+prepare_Rd: infer.clonality.Rd:72-74: Dropping empty section \note
+prepare_Rd: infer.clonality.Rd:69-71: Dropping empty section \author
+prepare_Rd: infer.clonality.Rd:66-68: Dropping empty section \references
+prepare_Rd: infer.clonality.Rd:78-80: Dropping empty section \seealso
 prepare_Rd: simulate.clonality.data.Rd:34-36: Dropping empty section \details
 prepare_Rd: simulate.clonality.data.Rd:53-55: Dropping empty section \note
 prepare_Rd: simulate.clonality.data.Rd:50-52: Dropping empty section \author
@@ -56,18 +56,7 @@ prepare_Rd: simulate.clonality.data.Rd:59-61: Dropping empty section \seealso
 * checking Rd cross-references ... WARNING
 Unknown package(s) ‘<vegan>’ in Rd xrefs
 * checking for missing documentation entries ... OK
-* checking for code/documentation mismatches ... WARNING
-Codoc mismatches from documentation object 'infer.clonality':
-infer.clonality
-  Code: function(read.count.matrix, variance.method = "mle.1",
-                 estimate.abundances = F, loo.squared.err.est = c(),
-                 use.squared.err.est = c(), num.iterations = 1)
-  Docs: function(read.count.matrix, variance.method = "loo.2",
-                 estimate.abundances = F, loo.squared.err.est = c(),
-                 use.squared.err.est = c(), num.iterations = 1)
-  Mismatches in argument default values:
-    Name: 'variance.method' Code: "mle.1" Docs: "loo.2"
-
+* checking for code/documentation mismatches ... OK
 * checking Rd \usage sections ... NOTE
 S3 methods shown with full name in documentation object 'simulate.clonality.data':
   ‘simulate.clonality.data’
@@ -80,7 +69,7 @@ Extensions’ manual.
 * checking for unstated dependencies in examples ... OK
 * checking examples ... OK
 * checking PDF version of manual ... OK
-WARNING: There were 4 warnings.
+WARNING: There were 3 warnings.
 NOTE: There were 2 notes.
 See
   ‘/Users/Liu/gitrepo/lymphclon/lymphclon.Rcheck/00check.log’

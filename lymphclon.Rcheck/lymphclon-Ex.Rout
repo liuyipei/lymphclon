@@ -107,7 +107,7 @@ $rao.blackwell.mvg.clonality
 [6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
-[1] "mle.1"
+[1] "fpc.1"
 
 $rb.iter.estimates
 [1] 0.1160907
@@ -151,7 +151,7 @@ $rao.blackwell.mvg.clonality
 [6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
-[1] "mle.1"
+[1] "fpc.1"
 
 $rb.iter.estimates
 [1] 0.1160907
@@ -195,7 +195,7 @@ $rao.blackwell.mvg.clonality
 [6,]        NA       NA        NA        NA       NA 0.1849242
 
 $variance.method
-[1] "mle.1"
+[1] "fpc.1"
 
 $rb.iter.estimates
 [1] 0.1160907
@@ -206,7 +206,7 @@ $rb.iter.estimates
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.552 0.035 2.6 0 0 
+Time elapsed:  2.566 0.036 2.613 0 0 
 > grDevices::dev.off()
 null device 
           1 

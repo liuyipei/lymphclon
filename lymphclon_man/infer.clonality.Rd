@@ -11,11 +11,12 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 \usage{
 infer.clonality(
   read.count.matrix, 
-  variance.method = 'loo.2',
+  variance.method = 'fpc.1',
   estimate.abundances = F,
   loo.squared.err.est = c(),
   use.squared.err.est = c(),
-  num.iterations = 1)
+  num.iterations = 1,
+  regularization.method = '')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -45,6 +46,9 @@ A vector defaulting to the empty vector. If a non-empty vector is provided, then
 }
 \item{num.iterations}{
 An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods.
+}
+\item{regularization.method}{
+A flag which determines the method by which the covariance of the pairwise comparisons are regularized. Current options are '' and 'half.diag'
 }
 }
 \details{

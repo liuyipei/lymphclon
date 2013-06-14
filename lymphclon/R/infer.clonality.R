@@ -7,11 +7,13 @@ library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
-  variance.method = 'mle.1',
+  variance.method = 'fpc.1',
   estimate.abundances = F,
   loo.squared.err.est = c(),
   use.squared.err.est = c(),
-  num.iterations = 1) {
+  num.iterations = 1,
+  regularization.method = ''
+  ) {
 
 # normalize replicates, and get rep.grahm.matrix once
 replicates <- as.matrix(rbind(read.count.matrix))
@@ -33,7 +35,7 @@ simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) /
 curr.clonality.score.estimate <- simple.precision.clonality
 rb.iter.estimates <- c()
 
-replicates.off.diagonals <- 
+replicates.cov.off.diagonals <- 
   (curr.clonality.score.estimate 
   - diag(rep(curr.clonality.score.estimate, num.replicates))
   ) / n
@@ -44,10 +46,23 @@ replicates.cov.diagonals <-
     diag(rep.grahm.matrix), 
     2 * curr.clonality.score.estimate - diag(rep.grahm.matrix)) / n
 
+if (length(use.squared.err.est) == num.replicates) {
+  variance.method <- 'usr.1'
+} else if (length(use.squared.err.est) == num.replicates * num.replicates) {
+  variance.method <- 'usr.2'
+} else if (length(loo.squared.err.est) == 1) { 
+  variance.method <- ifelse(loo.squared.err.est, 'loo.2', 'fpc.1')
+}
+
 for (curr.iter.number in 1:num.iterations) {
 
-replicates.cov <- diag(replicates.cov.diagonals) 
-  + replicates.off.diagonals      
+if (variance.method %in% c('fpc.1', 'fpc.2'))
+{
+  replicates.cov <- diag(replicates.cov.diagonals) 
+    + replicates.cov.off.diagonals      
+} else if (variance.method %in% c('mle.1', 'mle.2', 'loo.1', 'loo.2')) {
+  replicates.cov <- cov(replicates)
+}
 
 if (length(use.squared.err.est > 0)) {
   use.squared.err.est <- as.matrix(use.squared.err.est)
@@ -55,20 +70,14 @@ if (length(use.squared.err.est > 0)) {
 
 # usr.1: argument use.squared.err.est specifies 1st order variances
 # usr.2: argument use.squared.err.est specifies 2nd order variances
-# mle.1: use maximum likelihood estimate of 1st order variances
-# mle.2: use maximum likelihood estimate of 2nd order variances
+# fpc.1: fixed point iteration: 1st order variances
+# fpc.2: fixed point iteration: 2nd order variances
 # loo.1: use leave-one-out estimate of 1st order variances
 # loo.2: use leave-one-out estimate of 2nd order variances
+# mle.1: use maximum likelihood estimate of 1st order variances
+# mle.2: use maximum likelihood estimate of 2nd order variances
 # corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
 # corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corpcor)
-
-if (length(use.squared.err.est) == num.replicates) {
-  variance.method <- 'usr.1'
-} else if (length(use.squared.err.est) == num.replicates * num.replicates) {
-  variance.method <- 'usr.2'
-} else if (length(loo.squared.err.est) == 1) { 
-  variance.method <- ifelse(loo.squared.err.est, 'loo.2', 'mle.1')
-}
 
 Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
 ptinv.Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
@@ -84,8 +93,8 @@ if (variance.method == 'usr.1') {
   Lambda.matrix <- -use.squared.err.est
   diag(Lambda.matrix) <- inv.eps.vec
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
-} else if (variance.method %in% c('mle.1', 'corpcor.1')) {
-  if (variance.method == 'mle.1') {
+} else if (variance.method %in% c('fpc.1', 'mle.1', 'corpcor.1')) {
+  if (variance.method %in% c('fpc.1', 'mle.1')) {
     inv.eps.vec <- diag(ginv(replicates.cov) / n)
   } else { 
     # variance.method == 'corpcor.1'
@@ -95,8 +104,8 @@ if (variance.method == 'usr.1') {
   epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
   diag(Lambda.matrix) <- inv.eps.vec
   diag(ptinv.Lambda.matrix) <- epsilon.vec
-} else if (variance.method %in% c('mle.2', 'corpcor.2')) { 
-  if (variance.method == 'mle.2') {
+} else if (variance.method %in% c('fpc.2', 'mle.2', 'corpcor.2')) { 
+  if (variance.method %in% c('fpc.2', 'mle.2')) {
     Lambda.matrix <- ginv(replicates.cov) / n
   } else {# variance.method == 'corpcor.2'
     capture.output(Lambda.matrix <- invcov.shrink(replicates) / n)
@@ -140,7 +149,7 @@ if (variance.method == 'usr.1') {
   }
 } else {
   print(sprintf('unknown variance method: %s\n', variance.method))
-  print(sprintf('list of valid methods: usr.1, usr.2, mle.1, mle.2, loo.1, loo.2, corpcor.1, corpcor.2'))
+  print(sprintf('list of valid methods: usr.1, usr.2, fpc.1, fpc.2, loo.1, loo.2, corpcor.1, corpcor.2'))
 }
 conditional.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
 diag(conditional.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
@@ -258,6 +267,13 @@ old.cov.matrix<-cov.matrix
 } # if(F)
 
 cov.matrix <- full.cov
+
+#regularize the n-choose-2 by n-choose-2 covariance matrix
+if (regularization.method == 'half.diag')
+{
+  cov.matrix <- (cov.matrix + diag(rep(mean(diag(cov.matrix)), nrow(cov.matrix)))) / 2
+  #print (diag(rep(mean(diag(cov.matrix)), nrow(cov.matrix))))
+}
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
 root.prec.matrix <- sqrtm(ginv(cov.matrix))
