@@ -270,24 +270,27 @@ cov.matrix <- full.cov
 
 #regularize the n-choose-2 by n-choose-2 covariance matrix
 mean.var <- mean(diag(cov.matrix)) / 2
-if (regularization.method == 'eq.zr.half') {
-  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
-  cov.matrix <- (cov.matrix + target.matrix) / 2
-} else if (regularization.method == 'ue.zr.half') {
+if (regularization.method == 'ue.zr.full') { # diagonal of unequals, project
   target.matrix <- diag(diag(cov.matrix))
-  cov.matrix <- (cov.matrix + target.matrix) / 2
-} else if (regularization.method == 'eq.eq.half') {
-  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
-  target.matrix[target.matrix > 0] <- mean.var
-  cov.matrix <- (cov.matrix + target.matrix) / 2
-} else if (regularization.method == 'ue.zr.half') {
-  target.matrix <- diag(diag(cov.matrix))
-  target.matrix[target.matrix > 0] <- mean.var
-  cov.matrix <- (cov.matrix + target.matrix) / 2
-} else if (regularization.method == 'ue.zr.full') {
-  target.matrix <- diag(diag(cov.matrix))
-  target.matrix[target.matrix > 0] <- mean.var
   cov.matrix <- target.matrix
+} else if (regularization.method == 'eq.zr.half') { # diagonal of equals
+  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.zr.half') { # diagonal of unequals
+  target.matrix <- diag(diag(cov.matrix))
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'eq.eq.half') { # diagonals of equals, off diagonal of equals
+  target.matrix <- cov.matrix
+  target.matrix[cov.matrix > 0] <- mean.var
+  diag(target.matrix) <- 2 * mean.var
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.eq.half') { # diagnonals of unequals, off diagonals are equals
+  target.matrix <- cov.matrix
+  target.matrix[cov.matrix > 0] <- mean.var
+  diag(target.matrix) <- diag(cov.matrix)
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (nchar(regularization.method) > 0) {
+  write(sprintf('unrecognized regularization method: %s. Using none.', regularization.method), stderr())
 }
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
