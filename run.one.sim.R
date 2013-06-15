@@ -1,8 +1,12 @@
 #!/usr/bin/Rscript
-#library(lymphclon)
 
-source('simulate.clonality.data.R')
-source('infer.clonality.R')
+if (all(c('infer.clonality.R', 'simulate.clonality.data.R') %in% list.files())) {
+  write('using local source files', stderr())
+  source('simulate.clonality.data.R')
+  source('infer.clonality.R')
+} else {
+  library(lymphclon) 
+}
 
 curr.args <- commandArgs(trailingOnly = FALSE)
 settings.index <- as.integer(curr.args[length(curr.args)])
@@ -93,7 +97,7 @@ answer.reg5 <- infer.clonality(read.count.matrix = x,
   regularization.method = 'eq.eq.half')
 answer.reg6 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'fpc.1', 
-  regularization.method = 'ue.zr.half')
+  regularization.method = 'ue.eq.half')
 
 simple.mean.abundances <- apply((x %*% diag(1/apply(x,2,sum)) ), 1,mean)
 opt1.mean.abundances    <- as.numeric(answer.opt1$estimated.abundances)
@@ -173,19 +177,19 @@ experiment.values <- c(
   answer.idt2$rb.iter.estimates,
   sum((idt2.mean.abundances - sim.data$true.clone.prob)^2),
 
-  as.numeric(answer.reg1$rb.iter.estimates),
+  answer.reg1$rb.iter.estimates,
   sum((reg1.mean.abundances - sim.data$true.clone.prob)^2),
-  as.numeric(answer.reg2$rb.iter.estimates),
+  answer.reg2$rb.iter.estimates,
   sum((reg2.mean.abundances - sim.data$true.clone.prob)^2),
 
-  as.numeric(answer.reg1$rb.iter.estimates),
+  answer.reg3$rb.iter.estimates,
   sum((reg3.mean.abundances - sim.data$true.clone.prob)^2),
-  as.numeric(answer.reg2$rb.iter.estimates),
+  answer.reg4$rb.iter.estimates,
   sum((reg4.mean.abundances - sim.data$true.clone.prob)^2),
   
-  as.numeric(answer.reg1$rb.iter.estimates),
+  answer.reg5$rb.iter.estimates,
   sum((reg5.mean.abundances - sim.data$true.clone.prob)^2),
-  as.numeric(answer.reg2$rb.iter.estimates),
+  answer.reg6$rb.iter.estimates,
   sum((reg6.mean.abundances - sim.data$true.clone.prob)^2)
   )
 names(experiment.values) <- experiment.cols

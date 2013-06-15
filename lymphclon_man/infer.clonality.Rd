@@ -48,7 +48,7 @@ A vector defaulting to the empty vector. If a non-empty vector is provided, then
 An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods.
 }
 \item{regularization.method}{
-A flag which determines the method by which the covariance of the pairwise comparisons are regularized. Current options are '' and 'half.diag'
+A flag which determines the method by which the covariance of the pairwise comparisons are regularized. Current options are '', 'ue.zr.full', 'eq.zr.half', 'ue.zr.half', 'eq.eq'half', 'ue.eq.half'.
 }
 }
 \details{

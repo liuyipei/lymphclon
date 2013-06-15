@@ -19,4 +19,4 @@ Description: We provide a clonality score estimator that takes full advantage of
 License: LGPL-2
 URL: http://www.r-project.org, http://www.another.url
 BugReports: http://pkgname.bugtracker.url
-Built: R 2.15.1; ; 2013-06-15 05:02:41 UTC; unix
+Built: R 2.15.1; ; 2013-06-15 17:25:10 UTC; unix
