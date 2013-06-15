@@ -269,10 +269,25 @@ old.cov.matrix<-cov.matrix
 cov.matrix <- full.cov
 
 #regularize the n-choose-2 by n-choose-2 covariance matrix
-if (regularization.method == 'half.diag')
-{
-  cov.matrix <- (cov.matrix + diag(rep(mean(diag(cov.matrix)), nrow(cov.matrix)))) / 2
-  #print (diag(rep(mean(diag(cov.matrix)), nrow(cov.matrix))))
+mean.var <- mean(diag(cov.matrix)) / 2
+if (regularization.method == 'eq.zr.half') {
+  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.zr.half') {
+  target.matrix <- diag(diag(cov.matrix))
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'eq.eq.half') {
+  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
+  target.matrix[target.matrix > 0] <- mean.var
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.zr.half') {
+  target.matrix <- diag(diag(cov.matrix))
+  target.matrix[target.matrix > 0] <- mean.var
+  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.zr.full') {
+  target.matrix <- diag(diag(cov.matrix))
+  target.matrix[target.matrix > 0] <- mean.var
+  cov.matrix <- target.matrix
 }
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators

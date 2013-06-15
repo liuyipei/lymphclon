@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  14 JUN 2013 14:58
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  14 JUN 2013 22:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpxqyUJQ/Rd2pdf6a6
-161e5fe36/Rd2.tex
+**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpfbCEAL/Rd2pdf726
+5f4c3a8b/Rd2.tex
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpxqyUJQ/Rd2pdf6a61
-61e5fe36/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpfbCEAL/Rd2pdf7265
+f4c3a8b/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -752,12 +752,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 210.
  ) 
 Here is how much of TeX's memory you used:
  6208 strings out of 493488
- 88997 string characters out of 3141326
+ 88994 string characters out of 3141326
  168079 words of memory out of 3000000
  9384 multiletter control sequences out of 15000+200000
  40684 words of font info for 49 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,5n,34p,793b,554s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,5n,34p,792b,554s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Rfn.<vegan>} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -770,7 +770,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82890 bytes).
+Output written on Rd2.pdf (6 pages, 82735 bytes).
 PDF statistics:
  128 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams
