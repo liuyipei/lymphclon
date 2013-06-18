@@ -13,7 +13,6 @@ infer.clonality(
   read.count.matrix, 
   variance.method = 'fpc.1',
   estimate.abundances = F,
-  loo.squared.err.est = c(),
   use.squared.err.est = c(),
   num.iterations = 1,
   regularization.method = '')
@@ -37,9 +36,6 @@ corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corp
 }
 \item{estimate.abundances}{
 A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.
-}
-\item{loo.squared.err.est}{
-A boolean value defaulting to true. When estimating the squared errors and precisions associated with each replicate, we can use the maximum likelihood estimate (i.e. set loo.squared.err.est to false), or use an averaged leave-one-out estimate (i.e. set loo.squared.err.est to true). The leave-one-out estimate is slightly biased, and slightly slower to compute, but much less variance. Especially if there are at least three replicates, this value probably should be set to true.
 }
 \item{use.squared.err.est}{
 A vector defaulting to the empty vector. If a non-empty vector is provided, then this forces infer.clonality to use these values as the conditional variances of the respective replicates. If non-empty, then this vector should be positive, and of length equal to the number of replicates.

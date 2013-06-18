@@ -3,7 +3,7 @@
 * using platform: i386-apple-darwin9.8.0 (32-bit)
 * using session charset: UTF-8
 * checking for file ‘lymphclon/DESCRIPTION’ ... OK
-* this is package ‘lymphclon’ version ‘1.0.12’
+* this is package ‘lymphclon’ version ‘1.0.17’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -42,11 +42,11 @@ Extensions’ manual.
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
 * checking Rd files ... NOTE
-prepare_Rd: infer.clonality.Rd:54-56: Dropping empty section \details
-prepare_Rd: infer.clonality.Rd:72-74: Dropping empty section \note
-prepare_Rd: infer.clonality.Rd:69-71: Dropping empty section \author
-prepare_Rd: infer.clonality.Rd:66-68: Dropping empty section \references
-prepare_Rd: infer.clonality.Rd:78-80: Dropping empty section \seealso
+prepare_Rd: infer.clonality.Rd:50-52: Dropping empty section \details
+prepare_Rd: infer.clonality.Rd:68-70: Dropping empty section \note
+prepare_Rd: infer.clonality.Rd:65-67: Dropping empty section \author
+prepare_Rd: infer.clonality.Rd:62-64: Dropping empty section \references
+prepare_Rd: infer.clonality.Rd:74-76: Dropping empty section \seealso
 prepare_Rd: simulate.clonality.data.Rd:34-36: Dropping empty section \details
 prepare_Rd: simulate.clonality.data.Rd:53-55: Dropping empty section \note
 prepare_Rd: simulate.clonality.data.Rd:50-52: Dropping empty section \author
