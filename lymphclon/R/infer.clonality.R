@@ -9,7 +9,6 @@ infer.clonality <- function(
   read.count.matrix, 
   variance.method = 'fpc.1',
   estimate.abundances = F,
-  loo.squared.err.est = c(),
   use.squared.err.est = c(),
   num.iterations = 1,
   regularization.method = ''
@@ -35,32 +34,31 @@ simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) /
 curr.clonality.score.estimate <- simple.precision.clonality
 rb.iter.estimates <- c()
 
-replicates.cov.off.diagonals <- 
-  (curr.clonality.score.estimate 
-  - diag(rep(curr.clonality.score.estimate, num.replicates))
-  ) / n
-
-replicates.cov.diagonals <- 
-  ifelse(
-    diag(rep.grahm.matrix) > curr.clonality.score.estimate,
-    diag(rep.grahm.matrix), 
-    2 * curr.clonality.score.estimate - diag(rep.grahm.matrix)) / n
 
 if (length(use.squared.err.est) == num.replicates) {
   variance.method <- 'usr.1'
 } else if (length(use.squared.err.est) == num.replicates * num.replicates) {
   variance.method <- 'usr.2'
-} else if (length(loo.squared.err.est) == 1) { 
-  variance.method <- ifelse(loo.squared.err.est, 'loo.2', 'fpc.1')
 }
 
 for (curr.iter.number in 1:num.iterations) {
 
 if (variance.method %in% c('fpc.1', 'fpc.2'))
 {
-  replicates.cov <- diag(replicates.cov.diagonals) 
-    + replicates.cov.off.diagonals      
-} else if (variance.method %in% c('mle.1', 'mle.2', 'loo.1', 'loo.2')) {
+  replicates.cov.off.diagonals <- 
+    (curr.clonality.score.estimate 
+    - diag(rep(curr.clonality.score.estimate, num.replicates))
+    ) / n
+
+  replicates.cov.diagonals <- 
+    ifelse(
+      diag(rep.grahm.matrix) > curr.clonality.score.estimate,
+      diag(rep.grahm.matrix), 
+      2 * curr.clonality.score.estimate - diag(rep.grahm.matrix)) / n
+
+  replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
+
+} else if (variance.method %in% c('mle.1', 'mle.2')) {
   replicates.cov <- cov(replicates)
 }
 
@@ -72,8 +70,6 @@ if (length(use.squared.err.est > 0)) {
 # usr.2: argument use.squared.err.est specifies 2nd order variances
 # fpc.1: fixed point iteration: 1st order variances
 # fpc.2: fixed point iteration: 2nd order variances
-# loo.1: use leave-one-out estimate of 1st order variances
-# loo.2: use leave-one-out estimate of 2nd order variances
 # mle.1: use maximum likelihood estimate of 1st order variances
 # mle.2: use maximum likelihood estimate of 2nd order variances
 # corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
@@ -85,7 +81,7 @@ if (variance.method == 'usr.1') {
   epsilon.vec <- use.squared.err.est
   inv.eps.vec <- 1 / epsilon.vec
   diag(Lambda.matrix) <- inv.eps.vec
-  diag(ptinv.Lambda.matrix) <- 1 / diag(Lambda.matrix)
+  diag(ptinv.Lambda.matrix) <- epsilon.vec
 } else if (variance.method == 'usr.2') {
   # make this appear like Lambda
   epsilon.vec <- diag(use.squared.err.est)
@@ -114,47 +110,14 @@ if (variance.method == 'usr.1') {
   ptinv.Lambda.matrix <- 1 / Lambda.matrix
   inv.eps.vec <- diag(Lambda.matrix)
   epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
-} else if (variance.method %in% c('loo.1', 'loo.2')) { 
-  loo.inv.eps.vec <- rep(0, num.replicates)
-  loo.eps.vec <- rep(0, num.replicates)
-
-  loo.Lambda.matrix <- matrix(data = 0, nrow = num.replicates, ncol = num.replicates)
-  loo.ptinv.Lambda.matrix <- matrix(data = 0, nrow = num.replicates, ncol = num.replicates)  
-  for (i in (1:num.replicates)) {
-    curr.sub.Lambda.matrix <- ginv(replicates.cov[-i, -i]) / n
-    loo.Lambda.matrix[-i, -i] <- loo.Lambda.matrix[-i, -i] + curr.sub.Lambda.matrix
-    loo.ptinv.Lambda.matrix[-i, -i] <- loo.ptinv.Lambda.matrix[-i, -i] + (1 / curr.sub.Lambda.matrix)
-
-    curr.inv.eps <- diag(curr.sub.Lambda.matrix)
-    loo.inv.eps.vec[-i] <- loo.inv.eps.vec[-i] + curr.inv.eps
-    loo.eps.vec[-i] <- loo.eps.vec[-i] + (1 / curr.inv.eps)
-  }
-
-  loo.Lambda.matrix <- loo.Lambda.matrix / (num.replicates - 1)
-  loo.ptinv.Lambda.matrix <- loo.ptinv.Lambda.matrix / (num.replicates - 1)
-
-  loo.inv.eps.vec <- loo.inv.eps.vec / (num.replicates - 1)
-  loo.eps.vec <- loo.eps.vec / (num.replicates - 1)
-
-  epsilon.vec <- loo.eps.vec
-  inv.eps.vec <- loo.inv.eps.vec
-
-  # "default" value if variance.method == loo.1  
-  diag(Lambda.matrix) <- diag(loo.Lambda.matrix)
-  diag(ptinv.Lambda.matrix) <- diag(loo.ptinv.Lambda.matrix)
-
-  if (variance.method == 'loo.2') {
-    Lambda.matrix <- loo.Lambda.matrix
-    ptinv.Lambda.matrix <- loo.ptinv.Lambda.matrix
-  }
 } else {
   print(sprintf('unknown variance method: %s\n', variance.method))
-  print(sprintf('list of valid methods: usr.1, usr.2, fpc.1, fpc.2, loo.1, loo.2, corpcor.1, corpcor.2'))
+  print(sprintf('list of valid methods: usr.1, usr.2, fpc.1, fpc.2, corpcor.1, corpcor.2'))
 }
-conditional.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
-diag(conditional.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
 
-#print('conditional.replicate.cov.matrix filled')
+contributions.to.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
+diag(contributions.to.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
+#print('contributions.to.replicate.cov.matrix filled')
 
 num.estimators <- num.replicates * (num.replicates - 1) / 2
 
@@ -203,10 +166,10 @@ for (r1 in 2:num.replicates) {
         curr.indx1 <- row.col.to.indx(r1, c1) # could have been "++1" but just to be safe...
         curr.indx2 <- row.col.to.indx(r2, c2)
         curr.cov.components <- c(
-          conditional.replicate.cov.matrix[r1, r2],
-          conditional.replicate.cov.matrix[r1, c2],
-          conditional.replicate.cov.matrix[c1, r2],
-          conditional.replicate.cov.matrix[c1, c2])
+          contributions.to.replicate.cov.matrix[r1, r2],
+          contributions.to.replicate.cov.matrix[r1, c2],
+          contributions.to.replicate.cov.matrix[c1, r2],
+          contributions.to.replicate.cov.matrix[c1, c2])
         set.count <- sum(!is.na(curr.cov.components))
         curr.cov.components[is.na(curr.cov.components)] <- 0
         # debug.data <- rbind(debug.data, c(curr.indx1, curr.indx2, r1, c1, r2, c2, set.count, sum(curr.cov.components)))
@@ -269,29 +232,48 @@ old.cov.matrix<-cov.matrix
 cov.matrix <- full.cov
 
 #regularize the n-choose-2 by n-choose-2 covariance matrix
-mean.var <- mean(diag(cov.matrix)) / 2
+mean.eps2 <- mean(epsilon.vec)
+min.eps2 <- min(epsilon.vec)
+reg.coef <- 0.5
+target.matrix <- cov.matrix
 if (regularization.method == 'ue.zr.full') { # diagonal of unequals, project
   target.matrix <- diag(diag(cov.matrix))
-  cov.matrix <- target.matrix
+  reg.coef <- 1
 } else if (regularization.method == 'eq.zr.half') { # diagonal of equals
-  target.matrix <- diag(rep(2 * mean.var, nrow(cov.matrix)))
-  cov.matrix <- (cov.matrix + target.matrix) / 2
+  target.matrix <- diag(rep(2 * mean.eps2, nrow(cov.matrix)))
 } else if (regularization.method == 'ue.zr.half') { # diagonal of unequals
   target.matrix <- diag(diag(cov.matrix))
-  cov.matrix <- (cov.matrix + target.matrix) / 2
 } else if (regularization.method == 'eq.eq.half') { # diagonals of equals, off diagonal of equals
   target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- mean.var
-  diag(target.matrix) <- 2 * mean.var
-  cov.matrix <- (cov.matrix + target.matrix) / 2
+  target.matrix[cov.matrix > 0] <- mean.eps2
+  diag(target.matrix) <- 2 * mean.eps2
 } else if (regularization.method == 'ue.eq.half') { # diagnonals of unequals, off diagonals are equals
   target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- mean.var
+  target.matrix[cov.matrix > 0] <- mean.eps2
   diag(target.matrix) <- diag(cov.matrix)
-  cov.matrix <- (cov.matrix + target.matrix) / 2
+} else if (regularization.method == 'ue.mn.half') {
+  target.matrix <- cov.matrix
+  target.matrix[cov.matrix > 0] <- min.eps2
+  diag(target.matrix) <- diag(cov.matrix)
+} else if (regularization.method == 'ue.mn.full') { 
+  target.matrix <- cov.matrix
+  target.matrix[cov.matrix > 0] <- min.eps2
+  diag(target.matrix) <- diag(cov.matrix)
+  reg.coef <- 1
+} else if (regularization.method == 'ue.mn.js1') {
+  target.matrix <- cov.matrix
+  target.matrix[cov.matrix > 0] <- min.eps2
+  diag(target.matrix) <- diag(cov.matrix)
+  reg.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2)
+  reg.coef.numer <- sum((epsilon.vec - mean(epsilon.vec)) ^ 2)
+  reg.coef <- reg.coef.numer / reg.coef.denom
 } else if (nchar(regularization.method) > 0) {
   write(sprintf('unrecognized regularization method: %s. Using none.', regularization.method), stderr())
 }
+
+cov.matrix <- (target.matrix * reg.coef)
+           +  (cov.matrix    * (1 - reg.coef))
+
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
 root.prec.matrix <- sqrtm(ginv(cov.matrix))
@@ -300,7 +282,6 @@ denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
 rao.blackwell.mvg.clonality <- abs(numerator / denominator)
 
 curr.clonality.score.estimate <- as.numeric(rao.blackwell.mvg.clonality) # update
-replicates.cov.diagonals <- (epsilon.vec + curr.clonality.score.estimate) / n # updates quality estimate for constructing Lambda
 
 rb.iter.estimates <- append(rb.iter.estimates, curr.clonality.score.estimate)
 } #for (curr.iter.number in 1: num.iterations)
@@ -314,15 +295,19 @@ if (estimate.abundances) {
     estimated.squared.errs = epsilon.vec,
     estimated.precisions = inv.eps.vec,
     variance.method = variance.method,
-    rb.iter.estimates = rb.iter.estimates)
+    rb.iter.estimates = rb.iter.estimates,
+    reg.coef = reg.coef,
+    regularization.method = regularization.method)
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
     mle.unconditioned.clonality = mle.unconditioned.clonality,
     rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
-    conditional.replicate.cov.matrix,
+    contributions.to.replicate.cov.matrix,
     variance.method = variance.method,
-    rb.iter.estimates = rb.iter.estimates)
+    rb.iter.estimates = rb.iter.estimates,
+    reg.coef = reg.coef,
+    regularization.method = regularization.method)
 }
 
 return (return.results)

@@ -56,10 +56,6 @@ answer.fpc1 <- infer.clonality(read.count.matrix = x,
   estimate.abundances = T, variance.method = 'fpc.1', num.iterations = num.iterations)
 answer.fpc2 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'fpc.2', num.iterations = num.iterations)
-answer.loo1 <- infer.clonality(read.count.matrix = x, 
-  estimate.abundances = T, variance.method = 'loo.1')
-answer.loo2 <- infer.clonality(read.count.matrix = x, 
-  estimate.abundances = T, variance.method = 'loo.2')
 answer.mle1 <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'mle.1')
 answer.mle2 <- infer.clonality(read.count.matrix = x, 
@@ -99,13 +95,22 @@ answer.reg6 <- infer.clonality(read.count.matrix = x,
   estimate.abundances = T, variance.method = 'fpc.1', 
   regularization.method = 'ue.eq.half')
 
+answer.rgn1 <- infer.clonality(read.count.matrix = x, 
+  estimate.abundances = T, variance.method = 'fpc.1', 
+  regularization.method = 'ue.mn.half')
+answer.rgn2 <- infer.clonality(read.count.matrix = x, 
+  estimate.abundances = T, variance.method = 'fpc.1', 
+  regularization.method = 'ue.mn.full')
+answer.rgn3 <- infer.clonality(read.count.matrix = x, 
+  estimate.abundances = T, variance.method = 'fpc.1', 
+  regularization.method = 'ue.mn.js1')
+
+
 simple.mean.abundances <- apply((x %*% diag(1/apply(x,2,sum)) ), 1,mean)
 opt1.mean.abundances    <- as.numeric(answer.opt1$estimated.abundances)
 opt2.mean.abundances    <- as.numeric(answer.opt2$estimated.abundances)
 fpc1.mean.abundances    <- as.numeric(answer.fpc1$estimated.abundances)
 fpc2.mean.abundances    <- as.numeric(answer.fpc2$estimated.abundances)
-loo1.mean.abundances    <- as.numeric(answer.loo1$estimated.abundances)
-loo2.mean.abundances    <- as.numeric(answer.loo2$estimated.abundances)
 mle1.mean.abundances    <- as.numeric(answer.mle1$estimated.abundances)
 mle2.mean.abundances    <- as.numeric(answer.mle2$estimated.abundances)
 cpc1.mean.abundances    <- as.numeric(answer.cpc1$estimated.abundances)
@@ -118,6 +123,9 @@ reg3.mean.abundances    <- as.numeric(answer.reg3$estimated.abundances)
 reg4.mean.abundances    <- as.numeric(answer.reg4$estimated.abundances)
 reg5.mean.abundances    <- as.numeric(answer.reg5$estimated.abundances)
 reg6.mean.abundances    <- as.numeric(answer.reg6$estimated.abundances)
+rgn1.mean.abundances    <- as.numeric(answer.rgn1$estimated.abundances)
+rgn2.mean.abundances    <- as.numeric(answer.rgn2$estimated.abundances)
+rgn3.mean.abundances    <- as.numeric(answer.rgn3$estimated.abundances)
 
 meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling')
 meta.values <- c(clonal.power,
@@ -136,15 +144,15 @@ experiment.cols <-
   c('opt1', 'opt1.abe2', 'opt2', 'opt2.abe2', 
     paste('fpc1', c(1:num.iterations), sep = '.'), 'fpc1.abe2', 
     paste('fpc2', c(1:num.iterations), sep = '.'), 'fpc2.abe2', 
-    'loo1', 'loo1.abe2', 'loo2', 'loo2.abe2',
     'mle1', 'mle1.abe2', 'mle2', 'mle2.abe2',
     'cpc1', 'cpc1.abe2', 'cpc2', 'cpc2.abe2',
     'idt1', 'idt1.abe2', 'idt2', 'idt2.abe2',
     'reg1', 'reg1.abe2', 
     paste('reg2', c(1:num.iterations), sep = '.'), 'reg2.abe2', # fpc.1
     'reg3', 'reg3.abe2', 'reg4', 'reg4.abe2', 
-    'reg5', 'reg5.abe2', 'reg6', 'reg6.abe2' 
-    )
+    'reg5', 'reg5.abe2', 'reg6', 'reg6.abe2',
+    'rgn1', 'rgn1.abe2', 'rgn2', 'rgn2.abe2',
+    'rgn3', 'rgn3.abe2')
 
 experiment.values <- c(
   answer.opt1$rb.iter.estimates,
@@ -157,11 +165,6 @@ experiment.values <- c(
   answer.fpc2$rb.iter.estimates,
   sum((fpc2.mean.abundances - sim.data$true.clone.prob)^2),
   
-  answer.loo1$rb.iter.estimates,
-  sum((loo1.mean.abundances - sim.data$true.clone.prob)^2),
-  answer.loo2$rb.iter.estimates,
-  sum((loo2.mean.abundances - sim.data$true.clone.prob)^2),
-
   answer.mle1$rb.iter.estimates,
   sum((mle1.mean.abundances - sim.data$true.clone.prob)^2),
   answer.mle2$rb.iter.estimates,
@@ -190,7 +193,14 @@ experiment.values <- c(
   answer.reg5$rb.iter.estimates,
   sum((reg5.mean.abundances - sim.data$true.clone.prob)^2),
   answer.reg6$rb.iter.estimates,
-  sum((reg6.mean.abundances - sim.data$true.clone.prob)^2)
+  sum((reg6.mean.abundances - sim.data$true.clone.prob)^2),
+
+  answer.rgn1$rb.iter.estimates,
+  sum((rgn1.mean.abundances - sim.data$true.clone.prob)^2),
+  answer.rgn2$rb.iter.estimates,
+  sum((rgn2.mean.abundances - sim.data$true.clone.prob)^2),
+  answer.rgn3$rb.iter.estimates,
+  sum((rgn3.mean.abundances - sim.data$true.clone.prob)^2)
   )
 names(experiment.values) <- experiment.cols
 
