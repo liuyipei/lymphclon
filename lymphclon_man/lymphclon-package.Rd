@@ -33,7 +33,8 @@ Author and Maintainer: Yi Liu <liuyipei@stanford.edu>
 \code{\link[<vegan>:<vegan>-package]{<vegan>}}
 }
 \examples{
-my.data<-simulate.clonality.data(n=2e3) 
+my.data <- simulate.clonality.data(n=2e3) 
 # n ~ 2e7 is more appropriate for a realistic B cell repertoire
-infer.clonality(my.data$read.count.matrix)
+my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
+# a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 }

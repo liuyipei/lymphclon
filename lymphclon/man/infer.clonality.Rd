@@ -13,8 +13,8 @@ infer.clonality(
   read.count.matrix, 
   variance.method = 'fpc.1',
   estimate.abundances = F,
-  use.squared.err.est = c(),
-  num.iterations = 1)
+  num.iterations = 1,
+  internal.parameters = list())
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -32,11 +32,16 @@ corpcor.1: use shrinkage-based estimate of 1st order variances (see package corp
 \item{estimate.abundances}{
 A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.
 }
-\item{use.squared.err.est}{
-A vector defaulting to the empty vector. If a non-empty vector is provided, then this forces infer.clonality to use these values as the conditional variances of the respective replicates. If non-empty, then this vector should be positive, and of length equal to the number of replicates.
-}
 \item{num.iterations}{
 An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods. Note that the ue.zr.half setting provides the most consistent improvement against the naive simple clonality score, in terms of MSE reduction.
+}
+\item{internal.parameters}{
+A named list of internal parameters used primarily to speed up evaluation of MSE performance across a large number of simulations.
+The entries are named "replicates", "rep.grahm.matrix", "simple.precision.clonality", and "use.squared.err.est".
+"replicates" refer to a column normalized (to 1) matrix of read.count.matrix.
+"rep.grahm.matrix" refers to t(replicates) %*% replicates.
+"simple.precision.clonality" refers to the unweighted averaging of all n-choose-2 estimators of clonality.
+"use.squared.err.est" refers to a user-provided set of squared error estimates corresponding to each of the replicates; this parameter is active iff  the variance method is set to 'usr.1'.
 }
 }
 \details{
@@ -66,7 +71,7 @@ The method code provided in the input, determining the method by which the repli
 Specifies the intermediate clonality score estimates across iterations, when num.iterations is greater than 1. Note that, in empirical simulations, it is best to use a num.iterations value of 1. Additional iterations occasionally, but usually do not help in improving the mean squared error of the clonality measures.
 }
 \item{regularized.estimates}{
-Under a variety of regularization settings on the n-choose-2 by n-choose-2 covariance matrix for the n-choose-2 individually unbiased clonality estimators, return the respectively weighted clonality measures for each regularization setting. Note that 
+Under a variety of regularization settings on the n-choose-2 by n-choose-2 covariance matrix for the n-choose-2 individually unbiased clonality estimators, return the respectively weighted clonality measures for each regularization setting. 
 }
 }
 \references{
@@ -85,9 +90,11 @@ Under a variety of regularization settings on the n-choose-2 by n-choose-2 covar
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-my.data<-simulate.clonality.data(n=2e3) 
+my.data <- simulate.clonality.data(n=2e3) 
 # n ~ 2e7 is more appropriate for a realistic B cell repertoire
-infer.clonality(my.data$read.count.matrix)
+my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
+# a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
+my.lymphclon.results$lymphclon.clonality 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

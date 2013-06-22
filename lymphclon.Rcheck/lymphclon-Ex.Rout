@@ -81,40 +81,16 @@ Warning: package ‘corpcor’ was built under R version 2.15.3
 > 
 > ### ** Examples
 > 
-> my.data<-simulate.clonality.data(n=2e3) 
+> my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
-> infer.clonality(my.data$read.count.matrix)
+> my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
 Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur",
  target signature "dsyMatrix#missing".
  "dsyMatrix#ANY" would also be valid
-$simple.precision.clonality
-[1] 0.1136572
-
-$lymphclon.clonality
+> # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
+> my.lymphclon.results$lymphclon.clonality 
 ue.zr.half 
  0.1163696 
-
-$estimated.abundances
-[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
-
-$estimated.squared.errs
-[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
-
-$estimated.precisions
-[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
-
-$variance.method
-[1] "fpc.1"
-
-$fpc.iter.estimates
-[1] 0.1163696
-
-$regularized.estimates
-unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
-    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
-   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
-    0.1135622     0.1151302     0.1151302     0.1151302 
-
 > 
 > 
 > 
@@ -131,37 +107,10 @@ unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half
 > 
 > ### ** Examples
 > 
-> my.data<-simulate.clonality.data(n=2e3) 
+> my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
-> infer.clonality(my.data$read.count.matrix)
-$simple.precision.clonality
-[1] 0.1136572
-
-$lymphclon.clonality
-ue.zr.half 
- 0.1163696 
-
-$estimated.abundances
-[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
-
-$estimated.squared.errs
-[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
-
-$estimated.precisions
-[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
-
-$variance.method
-[1] "fpc.1"
-
-$fpc.iter.estimates
-[1] 0.1163696
-
-$regularized.estimates
-unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
-    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
-   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
-    0.1135622     0.1151302     0.1151302     0.1151302 
-
+> my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
+> # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 > 
 > 
 > 
@@ -178,44 +127,17 @@ unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half
 > 
 > ### ** Examples
 > 
-> my.data<-simulate.clonality.data(n=2e3) 
+> my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
-> infer.clonality(my.data$read.count.matrix)
-$simple.precision.clonality
-[1] 0.1136572
-
-$lymphclon.clonality
-ue.zr.half 
- 0.1163696 
-
-$estimated.abundances
-[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
-
-$estimated.squared.errs
-[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
-
-$estimated.precisions
-[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
-
-$variance.method
-[1] "fpc.1"
-
-$fpc.iter.estimates
-[1] 0.1163696
-
-$regularized.estimates
-unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
-    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
-   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
-    0.1135622     0.1151302     0.1151302     0.1151302 
-
+> my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
+> # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 > 
 > 
 > 
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.999 0.038 3.056 0 0 
+Time elapsed:  2.964 0.037 3.011 0 0 
 > grDevices::dev.off()
 null device 
           1 

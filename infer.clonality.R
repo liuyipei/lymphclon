@@ -45,6 +45,8 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
 
 if (length(internal.parameters$use.squared.err.est) > 0) {
   use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
+} else {
+  use.squared.err.est <- c()
 }
 
 internal.parameters <- list(
@@ -102,8 +104,8 @@ if (variance.method == 'usr.1') {
   diag(Lambda.matrix) <- inv.eps.vec
   diag(ptinv.Lambda.matrix) <- epsilon.vec
 } else {
-  stderr(sprintf('unknown variance method: %s\n', variance.method))
-  stderr(sprintf('list of valid methods: usr.1, fpc.1, corpcor.1'))
+  write(sprintf('unknown variance method: %s\n', variance.method), stderr())
+  write('list of valid methods: usr.1, fpc.1, corpcor.1', stderr())
 }
 
 contributions.to.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
@@ -172,15 +174,12 @@ for (r1 in 2:num.replicates) {
 pre.reg.matrix <- full.cov
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
-print('...')
 cov.to.clonality <- function(target.matrix, reg.coefs) {
-  print(c('c2c start', reg.coefs))
   linear.combo.matrix <- (target.matrix      * reg.coefs)
                       +  (pre.reg.matrix * (1 - reg.coefs))
   root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
   numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
   denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
-  print('c2c end')
   return(abs(numerator / denominator)) # the clonality score
 }
 
