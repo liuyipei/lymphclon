@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
-1d439aa1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
+4051bb61/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -82,15 +82,33 @@ No file Rd2.aux.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
+, and "use.squared.err.est".
+
+Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
+clon-al-ity. "use.squared.err.est"
+[3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
 \T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
  is best to use a num.iterations
+
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
 No file Rd2.ind.
 [5] (./Rd2.aux)
 
@@ -110,7 +128,7 @@ live/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (5 pages, 71388 bytes).
+Output written on Rd2.pdf (5 pages, 71923 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -122,8 +140,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
-1d439aa1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
+4051bb61/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -200,16 +218,34 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+[2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
+, and "use.squared.err.est".
+
+Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
+clon-al-ity. "use.squared.err.est"
+[3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
 \T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
  is best to use a num.iterations
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4] (./Rd2.ind
-[5]
+
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+(./Rd2.ind [5]
 
 LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
 (Font)              using `T1/fi4/m/n' instead on input line 19.
@@ -236,7 +272,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82450 bytes).
+Output written on Rd2.pdf (6 pages, 83048 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -248,8 +284,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
-1d439aa1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
+4051bb61/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -326,16 +362,34 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+[2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
+, and "use.squared.err.est".
+
+Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
+\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
+clon-al-ity. "use.squared.err.est"
+[3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
 \T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
  is best to use a num.iterations
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4] (./Rd2.ind
-[5]
+
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
+Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
+ []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
+-norm of the underlying multinomial probabilistic distrubution vector)[] 
+(./Rd2.ind [5]
 
 LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
 (Font)              using `T1/fi4/m/n' instead on input line 19.
@@ -357,8 +411,8 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82750 bytes).
+Output written on Rd2.pdf (6 pages, 83347 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpwcwjEQ/Rd2pdf23301d439aa1'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmpy5SAkn/Rd2pdf52774051bb61'
