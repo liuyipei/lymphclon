@@ -9,34 +9,53 @@ infer.clonality <- function(
   read.count.matrix, 
   variance.method = 'fpc.1',
   estimate.abundances = F,
-  use.squared.err.est = c(),
-  num.iterations = 1
+  num.iterations = 1,
+  internal.parameters = list()
   ) {
 
-# normalize replicates, and get rep.grahm.matrix once
 
-replicates <- as.matrix(read.count.matrix)
+if (length(internal.parameters$replicates > 0)) {
+  replicates <- internal.parameters$replicates
+} else {
+  # normalize replicates, and get rep.grahm.matrix once
+  replicates <- as.matrix(read.count.matrix)
+  replicates <- t(t(replicates) / colSums(replicates))
+}
+
+if (length(internal.parameters$rep.grahm.matrix) > 0) {
+  rep.grahm.matrix <- internal.parameters$rep.grahm.matrix
+} else {
+  rep.grahm.matrix <- t(replicates) %*% replicates
+}
 
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
-replicates <- t(t(replicates) / colSums(replicates))
-rep.grahm.matrix <- t(replicates) %*% replicates
-
 num.pairs <- num.replicates * (num.replicates - 1) / 2
 
-## simple model where each read is independent
-reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
-simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
-  matrix(reads.per.replicate, ncol = num.replicates)
-simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
-simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
+if (length(internal.parameters$simple.precision.clonality) > 0) {
+  simple.precision.clonality <- internal.parameters$simple.precision.clonality
+} else {
+  ## simple model where each read is independent
+  reads.per.replicate <- as.numeric(apply(read.count.matrix, 2, sum))
+  simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
+    matrix(reads.per.replicate, ncol = num.replicates)
+  simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
+  simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
+}
+
+if (length(internal.parameters$use.squared.err.est) > 0) {
+  use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
+}
+
+internal.parameters <- list(
+  replicates = replicates,
+  rep.grahm.matrix = rep.grahm.matrix,
+  simple.precision.clonality = simple.precision.clonality,
+  use.squared.err.est = use.squared.err.est
+)
 
 curr.clonality.score.estimate <- simple.precision.clonality
 fpc.iter.estimates <- c()
-
-if (length(use.squared.err.est) == num.replicates) {
-  variance.method <- 'usr.1'
-}
 
 for (curr.iter.number in 1:num.iterations) {
 
@@ -57,10 +76,6 @@ if (variance.method %in% c('fpc.1'))
 
 } else if (variance.method %in% c('mle.1')) {
   replicates.cov <- cov(replicates)
-}
-
-if (length(use.squared.err.est > 0)) {
-  use.squared.err.est <- as.matrix(use.squared.err.est)
 }
 
 # usr.1: argument use.squared.err.est specifies 1st order variances
@@ -121,7 +136,6 @@ for (r in 2:num.replicates) {
   }
 }
 
-############### NEW LOGIC
 # fill out the actual estimators
 estimator.vec.forcov <- rep(0, num.pairs)
 for (r in 2:num.replicates) {
@@ -158,12 +172,15 @@ for (r1 in 2:num.replicates) {
 pre.reg.matrix <- full.cov
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
+print('...')
 cov.to.clonality <- function(target.matrix, reg.coefs) {
+  print(c('c2c start', reg.coefs))
   linear.combo.matrix <- (target.matrix      * reg.coefs)
                       +  (pre.reg.matrix * (1 - reg.coefs))
   root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
   numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
   denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
+  print('c2c end')
   return(abs(numerator / denominator)) # the clonality score
 }
 
@@ -207,8 +224,8 @@ reg.coefs['ue.eq.half'] <- 0.5
 target.matrices[['ue.eq.half']][pre.reg.matrix > 0] <- mean.eps2
 diag(target.matrices[['ue.eq.half']]) <- 2 * mean.eps2
 
-ue.mn.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2)
-ue.mn.coef.numer <- sum((epsilon.vec - mean(epsilon.vec)) ^ 2)
+ue.mn.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2) + (1e-14)
+ue.mn.coef.numer <- sum((epsilon.vec - mean(epsilon.vec)) ^ 2) + (2e-14)
 reg.coefs['ue.mn.half'] <- 0.5
 reg.coefs['ue.mn.full'] <- 1
 reg.coefs['ue.mn.js1'] <- ue.mn.coef.numer / ue.mn.coef.denom
@@ -243,7 +260,8 @@ if (estimate.abundances) {
     estimated.precisions = inv.eps.vec,
     variance.method = variance.method,
     fpc.iter.estimates = fpc.iter.estimates,
-    regularized.estimates = regularized.estimates)
+    regularized.estimates = regularized.estimates,
+    internal.parameters = internal.parameters)
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
@@ -254,7 +272,10 @@ if (estimate.abundances) {
     estimated.precisions = inv.eps.vec,
     variance.method = variance.method,
     fpc.iter.estimates = fpc.iter.estimates,
-    regularized.estimates = regularized.estimates)}
+    regularized.estimates = regularized.estimates,
+    internal.parameters = 
+      'The estimate.abundances parameter was set to false when infer.clonality was called. internal.parameters suppressed for brevity')
+}
 
 return (return.results)
 }

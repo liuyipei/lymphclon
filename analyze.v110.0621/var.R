@@ -4,42 +4,31 @@ num.iterations <- 4
 meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling')
 bln.cols <- c('true', 'bln', 'bln.abe2') # abe2: abundance error 2-norm
 
-experiment.cols <- 
-  c('opt1', 'opt1.abe2', 'opt2', 'opt2.abe2', 
-    paste('fpc1', c(1:num.iterations), sep = '.'), 'fpc1.abe2', 
-    paste('fpc2', c(1:num.iterations), sep = '.'), 'fpc2.abe2', 
-    'mle1', 'mle1.abe2', 'mle2', 'mle2.abe2',
-    'cpc1', 'cpc1.abe2', 'cpc2', 'cpc2.abe2',
-    'idt1', 'idt1.abe2', 'idt2', 'idt2.abe2',
-    'reg1', 'reg1.abe2', 
-    paste('reg2', c(1:num.iterations), sep = '.'), 'reg2.abe2', # fpc.1
-    'reg3', 'reg3.abe2', 'reg4', 'reg4.abe2', 
-    'reg5', 'reg5.abe2', 'reg6', 'reg6.abe2', 
-    'rgn1', 'rgn1.abe2', 'rgn2', 'rgn2.abe2', 'rgn3', 'rgn3.abe2'
-    )
+regularization.method.names <- 
+  c('unregularized', 'ue.zr.full', 
+  'eq.zr.half', 'ue.zr.half', 'eq.eq.half', 'ue.eq.half',
+  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1')
+var.meth.names <- c('opt1', 'fpc1', 'mle1', 'cpc1')
+
+experiment.cols <- Reduce(c, 
+  lapply(X = var.meth.names,
+    FUN = function(curr.var.meth.name)
+      {c(paste(curr.var.meth.name, regularization.method.names, sep = '.'),
+      paste(curr.var.meth.name, 'abe2', sep = '.'))}
+))
+
 all.cols <- c('labels', meta.cols, bln.cols, experiment.cols)
 
 raw <- read.csv('var.cat', header=F)
 colnames(raw) <- all.cols
 num.table <- raw[apply(raw, 1, function(X){all(!is.na(X))}), -1]
 
-var.settings.names <- c('bln', 'opt1', 'opt2',
-    paste('fpc1', c(1:num.iterations), sep = '.'), 
-    paste('fpc2', c(1:num.iterations), sep = '.'), 
-    'mle1', 'mle2', 'cpc1', 'cpc2', 
-    'idt1', 'idt2', 'reg1',
-    paste('reg2', c(1:num.iterations), sep = '.'),
-    'reg3', 'reg4', 'reg5','reg6',
-    'rgn1', 'rgn2', 'rgn3')
-
-var.settings.finaliter.names <- c('bln', 'opt1', 'opt2',
-    paste('fpc1', num.iterations, sep = '.'), 
-    paste('fpc2', num.iterations, sep = '.'), 
-    'mle1', 'mle2', 'cpc1', 'cpc2',
-    'idt1', 'idt2', 'reg1',
-    paste('reg2', num.iterations, sep = '.'),
-    'reg3', 'reg4', 'reg5','reg6',
-    'rgn1', 'rgn2', 'rgn3')
+var.settings.names <- c('bln', Reduce(c, 
+  lapply(X = var.meth.names,
+    FUN = function(curr.var.meth.name)
+      {c(paste(curr.var.meth.name, regularization.method.names, sep = '.'))}
+)))
+var.settings.finaliter.names <- var.settings.names
 
 for (curr.vsn in var.settings.names) 
 {
@@ -50,17 +39,7 @@ for (curr.vsn in var.settings.names)
     num.table[, paste(c(curr.vsn, 'err'), collapse = '.')] ^ 2
 }
 
-var.abe.names <- c('bln', 
-    'opt1', 'opt2',
-    'fpc1', 'fpc2',
-    'mle1', 'mle2',
-    'cpc1', 'cpc2',
-    'idt1', 'idt2',
-    'reg1', 'reg2',
-    'reg3', 'reg4',
-    'reg5', 'reg6',
-    'rgn1', 'rgn2', 'rgn3'
-    )
+var.abe.names <- var.meth.names
 
 
 for (curr.vsn in var.settings.names) 
@@ -71,7 +50,6 @@ for (curr.vsn in var.settings.names)
   num.table[, paste(c(curr.vsn, 'err2'), collapse = '.')] <-
     num.table[, paste(c(curr.vsn, 'err'), collapse = '.')] ^ 2
 }
-
 
 mean.err2.table <- ddply(num.table, .(power), 
 .fun = function(curr.table){ c(
@@ -159,6 +137,5 @@ dev.off()
 methods.err2.compare <- data.frame(
 geo = exp(apply(log(err2.rat.table),2, mean)),
 min = apply(err2.rat.table,2, min),
-med = apply(err2.rat.table,2, median),
-max = apply(err2.rat.table,2, max)
+med = apply(err2.rat.table,2, median)
 )

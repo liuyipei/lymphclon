@@ -13,7 +13,6 @@ infer.clonality(
   read.count.matrix, 
   variance.method = 'fpc.1',
   estimate.abundances = F,
-  use.squared.err.est = c(),
   num.iterations = 1)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -37,6 +36,14 @@ A vector defaulting to the empty vector. If a non-empty vector is provided, then
 }
 \item{num.iterations}{
 An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods. Note that the ue.zr.half setting provides the most consistent improvement against the naive simple clonality score, in terms of MSE reduction.
+}
+\item{internal.parameters}{
+A named list of internal parameters used primarily to speed up evaluation of MSE performance across a large number of simulations.
+The entries are named "replicates", "rep.grahm.matrix", "simple.precision.clonality", and "use.squared.err.est".
+"replicates" refer to a column normalized (to 1) matrix of read.count.matrix.
+"rep.grahm.matrix" refers to t(replicates) %*% replicates.
+"simple.precision.clonality" refers to the unweighted averaging of all n-choose-2 estimators of clonality.
+"use.squared.err.est" refers to a user-provided set of squared error estimates corresponding to each of the replicates; this parameter is active iff  the variance method is set to 'usr.1'.
 }
 }
 \details{
