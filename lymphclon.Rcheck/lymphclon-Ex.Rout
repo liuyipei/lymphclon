@@ -90,33 +90,30 @@ Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur
 $simple.precision.clonality
 [1] 0.1136572
 
-$mle.unconditioned.clonality
-[1] NA
+$lymphclon.clonality
+ue.zr.half 
+ 0.1163696 
 
-$rao.blackwell.mvg.clonality
-          [,1]
-[1,] 0.1169473
+$estimated.abundances
+[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
 
-[[4]]
-           [,1]     [,2]      [,3]       [,4]       [,5]       [,6]
-[1,] 0.07959747       NA        NA         NA         NA         NA
-[2,]         NA 0.134906        NA         NA         NA         NA
-[3,]         NA       NA 0.2470568         NA         NA         NA
-[4,]         NA       NA        NA 0.06690648         NA         NA
-[5,]         NA       NA        NA         NA 0.09512445         NA
-[6,]         NA       NA        NA         NA         NA 0.08582574
+$estimated.squared.errs
+[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
+
+$estimated.precisions
+[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
 
 $variance.method
 [1] "fpc.1"
 
-$rb.iter.estimates
-[1] 0.1169473
+$fpc.iter.estimates
+[1] 0.1163696
 
-$reg.coef
-[1] 0.5
-
-$regularization.method
-[1] ""
+$regularized.estimates
+unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
+    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
+   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
+    0.1135622     0.1151302     0.1151302     0.1151302 
 
 > 
 > 
@@ -140,33 +137,30 @@ $regularization.method
 $simple.precision.clonality
 [1] 0.1136572
 
-$mle.unconditioned.clonality
-[1] NA
+$lymphclon.clonality
+ue.zr.half 
+ 0.1163696 
 
-$rao.blackwell.mvg.clonality
-          [,1]
-[1,] 0.1169473
+$estimated.abundances
+[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
 
-[[4]]
-           [,1]     [,2]      [,3]       [,4]       [,5]       [,6]
-[1,] 0.07959747       NA        NA         NA         NA         NA
-[2,]         NA 0.134906        NA         NA         NA         NA
-[3,]         NA       NA 0.2470568         NA         NA         NA
-[4,]         NA       NA        NA 0.06690648         NA         NA
-[5,]         NA       NA        NA         NA 0.09512445         NA
-[6,]         NA       NA        NA         NA         NA 0.08582574
+$estimated.squared.errs
+[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
+
+$estimated.precisions
+[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
 
 $variance.method
 [1] "fpc.1"
 
-$rb.iter.estimates
-[1] 0.1169473
+$fpc.iter.estimates
+[1] 0.1163696
 
-$reg.coef
-[1] 0.5
-
-$regularization.method
-[1] ""
+$regularized.estimates
+unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
+    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
+   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
+    0.1135622     0.1151302     0.1151302     0.1151302 
 
 > 
 > 
@@ -190,33 +184,30 @@ $regularization.method
 $simple.precision.clonality
 [1] 0.1136572
 
-$mle.unconditioned.clonality
-[1] NA
+$lymphclon.clonality
+ue.zr.half 
+ 0.1163696 
 
-$rao.blackwell.mvg.clonality
-          [,1]
-[1,] 0.1169473
+$estimated.abundances
+[1] "The estimate.abundances parameter was set to false when infer.clonality was called."
 
-[[4]]
-           [,1]     [,2]      [,3]       [,4]       [,5]       [,6]
-[1,] 0.07959747       NA        NA         NA         NA         NA
-[2,]         NA 0.134906        NA         NA         NA         NA
-[3,]         NA       NA 0.2470568         NA         NA         NA
-[4,]         NA       NA        NA 0.06690648         NA         NA
-[5,]         NA       NA        NA         NA 0.09512445         NA
-[6,]         NA       NA        NA         NA         NA 0.08582574
+$estimated.squared.errs
+[1] 0.07959747 0.13490597 0.24705681 0.06690648 0.09512445 0.08582574
+
+$estimated.precisions
+[1] 12.563214  7.412570  4.047652 14.946236 10.512545 11.651516
 
 $variance.method
 [1] "fpc.1"
 
-$rb.iter.estimates
-[1] 0.1169473
+$fpc.iter.estimates
+[1] 0.1163696
 
-$reg.coef
-[1] 0.5
-
-$regularization.method
-[1] ""
+$regularized.estimates
+unregularized    ue.zr.full    eq.zr.half    ue.zr.half    eq.eq.half 
+    0.1169473     0.1163696     0.1135622     0.1163696     0.1135622 
+   ue.eq.half    ue.mn.half    ue.mn.full     ue.mn.js1 
+    0.1135622     0.1151302     0.1151302     0.1151302 
 
 > 
 > 
@@ -224,7 +215,7 @@ $regularization.method
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.592 0.036 2.641 0 0 
+Time elapsed:  2.999 0.038 3.056 0 0 
 > grDevices::dev.off()
 null device 
           1 

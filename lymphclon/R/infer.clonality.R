@@ -10,12 +10,12 @@ infer.clonality <- function(
   variance.method = 'fpc.1',
   estimate.abundances = F,
   use.squared.err.est = c(),
-  num.iterations = 1,
-  regularization.method = ''
+  num.iterations = 1
   ) {
 
 # normalize replicates, and get rep.grahm.matrix once
-replicates <- as.matrix(rbind(read.count.matrix))
+
+replicates <- as.matrix(read.count.matrix)
 
 n <- nrow(replicates)
 num.replicates <- ncol(replicates)
@@ -32,18 +32,15 @@ simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precisi
 simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
 
 curr.clonality.score.estimate <- simple.precision.clonality
-rb.iter.estimates <- c()
-
+fpc.iter.estimates <- c()
 
 if (length(use.squared.err.est) == num.replicates) {
   variance.method <- 'usr.1'
-} else if (length(use.squared.err.est) == num.replicates * num.replicates) {
-  variance.method <- 'usr.2'
 }
 
 for (curr.iter.number in 1:num.iterations) {
 
-if (variance.method %in% c('fpc.1', 'fpc.2'))
+if (variance.method %in% c('fpc.1'))
 {
   replicates.cov.off.diagonals <- 
     (curr.clonality.score.estimate 
@@ -58,7 +55,7 @@ if (variance.method %in% c('fpc.1', 'fpc.2'))
 
   replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
 
-} else if (variance.method %in% c('mle.1', 'mle.2')) {
+} else if (variance.method %in% c('mle.1')) {
   replicates.cov <- cov(replicates)
 }
 
@@ -67,13 +64,9 @@ if (length(use.squared.err.est > 0)) {
 }
 
 # usr.1: argument use.squared.err.est specifies 1st order variances
-# usr.2: argument use.squared.err.est specifies 2nd order variances
-# fpc.1: fixed point iteration: 1st order variances
-# fpc.2: fixed point iteration: 2nd order variances
-# mle.1: use maximum likelihood estimate of 1st order variances
-# mle.2: use maximum likelihood estimate of 2nd order variances
-# corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
-# corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corpcor)
+# fpc.1: fixed point covariance, based on an unbiased clonality and self inner products
+# mle.1: use maximum likelihood estimate
+# corpcor.1: corpcor covvariance
 
 Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
 ptinv.Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
@@ -82,13 +75,6 @@ if (variance.method == 'usr.1') {
   inv.eps.vec <- 1 / epsilon.vec
   diag(Lambda.matrix) <- inv.eps.vec
   diag(ptinv.Lambda.matrix) <- epsilon.vec
-} else if (variance.method == 'usr.2') {
-  # make this appear like Lambda
-  epsilon.vec <- diag(use.squared.err.est)
-  inv.eps.vec <- 1 / epsilon.vec
-  Lambda.matrix <- -use.squared.err.est
-  diag(Lambda.matrix) <- inv.eps.vec
-  ptinv.Lambda.matrix <- 1 / Lambda.matrix
 } else if (variance.method %in% c('fpc.1', 'mle.1', 'corpcor.1')) {
   if (variance.method %in% c('fpc.1', 'mle.1')) {
     inv.eps.vec <- diag(ginv(replicates.cov) / n)
@@ -100,19 +86,9 @@ if (variance.method == 'usr.1') {
   epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
   diag(Lambda.matrix) <- inv.eps.vec
   diag(ptinv.Lambda.matrix) <- epsilon.vec
-} else if (variance.method %in% c('fpc.2', 'mle.2', 'corpcor.2')) { 
-  if (variance.method %in% c('fpc.2', 'mle.2')) {
-    Lambda.matrix <- ginv(replicates.cov) / n
-  } else {# variance.method == 'corpcor.2'
-    capture.output(Lambda.matrix <- invcov.shrink(replicates) / n)
-  }
- 
-  ptinv.Lambda.matrix <- 1 / Lambda.matrix
-  inv.eps.vec <- diag(Lambda.matrix)
-  epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
 } else {
-  print(sprintf('unknown variance method: %s\n', variance.method))
-  print(sprintf('list of valid methods: usr.1, usr.2, fpc.1, fpc.2, corpcor.1, corpcor.2'))
+  stderr(sprintf('unknown variance method: %s\n', variance.method))
+  stderr(sprintf('list of valid methods: usr.1, fpc.1, corpcor.1'))
 }
 
 contributions.to.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
@@ -178,137 +154,107 @@ for (r1 in 2:num.replicates) {
     }
   }
 }
-#print('full.cov filled')
 
-mle.unconditioned.clonality = NA
-if (F) {
-#### OLD LOGIC
-estimator.table.raw <- data.frame(theta = estimators.vec, rn = rownums.vec, cn = colnums.vec)
+pre.reg.matrix <- full.cov
 
-# the abbreviation etr2 refers to the self cross product of estimator.table.raw
-etr2 <- merge(estimator.table.raw, estimator.table.raw, by = c()) 
-# next step is to generate a unique entry for each unordered pairing of estimators that shared exactly one source replicate
-
-indx <- etr2$cn.x == etr2$rn.y
-estimator.table.pairs1 <- data.frame(cn1 = etr2$cn.x[indx], rn1 = etr2$rn.x[indx], cn2 = etr2$cn.y[indx], 
-  rn2 = etr2$rn.y[indx], shared = etr2$cn.x[indx], rn = etr2$rn.x[indx], cn = etr2$cn.y[indx])
-indx <- (etr2$rn.x == etr2$rn.y) & (etr2$cn.x < etr2$cn.y)
-estimator.table.pairs2 <- data.frame(cn1 = etr2$cn.x[indx], rn1 = etr2$rn.x[indx], cn2 = etr2$cn.y[indx], 
-  rn2 = etr2$rn.y[indx], shared = etr2$rn.x[indx], rn = etr2$cn.y[indx], cn = etr2$cn.x[indx])
-indx <- (etr2$cn.x == etr2$cn.y) & (etr2$rn.x < etr2$rn.y)
-estimator.table.pairs3 <- data.frame(cn1 = etr2$cn.x[indx], rn1 = etr2$rn.x[indx], cn2 = etr2$cn.y[indx], 
-  rn2 = etr2$rn.y[indx], shared = etr2$cn.x[indx], rn = etr2$rn.y[indx], cn = etr2$rn.x[indx])
-
-estimator.table.pairs <- rbind(estimator.table.pairs1, estimator.table.pairs2, estimator.table.pairs3)
-estimator.table.pairs$covariance <- epsilon.vec[estimator.table.pairs$shared]
-
-estimator.table.pairs$cov.r <- row.col.to.indx(estimator.table.pairs$rn1, estimator.table.pairs$cn1)
-estimator.table.pairs$cov.c <- row.col.to.indx(estimator.table.pairs$rn2, estimator.table.pairs$cn2)
-
-cov.matrix.halfdone <- as.matrix(sparseMatrix(
-  i = estimator.table.pairs$cov.r, 
-  j = estimator.table.pairs$cov.c, 
-  x = estimator.table.pairs$covariance))
-# not necessarily upper or lower triangular -- just one of each (i, j) or (j, i) entry for i \ne j has been filled
-cov.matrix <- as.matrix(cov.matrix.halfdone + t(cov.matrix.halfdone))
-estimator.vec.forcov <- rep(0, num.pairs)
-# fill out the variances
-for (r in 2:num.replicates) {
-  for (c in 1:(r-1)) {
-    # could have been "++1" instead, but this code clarifies the intended use case for row.col.to.indx
-    curr.indx <- row.col.to.indx(r, c) 
-    cov.matrix[curr.indx, curr.indx] <- epsilon.vec[r] + epsilon.vec[c]
-    estimator.vec.forcov[curr.indx] <- rep.grahm.matrix[r, c]
-  }
+# use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
+cov.to.clonality <- function(target.matrix, reg.coefs) {
+  linear.combo.matrix <- (target.matrix      * reg.coefs)
+                      +  (pre.reg.matrix * (1 - reg.coefs))
+  root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
+  numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
+  denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
+  return(abs(numerator / denominator)) # the clonality score
 }
-root.prec.matrix <- sqrtm(ginv(cov.matrix))
-numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
-denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
-mle.unconditioned.clonality <- abs(numerator / denominator)
-old.cov.matrix<-cov.matrix
-##### end old logic
-} # if(F)
 
-cov.matrix <- full.cov
 
 #regularize the n-choose-2 by n-choose-2 covariance matrix
 mean.eps2 <- mean(epsilon.vec)
 min.eps2 <- min(epsilon.vec)
-reg.coef <- 0.5
-target.matrix <- cov.matrix
-if (regularization.method == 'ue.zr.full') { # diagonal of unequals, project
-  target.matrix <- diag(diag(cov.matrix))
-  reg.coef <- 1
-} else if (regularization.method == 'eq.zr.half') { # diagonal of equals
-  target.matrix <- diag(rep(2 * mean.eps2, nrow(cov.matrix)))
-} else if (regularization.method == 'ue.zr.half') { # diagonal of unequals
-  target.matrix <- diag(diag(cov.matrix))
-} else if (regularization.method == 'eq.eq.half') { # diagonals of equals, off diagonal of equals
-  target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- mean.eps2
-  diag(target.matrix) <- 2 * mean.eps2
-} else if (regularization.method == 'ue.eq.half') { # diagnonals of unequals, off diagonals are equals
-  target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- mean.eps2
-  diag(target.matrix) <- diag(cov.matrix)
-} else if (regularization.method == 'ue.mn.half') {
-  target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- min.eps2
-  diag(target.matrix) <- diag(cov.matrix)
-} else if (regularization.method == 'ue.mn.full') { 
-  target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- min.eps2
-  diag(target.matrix) <- diag(cov.matrix)
-  reg.coef <- 1
-} else if (regularization.method == 'ue.mn.js1') {
-  target.matrix <- cov.matrix
-  target.matrix[cov.matrix > 0] <- min.eps2
-  diag(target.matrix) <- diag(cov.matrix)
-  reg.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2)
-  reg.coef.numer <- sum((epsilon.vec - mean(epsilon.vec)) ^ 2)
-  reg.coef <- reg.coef.numer / reg.coef.denom
-} else if (nchar(regularization.method) > 0) {
-  write(sprintf('unrecognized regularization method: %s. Using none.', regularization.method), stderr())
+
+regularization.method.names <- 
+  c('unregularized', 'ue.zr.full', 
+  'eq.zr.half', 'ue.zr.half', 'eq.eq.half', 'ue.eq.half',
+  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1')
+num.reg.methods <- length(regularization.method.names)
+regularized.estimates <- rep(NA, num.reg.methods)
+names(regularized.estimates) <- regularization.method.names
+
+# initialize default values for regularization
+reg.coefs <- rep(0.5, num.reg.methods)
+names(reg.coefs) <- regularization.method.names
+
+target.matrices <- lapply(regularization.method.names, function(x){pre.reg.matrix})
+names(target.matrices) <- regularization.method.names
+
+reg.coefs['unregularized'] <- 1
+target.matrices[['unregularized']] <- pre.reg.matrix
+
+reg.coefs['ue.zr.full'] <- 1
+target.matrices[['ue.zr.full']] <- diag(diag(pre.reg.matrix))
+
+reg.coefs['eq.zr.half'] <- 0.5
+target.matrices[['eq.zr.half']] <- diag(rep(2 * mean.eps2, nrow(pre.reg.matrix)))
+
+reg.coefs['ue.zr.half'] <- 0.5
+target.matrices[['ue.zr.half']] <- diag(diag(pre.reg.matrix))
+
+reg.coefs['eq.eq.half'] <- 0.5
+target.matrices[['eq.eq.half']][pre.reg.matrix > 0] <- mean.eps2
+diag(target.matrices[['eq.eq.half']]) <- 2 * mean.eps2
+
+reg.coefs['ue.eq.half'] <- 0.5
+target.matrices[['ue.eq.half']][pre.reg.matrix > 0] <- mean.eps2
+diag(target.matrices[['ue.eq.half']]) <- 2 * mean.eps2
+
+ue.mn.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2)
+ue.mn.coef.numer <- sum((epsilon.vec - mean(epsilon.vec)) ^ 2)
+reg.coefs['ue.mn.half'] <- 0.5
+reg.coefs['ue.mn.full'] <- 1
+reg.coefs['ue.mn.js1'] <- ue.mn.coef.numer / ue.mn.coef.denom
+
+ue.mn.matrix <- pre.reg.matrix
+ue.mn.matrix[pre.reg.matrix > 0] <- min.eps2
+diag(ue.mn.matrix) <- diag(pre.reg.matrix)
+target.matrices[['ue.mn.half']] <- ue.mn.matrix
+target.matrices[['ue.mn.full']] <- ue.mn.matrix
+target.matrices[['ue.mn.js1']]  <- ue.mn.matrix
+
+for (curr.reg in regularization.method.names)
+{
+  regularized.estimates[curr.reg] <-
+    cov.to.clonality(target.matrices[[curr.reg]], reg.coefs[curr.reg])
 }
+#print(target.matrices)
+#print(reg.coefs)
 
-cov.matrix <- (target.matrix * reg.coef)
-           +  (cov.matrix    * (1 - reg.coef))
+curr.clonality.score.estimate <- as.numeric(regularized.estimates['ue.zr.half']) 
+# fpc: fixed point iterations. Usually 1 is best
 
-
-# use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
-root.prec.matrix <- sqrtm(ginv(cov.matrix))
-numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
-denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
-rao.blackwell.mvg.clonality <- abs(numerator / denominator)
-
-curr.clonality.score.estimate <- as.numeric(rao.blackwell.mvg.clonality) # update
-
-rb.iter.estimates <- append(rb.iter.estimates, curr.clonality.score.estimate)
-} #for (curr.iter.number in 1: num.iterations)
+fpc.iter.estimates <- append(fpc.iter.estimates, curr.clonality.score.estimate)
+} # for (curr.iter.number in 1: num.iterations)
 
 if (estimate.abundances) {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
-    mle.unconditioned.clonality = mle.unconditioned.clonality,
-    rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
+    lymphclon.clonality = regularized.estimates['ue.zr.half'],
     estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec),
     estimated.squared.errs = epsilon.vec,
     estimated.precisions = inv.eps.vec,
     variance.method = variance.method,
-    rb.iter.estimates = rb.iter.estimates,
-    reg.coef = reg.coef,
-    regularization.method = regularization.method)
+    fpc.iter.estimates = fpc.iter.estimates,
+    regularized.estimates = regularized.estimates)
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
-    mle.unconditioned.clonality = mle.unconditioned.clonality,
-    rao.blackwell.mvg.clonality = rao.blackwell.mvg.clonality,
-    contributions.to.replicate.cov.matrix,
+    lymphclon.clonality = regularized.estimates['ue.zr.half'],
+    estimated.abundances = 
+      'The estimate.abundances parameter was set to false when infer.clonality was called.',
+    estimated.squared.errs = epsilon.vec,
+    estimated.precisions = inv.eps.vec,
     variance.method = variance.method,
-    rb.iter.estimates = rb.iter.estimates,
-    reg.coef = reg.coef,
-    regularization.method = regularization.method)
-}
+    fpc.iter.estimates = fpc.iter.estimates,
+    regularized.estimates = regularized.estimates)}
 
 return (return.results)
 }
