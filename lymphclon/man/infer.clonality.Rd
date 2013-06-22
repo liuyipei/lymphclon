@@ -14,8 +14,7 @@ infer.clonality(
   variance.method = 'fpc.1',
   estimate.abundances = F,
   use.squared.err.est = c(),
-  num.iterations = 1,
-  regularization.method = '')
+  num.iterations = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,13 +25,9 @@ A matrix of read frequences, where each row corresponds to a distinct clone, and
 \item{variance.method}{
 The method is a code defaulting to "loo.2".
 usr.1: argument use.squared.err.est specifies 1st order variances
-usr.2: argument use.squared.err.est specifies 2nd order variances
 mle.1: use maximum likelihood estimate of 1st order variances
-mle.2: use maximum likelihood estimate of 2nd order variances
 loo.1: use leave-one-out estimate of 1st order variances
-loo.2: use leave-one-out estimate of 2nd order variances
 corpcor.1: use shrinkage-based estimate of 1st order variances (see package corpcor)
-corpcor.2: use shrinkage-based estimate of 2nd order variances (see package corpcor)
 }
 \item{estimate.abundances}{
 A boolean value defaulting to false. If set to true, then the return value will be in the form of a list, and include an additional item named "estiamted.abundances". The estimated abundances are computed as the (conditional) precision weighted average of the read.count.matrix.
@@ -41,10 +36,7 @@ A boolean value defaulting to false. If set to true, then the return value will 
 A vector defaulting to the empty vector. If a non-empty vector is provided, then this forces infer.clonality to use these values as the conditional variances of the respective replicates. If non-empty, then this vector should be positive, and of length equal to the number of replicates.
 }
 \item{num.iterations}{
-An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods.
-}
-\item{regularization.method}{
-A flag which determines the method by which the covariance of the pairwise comparisons are regularized. Current options are '', 'ue.zr.full', 'eq.zr.half', 'ue.zr.half', 'eq.eq'half', 'ue.eq.half'.
+An integer specifying the number of iterations in estimation; applicable only if the variance method is set to one of the loo or mle methods. Note that the ue.zr.half setting provides the most consistent improvement against the naive simple clonality score, in terms of MSE reduction.
 }
 }
 \details{
@@ -57,7 +49,25 @@ A flag which determines the method by which the covariance of the pairwise compa
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 \item{simple.precision.clonality}{This is a base line estimator of the clonality score based on simple modeling. Briefly, for each pairing of reads possible, where the two reads arise from different biological replicates -- this pairing is considered as an observation from a single share undelrying bernoulli distribution with parameter equal to the clonality score. This estimator computes maximum likelihood estimate of the underlying clonality score. This estimator can be thought of as a baseline estimate. Unlike the Gini-Simpson-Estimator, this baseline does not suffer from any convexity-based bias.}
-\item{rao.blackwell.mvg.clonality}{This is an estimator is a weighted average of n-choose-2 individually unbiased estimators that arise from comparing the provided n biological replicates pairwise. The weighting is determined by the covariance between these estimators. This has much lower variance than the simple.precision.clonality.}
+\item{lymphclon.clonality}{This is an estimator is a weighted average of n-choose-2 individually unbiased estimators that arise from comparing the provided n biological replicates pairwise. The weighting is determined by the covariance between these estimators. This has much lower variance than the simple.precision.clonality. This is the value returned by the ue.zr.half regularization setting}
+\item{estimated.abundances}{
+If the estimate.abundances parameter was set to True, then return a probability vector indicating the fractional contributions of each individual clone to the overall multinomial repertoire.
+}
+\item{esimated.squared.errs}{
+A numerical measure of the estimated squared 2-norm error of each given replicate.
+}
+\item{estimated.precisions}{
+A numerical measure of the estimated precisions of each given replicate.
+}
+\item{variance.method}{
+The method code provided in the input, determining the method by which the replicate-level covariances are computed.
+}
+\item{fpc.iter.estimates}{
+Specifies the intermediate clonality score estimates across iterations, when num.iterations is greater than 1. Note that, in empirical simulations, it is best to use a num.iterations value of 1. Additional iterations occasionally, but usually do not help in improving the mean squared error of the clonality measures.
+}
+\item{regularized.estimates}{
+Under a variety of regularization settings on the n-choose-2 by n-choose-2 covariance matrix for the n-choose-2 individually unbiased clonality estimators, return the respectively weighted clonality measures for each regularization setting. Note that 
+}
 }
 \references{
 %% ~put references to the literature/web site here ~

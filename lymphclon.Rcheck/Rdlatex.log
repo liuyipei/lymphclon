@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmphr6evb/Rd2pdfa894
-249b24c1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
+1d439aa1/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -83,6 +83,13 @@ No file Rd2.aux.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+[]\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
+cross it-er-a-tions, when num.iterations
+
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
+ is best to use a num.iterations
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
 No file Rd2.ind.
 [5] (./Rd2.aux)
@@ -91,8 +98,9 @@ Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
- )pdfTeX warning (dest): name{Rfn.<vegan>} has been referenced but does not exi
-st, replaced by a fixed one
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
 live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
@@ -102,7 +110,7 @@ live/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (5 pages, 71077 bytes).
+Output written on Rd2.pdf (5 pages, 71388 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -114,8 +122,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmphr6evb/Rd2pdfa894
-249b24c1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
+1d439aa1/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -193,6 +201,13 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+[]\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
+cross it-er-a-tions, when num.iterations
+
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
+ is best to use a num.iterations
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4] (./Rd2.ind
 [5]
 
@@ -208,8 +223,9 @@ Package rerunfilecheck Warning: File `Rd2.out' has changed.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
- )pdfTeX warning (dest): name{Rfn.<vegan>} has been referenced but does not exi
-st, replaced by a fixed one
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
 live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
@@ -220,7 +236,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82238 bytes).
+Output written on Rd2.pdf (6 pages, 82450 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -232,8 +248,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmphr6evb/Rd2pdfa894
-249b24c1/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpwcwjEQ/Rd2pdf2330
+1d439aa1/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -311,6 +327,13 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2] [3]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 143--144
+[]\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
+cross it-er-a-tions, when num.iterations
+
+Overfull \hbox (13.43655pt too wide) in paragraph at lines 143--144
+\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
+ is best to use a num.iterations
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4] (./Rd2.ind
 [5]
 
@@ -321,8 +344,9 @@ LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
- )pdfTeX warning (dest): name{Rfn.<vegan>} has been referenced but does not exi
-st, replaced by a fixed one
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
 
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
 live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
@@ -333,8 +357,8 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 82534 bytes).
+Output written on Rd2.pdf (6 pages, 82750 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmphr6evb/Rd2pdfa894249b24c1'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpwcwjEQ/Rd2pdf23301d439aa1'
