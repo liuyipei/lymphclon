@@ -8,7 +8,7 @@ regularization.method.names <-
   c('unregularized', 'ue.zr.full', 
   'eq.zr.half', 'ue.zr.half', 'eq.eq.half', 'ue.eq.half',
   'ue.mn.half', 'ue.mn.full', 'ue.mn.js1')
-var.meth.names <- c('opt1', 'fpc1', 'mle1', 'cpc1')
+var.meth.names <- c('opt.rer', 'opt.cov', 'fpc.add', 'fpc.max', 'mle.cov', 'corpcor')
 
 experiment.cols <- Reduce(c, 
   lapply(X = var.meth.names,
@@ -80,8 +80,8 @@ med = apply(err2.rat.table,2, median)
 )
 
 
-meth.to.plot <- 'fpc1.ue.zr.half'
-abe.to.plot <- 'fpc1'
+meth.to.plot <- 'fpc.add.ue.zr.half'
+abe.to.plot <- 'fpc.add'
 
 err2.table <- data.frame(
 method = c(rep('bln',nrow(num.table)), 
@@ -145,3 +145,5 @@ legend(x = 'top', c(abe.to.plot, "Baseline"),
 dev.off()
 
 write.csv(x=err2.rat.table, file = 'err2.csv')
+library(pheatmap)
+pheatmap(err2.rat.table, cluster_rows = F)
