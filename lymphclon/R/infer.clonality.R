@@ -13,6 +13,11 @@ infer.clonality <- function(
   internal.parameters = list()
   ) {
 
+take.pos <- function(x)
+{
+  x[x < 0] <- 0
+  return(x)
+}
 
 if (length(internal.parameters$replicates > 0)) {
   replicates <- internal.parameters$replicates
@@ -46,8 +51,18 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
 if (length(internal.parameters$num.clones.seen) > 0) {
   num.clones.seen <- internal.parameters$num.clones.seen
 } else {
-  num.clones.seen <- sum(apply(replicates, 1, max) > 0)
+  int.chao <- function (x) { # taken from fossil package
+    so <- length(x[x > 0])
+    s1 <- length(x[x == 1])
+    s2 <- length(x[x == 2])
+    if ((s1 - s2)^2 == (s1 + s2)^2) 
+        return(so + s1 * (s1 - 1)/((s2 + 1) * 2))
+    else return(so + s1^2/(s2 * 2))
+  }
+
+  num.clones.seen <- int.chao(apply(replicates > 0, 1, sum))
 }
+print(num.clones.seen)
 
 if (length(internal.parameters$use.squared.err.est) > 0) {
   use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
@@ -76,17 +91,20 @@ fpc.iter.estimates <- c()
 
 for (curr.iter.number in 1:num.iterations) {
 
+replicates.cov.off.diagonal.value <-
+  take.pos(curr.clonality.score.estimate - (1 / num.clones.seen)) 
+
 replicates.cov.off.diagonals <- 
-    (curr.clonality.score.estimate 
+    matrix(replicates.cov.off.diagonal.value, num.replicates, num.replicates)
     - diag(rep(curr.clonality.score.estimate, num.replicates))
-    )
+
 if (variance.method %in% c('fpc.add'))
 { # diagonal is the clonality score plus the abs difference of the self-inner products from it
   replicates.cov.diagonals <- 
     ifelse(
-      diag(rep.grahm.matrix) > curr.clonality.score.estimate,
+      diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
       diag(rep.grahm.matrix), 
-      2 * curr.clonality.score.estimate - diag(rep.grahm.matrix))
+      2 * replicates.cov.off.diagonal.value - diag(rep.grahm.matrix))
     + rep((1 / num.clones.seen), num.replicates) 
     # regularize by smallest possible clonality, given number of clones seen  
     # print(replicates.cov.off.diagonals)
@@ -95,9 +113,9 @@ if (variance.method %in% c('fpc.add'))
 { # diagonal is the max of clonality score, or the self-inner products
   replicates.cov.diagonals <- 
     ifelse(
-      diag(rep.grahm.matrix) > curr.clonality.score.estimate,
+      diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
       diag(rep.grahm.matrix), 
-      curr.clonality.score.estimate)
+      replicates.cov.off.diagonal.value)
     + rep((1 / num.clones.seen), num.replicates)  
   # print(replicates.cov.off.diagonals)
   # regularize by smallest possible clonality, given number of clones seen
@@ -212,7 +230,6 @@ cov.to.clonality <- function(target.matrix, reg.coefs) {
   denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
   return(abs(numerator / denominator)) # the clonality score
 }
-
 
 #regularize the n-choose-2 by n-choose-2 covariance matrix
 mean.eps2 <- mean(epsilon.vec)
