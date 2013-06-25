@@ -92,10 +92,11 @@ fpc.max.mean.abundances    <- as.numeric(answer.fpc.max$estimated.abundances)
 mle.cov.mean.abundances    <- as.numeric(answer.mle.cov$estimated.abundances)
 corpcor.mean.abundances    <- as.numeric(answer.corpcor$estimated.abundances)
 
-meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling')
+meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling', 'chao2')
 meta.values <- c(clonal.power,
   length(base.num.cells.taken.vector) * sets.of.8,
-  clones, num.cells.scaling)
+  clones, num.cells.scaling,
+  internal.parameters$num.clones.est)
 names(meta.values) <- meta.cols
 
 baseline.cols <- c('true', 'bln', 'bln.abe2') # abe2: abundance error 2-norm
