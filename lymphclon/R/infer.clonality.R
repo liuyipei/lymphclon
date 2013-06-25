@@ -48,8 +48,8 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
 }
 
-if (length(internal.parameters$num.clones.seen) > 0) {
-  num.clones.seen <- internal.parameters$num.clones.seen
+if (length(internal.parameters$num.clones.est) > 0) {
+  num.clones.est <- internal.parameters$num.clones.est
 } else {
   int.chao <- function (x) { # taken from fossil package
     so <- length(x[x > 0])
@@ -60,9 +60,9 @@ if (length(internal.parameters$num.clones.seen) > 0) {
     else return(so + s1^2/(s2 * 2))
   }
 
-  num.clones.seen <- int.chao(apply(replicates > 0, 1, sum))
+  num.clones.est <- int.chao(apply(replicates > 0, 1, sum))
 }
-print(num.clones.seen)
+#print(num.clones.est)
 
 if (length(internal.parameters$use.squared.err.est) > 0) {
   use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
@@ -80,7 +80,7 @@ internal.parameters <- list(
   replicates = replicates,
   rep.grahm.matrix = rep.grahm.matrix,
   simple.precision.clonality = simple.precision.clonality,
-  num.clones.seen = num.clones.seen, 
+  num.clones.est = num.clones.est, 
   use.squared.err.est = use.squared.err.est,
   use.replicate.var.est = use.replicate.var.est
 )
@@ -92,7 +92,7 @@ fpc.iter.estimates <- c()
 for (curr.iter.number in 1:num.iterations) {
 
 replicates.cov.off.diagonal.value <-
-  take.pos(curr.clonality.score.estimate - (1 / num.clones.seen)) 
+  take.pos(curr.clonality.score.estimate - (1 / num.clones.est)) 
 
 replicates.cov.off.diagonals <- 
     matrix(replicates.cov.off.diagonal.value, num.replicates, num.replicates)
@@ -105,7 +105,7 @@ if (variance.method %in% c('fpc.add'))
       diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
       diag(rep.grahm.matrix), 
       2 * replicates.cov.off.diagonal.value - diag(rep.grahm.matrix))
-    + rep((1 / num.clones.seen), num.replicates) 
+    + rep((1 / num.clones.est), num.replicates) 
     # regularize by smallest possible clonality, given number of clones seen  
     # print(replicates.cov.off.diagonals)
     replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
@@ -116,7 +116,7 @@ if (variance.method %in% c('fpc.add'))
       diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
       diag(rep.grahm.matrix), 
       replicates.cov.off.diagonal.value)
-    + rep((1 / num.clones.seen), num.replicates)  
+    + rep((1 / num.clones.est), num.replicates)  
   # print(replicates.cov.off.diagonals)
   # regularize by smallest possible clonality, given number of clones seen
   replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      

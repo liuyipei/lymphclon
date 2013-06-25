@@ -84,7 +84,6 @@ Warning: package ‘corpcor’ was built under R version 2.15.3
 > my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
-[1] 1584.803
 Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur",
  target signature "dsyMatrix#missing".
  "dsyMatrix#ANY" would also be valid
@@ -111,7 +110,6 @@ ue.zr.half
 > my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
-[1] 1584.803
 > # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 > 
 > 
@@ -132,7 +130,6 @@ ue.zr.half
 > my.data <- simulate.clonality.data(n=2e3) 
 > # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 > my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
-[1] 1584.803
 > # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 > 
 > 
@@ -140,7 +137,7 @@ ue.zr.half
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.001 0.036 3.053 0 0 
+Time elapsed:  2.985 0.036 3.031 0 0 
 > grDevices::dev.off()
 null device 
           1 
