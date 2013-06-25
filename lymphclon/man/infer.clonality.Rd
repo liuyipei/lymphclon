@@ -11,7 +11,7 @@ Clonality score, a useful metric used in immunology, refers to the probability t
 \usage{
 infer.clonality(
   read.count.matrix, 
-  variance.method = 'fpc.1',
+  variance.method = 'fpc.add',
   estimate.abundances = F,
   num.iterations = 1,
   internal.parameters = list())
@@ -23,7 +23,7 @@ infer.clonality(
 A matrix of read frequences, where each row corresponds to a distinct clone, and each column corresponds to a particular biological (rather than technical) replicate. All biological replicates should be drawn from the same person. Reads from technical replicates of the same underlying templates should be merged into a single column.
 }
 \item{variance.method}{
-The method is a code defaulting to "loo.2".
+The method is a code defaulting to "fpc.add".
 usr.1: argument use.squared.err.est specifies 1st order variances
 mle.1: use maximum likelihood estimate of 1st order variances
 loo.1: use leave-one-out estimate of 1st order variances

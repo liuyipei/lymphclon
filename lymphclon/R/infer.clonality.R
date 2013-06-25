@@ -7,7 +7,7 @@ library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
-  variance.method = 'fpc.1',
+  variance.method = 'fpc.add',
   estimate.abundances = F,
   num.iterations = 1,
   internal.parameters = list()
@@ -43,61 +43,91 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
 }
 
+if (length(internal.parameters$num.clones.seen) > 0) {
+  num.clones.seen <- internal.parameters$num.clones.seen
+} else {
+  num.clones.seen <- sum(apply(replicates, 1, max) > 0)
+}
+
 if (length(internal.parameters$use.squared.err.est) > 0) {
   use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
 } else {
   use.squared.err.est <- c()
 }
 
+if (length(internal.parameters$use.replicate.var.est) > 0) {
+  use.replicate.var.est <- as.matrix(internal.parameters$use.replicate.var.est)
+} else {
+  use.replicate.var.est <- c()
+}
+
 internal.parameters <- list(
   replicates = replicates,
   rep.grahm.matrix = rep.grahm.matrix,
   simple.precision.clonality = simple.precision.clonality,
-  use.squared.err.est = use.squared.err.est
+  num.clones.seen = num.clones.seen, 
+  use.squared.err.est = use.squared.err.est,
+  use.replicate.var.est = use.replicate.var.est
 )
 
 curr.clonality.score.estimate <- simple.precision.clonality
 fpc.iter.estimates <- c()
 
+
 for (curr.iter.number in 1:num.iterations) {
 
-if (variance.method %in% c('fpc.1'))
-{
-  replicates.cov.off.diagonals <- 
+replicates.cov.off.diagonals <- 
     (curr.clonality.score.estimate 
     - diag(rep(curr.clonality.score.estimate, num.replicates))
-    ) / n
-
+    )
+if (variance.method %in% c('fpc.add'))
+{ # diagonal is the clonality score plus the abs difference of the self-inner products from it
   replicates.cov.diagonals <- 
     ifelse(
       diag(rep.grahm.matrix) > curr.clonality.score.estimate,
       diag(rep.grahm.matrix), 
-      2 * curr.clonality.score.estimate - diag(rep.grahm.matrix)) / n
-
+      2 * curr.clonality.score.estimate - diag(rep.grahm.matrix))
+    + rep((1 / num.clones.seen), num.replicates) 
+    # regularize by smallest possible clonality, given number of clones seen  
+    # print(replicates.cov.off.diagonals)
+    replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
+} else if (variance.method %in% c('fpc.max')) 
+{ # diagonal is the max of clonality score, or the self-inner products
+  replicates.cov.diagonals <- 
+    ifelse(
+      diag(rep.grahm.matrix) > curr.clonality.score.estimate,
+      diag(rep.grahm.matrix), 
+      curr.clonality.score.estimate)
+    + rep((1 / num.clones.seen), num.replicates)  
+  # print(replicates.cov.off.diagonals)
+  # regularize by smallest possible clonality, given number of clones seen
   replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
-
-} else if (variance.method %in% c('mle.1')) {
-  replicates.cov <- cov(replicates)
+} else if (variance.method %in% c('mle.cov')) {
+  replicates.cov <- cov(replicates) * n
+} else if (variance.method %in% c('usr.var')) {
+  replicates.cov.diagonals <- use.replicate.var.est
+  replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
 }
 
-# usr.1: argument use.squared.err.est specifies 1st order variances
-# fpc.1: fixed point covariance, based on an unbiased clonality and self inner products
-# mle.1: use maximum likelihood estimate
-# corpcor.1: corpcor covvariance
+# usr.rer: internal.parameters$use.squared.err.est specifies conditional variances of replicates
+# usr.var internal.parameters$use.replicate.var.est specifies variances of replicates
+# fpc.add: fixed point covariance, based on an unbiased clonality and self inner products
+# mle.cov: use maximum likelihood estimate
+# corpcor: corpcor covvariance
 
 Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
 ptinv.Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
-if (variance.method == 'usr.1') {
+if (variance.method == 'usr.rer') {
   epsilon.vec <- use.squared.err.est
   inv.eps.vec <- 1 / epsilon.vec
   diag(Lambda.matrix) <- inv.eps.vec
   diag(ptinv.Lambda.matrix) <- epsilon.vec
-} else if (variance.method %in% c('fpc.1', 'mle.1', 'corpcor.1')) {
-  if (variance.method %in% c('fpc.1', 'mle.1')) {
-    inv.eps.vec <- diag(ginv(replicates.cov) / n)
+} else if (variance.method %in% c('fpc.add', 'fpc.max', 'mle.cov', 'corpcor', 'usr.var')) {
+  if (variance.method %in% c('fpc.add', 'mle.cov', 'fpc.max', 'usr.var')) {
+    inv.eps.vec <- diag(ginv(replicates.cov))
   } else { 
-    # variance.method == 'corpcor.1'
-    capture.output(inv.eps.vec <- diag(invcov.shrink(replicates) / n))
+    # variance.method == 'corpcor'
+    capture.output(inv.eps.vec <- diag(invcov.shrink(replicates)))
   }
 
   epsilon.vec <- 1 / inv.eps.vec # the estimated conditional errors associated with each replicate
@@ -105,7 +135,7 @@ if (variance.method == 'usr.1') {
   diag(ptinv.Lambda.matrix) <- epsilon.vec
 } else {
   write(sprintf('unknown variance method: %s\n', variance.method), stderr())
-  write('list of valid methods: usr.1, fpc.1, corpcor.1', stderr())
+  write('list of valid methods: usr.rer, fpc.add, fpc.max, corpcor', stderr())
 }
 
 contributions.to.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances

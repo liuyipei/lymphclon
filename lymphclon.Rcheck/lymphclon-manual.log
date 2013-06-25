@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 JUN 2013 13:55
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  24 JUN 2013 20:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf527
-74051bb61/Rd2.tex
+**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9Sd52a/Rd2pdf7ba
+629fee6cd/Rd2.tex
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
-4051bb61/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9Sd52a/Rd2pdf7ba6
+29fee6cd/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -727,6 +727,12 @@ Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
 [2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 )
+Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
+[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
+ent use.squared.err.est
+ []
+
+
 Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
 \T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
 , and "use.squared.err.est".
@@ -809,7 +815,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 83347 bytes).
+Output written on Rd2.pdf (6 pages, 83348 bytes).
 PDF statistics:
  128 PDF objects out of 1000 (max. 8388607)
  111 compressed objects within 2 object streams
