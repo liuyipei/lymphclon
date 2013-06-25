@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
-4051bb61/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9Sd52a/Rd2pdf7ba6
+29fee6cd/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -86,6 +86,10 @@ Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
  []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
 -norm of the underlying multinomial probabilistic distrubution vector)[] 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2]
+Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
+[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
+ent use.squared.err.est
+
 Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
 \T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
 , and "use.squared.err.est".
@@ -128,7 +132,7 @@ live/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on Rd2.pdf (5 pages, 71923 bytes).
+Output written on Rd2.pdf (5 pages, 71919 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -140,8 +144,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
-4051bb61/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9Sd52a/Rd2pdf7ba6
+29fee6cd/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -222,6 +226,10 @@ Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
  []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
 -norm of the underlying multinomial probabilistic distrubution vector)[] 
 [2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
+[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
+ent use.squared.err.est
+
 Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
 \T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
 , and "use.squared.err.est".
@@ -272,7 +280,7 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 83048 bytes).
+Output written on Rd2.pdf (6 pages, 83045 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
@@ -284,8 +292,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpy5SAkn/Rd2pdf5277
-4051bb61/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmp9Sd52a/Rd2pdf7ba6
+29fee6cd/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -366,6 +374,10 @@ Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
  []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
 -norm of the underlying multinomial probabilistic distrubution vector)[] 
 [2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
+Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
+[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
+ent use.squared.err.est
+
 Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
 \T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
 , and "use.squared.err.est".
@@ -411,8 +423,8 @@ ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
 imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 83347 bytes).
+Output written on Rd2.pdf (6 pages, 83348 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmpy5SAkn/Rd2pdf52774051bb61'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmp9Sd52a/Rd2pdf7ba629fee6cd'
