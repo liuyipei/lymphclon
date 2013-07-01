@@ -45,7 +45,8 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
     matrix(reads.per.replicate, ncol = num.replicates)
   simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
-  simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / sum(simple.precision.weights)
+  simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / 
+    sum(simple.precision.weights)
 }
 
 if (length(internal.parameters$num.clones.est) > 0) {
@@ -87,7 +88,6 @@ internal.parameters <- list(
 
 curr.clonality.score.estimate <- simple.precision.clonality
 fpc.iter.estimates <- c()
-
 
 for (curr.iter.number in 1:num.iterations) {
 
@@ -219,19 +219,20 @@ for (r1 in 2:num.replicates) {
   }
 }
 
-pre.reg.matrix <- full.cov
+unreg.matrix <- full.cov
 
 # use the covariance matrix to compute the mvg MLE estimate, given the n-choose-2 estimators
 cov.to.clonality <- function(target.matrix, reg.coefs) {
-  linear.combo.matrix <- (target.matrix      * reg.coefs)
-                      +  (pre.reg.matrix * (1 - reg.coefs))
+  target.term <- (target.matrix * reg.coefs)
+  unreg.term <- (unreg.matrix * (1 - reg.coefs))
+  linear.combo.matrix <- target.term + unreg.term
   root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
   numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
   denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
   return(abs(numerator / denominator)) # the clonality score
-}
+} # cov.to.clonality
 
-#regularize the n-choose-2 by n-choose-2 covariance matrix
+# regularize the n-choose-2 by n-choose-2 covariance matrix
 mean.eps2 <- mean(epsilon.vec)
 min.eps2 <- min(epsilon.vec)
 
@@ -247,27 +248,28 @@ names(regularized.estimates) <- regularization.method.names
 reg.coefs <- rep(0.5, num.reg.methods)
 names(reg.coefs) <- regularization.method.names
 
-target.matrices <- lapply(regularization.method.names, function(x){pre.reg.matrix})
+# populate the list with default values to be overwritten
+target.matrices <- lapply(regularization.method.names, function(x){unreg.matrix}) 
 names(target.matrices) <- regularization.method.names
 
-reg.coefs['unregularized'] <- 1
-target.matrices[['unregularized']] <- pre.reg.matrix
+reg.coefs['unregularized'] <- 0 # doesn't matter
+target.matrices[['unregularized']] <- unreg.matrix
 
 reg.coefs['ue.zr.full'] <- 1
-target.matrices[['ue.zr.full']] <- diag(diag(pre.reg.matrix))
+target.matrices[['ue.zr.full']] <- diag(diag(unreg.matrix))
 
 reg.coefs['eq.zr.half'] <- 0.5
-target.matrices[['eq.zr.half']] <- diag(rep(2 * mean.eps2, nrow(pre.reg.matrix)))
+target.matrices[['eq.zr.half']] <- diag(rep(2 * mean.eps2, nrow(unreg.matrix)))
 
 reg.coefs['ue.zr.half'] <- 0.5
-target.matrices[['ue.zr.half']] <- diag(diag(pre.reg.matrix))
+target.matrices[['ue.zr.half']] <- diag(diag(unreg.matrix))
 
 reg.coefs['eq.eq.half'] <- 0.5
-target.matrices[['eq.eq.half']][pre.reg.matrix > 0] <- mean.eps2
+target.matrices[['eq.eq.half']][unreg.matrix > 0] <- mean.eps2
 diag(target.matrices[['eq.eq.half']]) <- 2 * mean.eps2
 
 reg.coefs['ue.eq.half'] <- 0.5
-target.matrices[['ue.eq.half']][pre.reg.matrix > 0] <- mean.eps2
+target.matrices[['ue.eq.half']][unreg.matrix > 0] <- mean.eps2
 diag(target.matrices[['ue.eq.half']]) <- 2 * mean.eps2
 
 ue.mn.coef.denom <- sum((epsilon.vec - min.eps2) ^ 2) + (1e-14)
@@ -276,9 +278,9 @@ reg.coefs['ue.mn.half'] <- 0.5
 reg.coefs['ue.mn.full'] <- 1
 reg.coefs['ue.mn.js1'] <- ue.mn.coef.numer / ue.mn.coef.denom
 
-ue.mn.matrix <- pre.reg.matrix
-ue.mn.matrix[pre.reg.matrix > 0] <- min.eps2
-diag(ue.mn.matrix) <- diag(pre.reg.matrix)
+ue.mn.matrix <- unreg.matrix
+ue.mn.matrix[unreg.matrix > 0] <- min.eps2
+diag(ue.mn.matrix) <- diag(unreg.matrix)
 target.matrices[['ue.mn.half']] <- ue.mn.matrix
 target.matrices[['ue.mn.full']] <- ue.mn.matrix
 target.matrices[['ue.mn.js1']]  <- ue.mn.matrix
@@ -288,14 +290,41 @@ for (curr.reg in regularization.method.names)
   regularized.estimates[curr.reg] <-
     cov.to.clonality(target.matrices[[curr.reg]], reg.coefs[curr.reg])
 }
-#print(target.matrices)
-#print(reg.coefs)
 
 curr.clonality.score.estimate <- as.numeric(regularized.estimates['ue.zr.half']) 
 # fpc: fixed point iterations. Usually 1 is best
 
 fpc.iter.estimates <- append(fpc.iter.estimates, curr.clonality.score.estimate)
 } # for (curr.iter.number in 1: num.iterations)
+
+# use jackknife to estimate variance
+compute.variances.d1jkn <- F
+if (length(internal.parameters$compute.variances.d1jkn > 0)) {
+  compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
+}
+
+simple.clonality.variance <- NA
+regularized.clonality.variance <- NA
+if (compute.variances.d1jkn) {
+subset.simple2.sum  <- 0
+subset.reg2.sum     <- 0
+for (i in c(1:num.replicates)) {
+  curr.subset.internal.parameters <- list(
+    replicates = replicates[, -i],
+    rep.grahm.matrix = rep.grahm.matrix[-i, -i])
+  curr.subset.clonality <- infer.clonality(
+      read.count.matrix = read.count.matrix[, -i], 
+      variance.method = variance.method,
+      internal.parameters = curr.subset.internal.parameters)
+  subset.simple2.sum <- subset.simple2.sum +
+    (curr.subset.clonality$simple.precision.clonality - simple.precision.clonality) ^ 2
+  subset.reg2.sum <- subset.reg2.sum +
+    (curr.subset.clonality$regularized.estimates - regularized.estimates) ^ 2
+} # for (i in c(1:num.replicates))
+n.var.coef <- (num.replicates - 1) / num.replicates
+simple.clonality.variance <- n.var.coef * subset.simple2.sum
+regularized.clonality.variance <- n.var.coef * subset.reg2.sum
+} # if (compute.variances.d1jkn)
 
 if (estimate.abundances) {
   return.results <- list(
@@ -307,7 +336,10 @@ if (estimate.abundances) {
     variance.method = variance.method,
     fpc.iter.estimates = fpc.iter.estimates,
     regularized.estimates = regularized.estimates,
-    internal.parameters = internal.parameters)
+    internal.parameters = internal.parameters,
+    simple.clonality.variance = simple.clonality.variance,
+    regularized.clonality.variance = regularized.clonality.variance
+    )
 } else {
   return.results <- list(
     simple.precision.clonality = simple.precision.clonality, 
@@ -319,8 +351,10 @@ if (estimate.abundances) {
     variance.method = variance.method,
     fpc.iter.estimates = fpc.iter.estimates,
     regularized.estimates = regularized.estimates,
-    internal.parameters = 
-      'The estimate.abundances parameter was set to false when infer.clonality was called. internal.parameters suppressed for brevity')
+    internal.parameters = internal.parameters,
+    simple.clonality.variance = simple.clonality.variance,
+    regularized.clonality.variance = regularized.clonality.variance
+    )
 }
 
 return (return.results)

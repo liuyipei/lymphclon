@@ -45,8 +45,8 @@ num.cells.taken.vector <- rep(base.num.cells.taken.vector, sets.of.8)
 #print(c(curr.settings, num.cells.taken.vector, clonal.power))
 #clones <- 2e7 # 20m
 #clones <- 5e5 # 500k
-clones <- 2e5 # 200k
-#clones <- 5e2 # 500 
+#clones <- 2e5 # 200k
+clones <- 5e2 # 500 
 
 for (i in c(1:number.of.repeated.simulations)) {
 
