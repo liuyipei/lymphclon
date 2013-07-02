@@ -80,8 +80,6 @@ med = apply(err2.rat.table,2, median)
 )
 
 write.csv(x=err2.rat.table, file = 'err2.csv')
-library(pheatmap)
-pheatmap(err2.rat.table, cluster_rows = F, display_numbers = T, fontsize_number=6)
 
 
 meth.to.plot <- 'fpc.add.ue.zr.half'
@@ -147,3 +145,10 @@ points(mean.err2.table$power, mean.err2.table$bln.abe2, col = 'red', pch = 2)
 legend(x = 'top', c(abe.to.plot, "Baseline"),
   col = c("blue", "red"), pch = 2)
 dev.off()
+
+library(pheatmap)
+postscript('err2.heatmap.eps')
+par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
+pheatmap(log2(err2.rat.table), cluster_rows = F, display_numbers = T, fontsize_number=6)
+dev.off()
+
