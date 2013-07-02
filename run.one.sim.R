@@ -66,11 +66,11 @@ answer.opt.rer <- infer.clonality(read.count.matrix = x,
          compute.variances.d1jkn = T)
   )
 internal.parameters <- answer.opt.rer$internal.parameters
+internal.parameters[['use.replicate.var.est']] <- sim.data$replicate.squared.errs + sim.data$true.clonality
 
 answer.opt.cov <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'usr.var',
-  internal.parameters = 
-    list(use.replicate.var.est = sim.data$replicate.squared.errs + sim.data$true.clonality))
+  internal.parameters = internal.parameters)
 
 
 answer.fpc.add <- infer.clonality(read.count.matrix = x, 
