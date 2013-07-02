@@ -63,7 +63,6 @@ if (length(internal.parameters$num.clones.est) > 0) {
 
   num.clones.est <- int.chao(apply(replicates > 0, 1, sum))
 }
-#print(num.clones.est)
 
 if (length(internal.parameters$use.squared.err.est) > 0) {
   use.squared.err.est <- as.matrix(internal.parameters$use.squared.err.est)
@@ -77,13 +76,20 @@ if (length(internal.parameters$use.replicate.var.est) > 0) {
   use.replicate.var.est <- c()
 }
 
+compute.variances.d1jkn <- F
+if (length(internal.parameters$compute.variances.d1jkn > 0)) {
+  compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
+}
+
+
 internal.parameters <- list(
   replicates = replicates,
   rep.grahm.matrix = rep.grahm.matrix,
   simple.precision.clonality = simple.precision.clonality,
   num.clones.est = num.clones.est, 
   use.squared.err.est = use.squared.err.est,
-  use.replicate.var.est = use.replicate.var.est
+  use.replicate.var.est = use.replicate.var.est,
+  compute.variances.d1jkn = compute.variances.d1jkn
 )
 
 curr.clonality.score.estimate <- simple.precision.clonality
@@ -107,7 +113,7 @@ if (variance.method %in% c('fpc.add'))
       2 * replicates.cov.off.diagonal.value - diag(rep.grahm.matrix))
     + rep((1 / num.clones.est), num.replicates) 
     # regularize by smallest possible clonality, given number of clones seen  
-    # print(replicates.cov.off.diagonals)
+
     replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
 } else if (variance.method %in% c('fpc.max')) 
 { # diagonal is the max of clonality score, or the self-inner products
@@ -117,7 +123,7 @@ if (variance.method %in% c('fpc.add'))
       diag(rep.grahm.matrix), 
       replicates.cov.off.diagonal.value)
     + rep((1 / num.clones.est), num.replicates)  
-  # print(replicates.cov.off.diagonals)
+
   # regularize by smallest possible clonality, given number of clones seen
   replicates.cov <- diag(replicates.cov.diagonals) + replicates.cov.off.diagonals      
 } else if (variance.method %in% c('mle.cov')) {
@@ -158,7 +164,6 @@ if (variance.method == 'usr.rer') {
 
 contributions.to.replicate.cov.matrix <- -Lambda.matrix # negative conditional covariances
 diag(contributions.to.replicate.cov.matrix) <- diag(ptinv.Lambda.matrix) # inverse conditional variances
-#print('contributions.to.replicate.cov.matrix filled')
 
 num.estimators <- num.replicates * (num.replicates - 1) / 2
 
@@ -196,7 +201,6 @@ for (r in 2:num.replicates) {
 }
 
 # debug.data <- c()
-#print('about to fill out full.cov')
 full.cov <- matrix(data = 0, nrow = num.estimators, ncol = num.estimators)
 # (n choose 2) by (n choose 2)
 for (r1 in 2:num.replicates) {
@@ -228,7 +232,7 @@ cov.to.clonality <- function(target.matrix, reg.coefs) {
   linear.combo.matrix <- target.term + unreg.term
   root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
   numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
-  denominator <- t(rep(1, num.pairs)) %*% root.prec.matrix %*% rep(1, num.pairs)
+  denominator <- rep(1, num.pairs) %*% root.prec.matrix %*% rep(1, num.pairs)
   return(abs(numerator / denominator)) # the clonality score
 } # cov.to.clonality
 
@@ -297,64 +301,72 @@ curr.clonality.score.estimate <- as.numeric(regularized.estimates['ue.zr.half'])
 fpc.iter.estimates <- append(fpc.iter.estimates, curr.clonality.score.estimate)
 } # for (curr.iter.number in 1: num.iterations)
 
-# use jackknife to estimate variance
-compute.variances.d1jkn <- F
-if (length(internal.parameters$compute.variances.d1jkn > 0)) {
-  compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
-}
 
-simple.clonality.variance <- NA
-regularized.clonality.variance <- NA
-if (compute.variances.d1jkn) {
-subset.simple2.sum  <- 0
-subset.reg2.sum     <- 0
+# jackknife related default values
+mixture.clonality <- NA
+d1jkn.covariance <- NA
+if (compute.variances.d1jkn) { # use jackknife to estimate variance
+mix.regnames <- c('unregularized', 'ue.zr.half', 'ue.mn.half', 'eq.zr.half')
+mix.values <- c(regularized.estimates[mix.regnames], simple.precision.clonality)
+
+# include an extra component in the mixture for simple clonality.
+unnormalized.d1jkn.cov.sqrt <- 
+  matrix(NA, length(mix.regnames) + 1, num.replicates)
 for (i in c(1:num.replicates)) {
+
   curr.subset.internal.parameters <- list(
     replicates = replicates[, -i],
-    rep.grahm.matrix = rep.grahm.matrix[-i, -i])
+    rep.grahm.matrix = rep.grahm.matrix[-i, -i],
+    use.squared.err.est = use.squared.err.est[-i],
+    use.replicate.var.est = use.replicate.var.est[-i],
+    compute.variances.d1jkn = F)
   curr.subset.clonality <- infer.clonality(
-      read.count.matrix = read.count.matrix[, -i], 
-      variance.method = variance.method,
-      internal.parameters = curr.subset.internal.parameters)
-  subset.simple2.sum <- subset.simple2.sum +
-    (curr.subset.clonality$simple.precision.clonality - simple.precision.clonality) ^ 2
-  subset.reg2.sum <- subset.reg2.sum +
-    (curr.subset.clonality$regularized.estimates - regularized.estimates) ^ 2
+    read.count.matrix = read.count.matrix[, -i], 
+    variance.method = variance.method,
+    internal.parameters = curr.subset.internal.parameters)
+
+  curr.d1jk.terms <-
+    c((curr.subset.clonality$regularized.estimates)[mix.regnames],
+      curr.subset.clonality$simple.precision.clonality)
+
+  unnormalized.d1jkn.cov.sqrt[, i] <- curr.d1jk.terms - mix.values
 } # for (i in c(1:num.replicates))
+
 n.var.coef <- (num.replicates - 1) / num.replicates
-simple.clonality.variance <- n.var.coef * subset.simple2.sum
-regularized.clonality.variance <- n.var.coef * subset.reg2.sum
+d1jkn.covariance <- n.var.coef * unnormalized.d1jkn.cov.sqrt %*% t(unnormalized.d1jkn.cov.sqrt)
+d1jkn.ev <- eigen(d1jkn.covariance)$values
+d1jkn.adjustment <-  # regularize the diagonal of the jackknifed covariance matrix
+  (-max(min(d1jkn.ev), 0)) + # negate the smallest eigenvalue, if it is negative
+  (1e-4) * max(d1jkn.ev) +   # 1e-4 of the largest eigenvalue
+  all(d1jkn.ev == 0) * .Machine$double.eps * 32 # if matrix was identically 0
+diag(d1jkn.covariance) <- diag(d1jkn.covariance) + d1jkn.adjustment
+
+mixture.clonality <- cov.to.clonality <- 
+  root.d1jkn.precision <- sqrtm(ginv(d1jkn.covariance))
+  numerator <- rep(1, nrow(root.d1jkn.precision)) %*% 
+    root.d1jkn.precision %*% mix.values
+  denominator <- rep(1, nrow(root.d1jkn.precision)) %*% 
+    root.d1jkn.precision %*% rep(1, nrow(root.d1jkn.precision))
+  mixture.clonality <- abs(numerator / denominator) # the clonality score
 } # if (compute.variances.d1jkn)
 
+return.results <- list(
+  estimated.abundances = 
+    'The estimate.abundances parameter was set to false when infer.clonality was called.',
+  internal.parameters = internal.parameters,
+  d1jkn.covariance = d1jkn.covariance,
+  estimated.squared.errs = epsilon.vec,
+  estimated.precisions = inv.eps.vec,
+  variance.method = variance.method,
+  fpc.iter.estimates = fpc.iter.estimates,
+  simple.precision.clonality = simple.precision.clonality, 
+  regularized.estimates = regularized.estimates,
+  mixture.clonality = mixture.clonality,
+  lymphclon.clonality = regularized.estimates['ue.zr.half']
+    )
+
 if (estimate.abundances) {
-  return.results <- list(
-    simple.precision.clonality = simple.precision.clonality, 
-    lymphclon.clonality = regularized.estimates['ue.zr.half'],
-    estimated.abundances = (replicates %*% inv.eps.vec) / sum(inv.eps.vec),
-    estimated.squared.errs = epsilon.vec,
-    estimated.precisions = inv.eps.vec,
-    variance.method = variance.method,
-    fpc.iter.estimates = fpc.iter.estimates,
-    regularized.estimates = regularized.estimates,
-    internal.parameters = internal.parameters,
-    simple.clonality.variance = simple.clonality.variance,
-    regularized.clonality.variance = regularized.clonality.variance
-    )
-} else {
-  return.results <- list(
-    simple.precision.clonality = simple.precision.clonality, 
-    lymphclon.clonality = regularized.estimates['ue.zr.half'],
-    estimated.abundances = 
-      'The estimate.abundances parameter was set to false when infer.clonality was called.',
-    estimated.squared.errs = epsilon.vec,
-    estimated.precisions = inv.eps.vec,
-    variance.method = variance.method,
-    fpc.iter.estimates = fpc.iter.estimates,
-    regularized.estimates = regularized.estimates,
-    internal.parameters = internal.parameters,
-    simple.clonality.variance = simple.clonality.variance,
-    regularized.clonality.variance = regularized.clonality.variance
-    )
+  return.results[['estimated.abundances']] = (replicates %*% inv.eps.vec) / sum(inv.eps.vec)
 }
 
 return (return.results)

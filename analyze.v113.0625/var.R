@@ -148,7 +148,11 @@ legend(x = 'top', c(abe.to.plot, "Baseline"),
 dev.off()
 
 write.csv(x=err2.rat.table, file = 'err2.csv')
-library(pheatmap)
-pheatmap(err2.rat.table, cluster_rows = F, display_numbers = T, fontsize_number=6)
 
+
+library(pheatmap)
+postscript('err2.heatmap.eps')
+par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
+pheatmap(log2(err2.rat.table), cluster_rows = F, display_numbers = T, fontsize_number=6)
+dev.off()
 

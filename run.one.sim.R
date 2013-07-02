@@ -62,7 +62,9 @@ x <- sim.data$read.count.matrix
 answer.opt.rer <- infer.clonality(read.count.matrix = x, 
   estimate.abundances = T, variance.method = 'usr.rer',
   internal.parameters = 
-    list(use.squared.err.est = sim.data$replicate.squared.errs))
+    list(use.squared.err.est = sim.data$replicate.squared.errs,
+         compute.variances.d1jkn = T)
+  )
 internal.parameters <- answer.opt.rer$internal.parameters
 
 answer.opt.cov <- infer.clonality(read.count.matrix = x, 
@@ -85,12 +87,6 @@ answer.corpcor <- infer.clonality(read.count.matrix = x,
   internal.parameters = internal.parameters)
 
 simple.mean.abundances <- apply((x %*% diag(1/apply(x,2,sum)) ), 1,mean)
-opt.rer.mean.abundances    <- as.numeric(answer.opt.rer$estimated.abundances)
-opt.cov.mean.abundances    <- as.numeric(answer.opt.cov$estimated.abundances)
-fpc.add.mean.abundances    <- as.numeric(answer.fpc.add$estimated.abundances)
-fpc.max.mean.abundances    <- as.numeric(answer.fpc.max$estimated.abundances)
-mle.cov.mean.abundances    <- as.numeric(answer.mle.cov$estimated.abundances)
-corpcor.mean.abundances    <- as.numeric(answer.corpcor$estimated.abundances)
 
 meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling', 'chao2')
 meta.values <- c(clonal.power,
@@ -109,34 +105,33 @@ names(baseline.values) <- baseline.cols
 regularization.method.names <- 
   c('unregularized', 'ue.zr.full', 
   'eq.zr.half', 'ue.zr.half', 'eq.eq.half', 'ue.eq.half',
-  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1')
+  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1', 'mix1')
 var.meth.names <- c('opt.rer', 'opt.cov', 'fpc.add', 'fpc.max', 'mle.cov', 'corpcor')
 
 experiment.cols <- Reduce(c, 
   lapply(X = var.meth.names,
     FUN = function(curr.var.meth.name)
       {c(paste(curr.var.meth.name, regularization.method.names, sep = '.'),
-      paste(curr.var.meth.name, 'abe2', sep = '.'))}
+         paste(curr.var.meth.name, 'abe2', sep = '.'))}
 ))
 
+
+get.experiment.values.from.answer <- function(answer)
+{
+return(c(
+  answer$regularized.estimates, 
+  answer$mixture.clonality,
+  sum((as.numeric(answer$estimated.abundances) - sim.data$true.clone.prob) ^ 2)
+  ))
+}
+
 experiment.values <- c(
-  answer.opt.rer$regularized.estimates,
-  sum((opt.rer.mean.abundances - sim.data$true.clone.prob)^2),
-
-  answer.opt.cov$regularized.estimates,
-  sum((opt.cov.mean.abundances - sim.data$true.clone.prob)^2),
-
-  answer.fpc.add$regularized.estimates,
-  sum((fpc.add.mean.abundances - sim.data$true.clone.prob)^2),
-
-  answer.fpc.max$regularized.estimates,
-  sum((fpc.max.mean.abundances - sim.data$true.clone.prob)^2),
-  
-  answer.mle.cov$regularized.estimates,
-  sum((mle.cov.mean.abundances - sim.data$true.clone.prob)^2),
-
-  answer.corpcor$regularized.estimates,
-  sum((corpcor.mean.abundances - sim.data$true.clone.prob)^2)
+  get.experiment.values.from.answer(answer.opt.rer),
+  get.experiment.values.from.answer(answer.opt.cov),
+  get.experiment.values.from.answer(answer.fpc.add),
+  get.experiment.values.from.answer(answer.fpc.max),
+  get.experiment.values.from.answer(answer.mle.cov),
+  get.experiment.values.from.answer(answer.corpcor)
   )
 names(experiment.values) <- experiment.cols
 
