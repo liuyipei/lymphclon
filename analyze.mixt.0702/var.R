@@ -21,8 +21,6 @@ all.cols <- c('labels', meta.cols, bln.cols, experiment.cols)
 
 raw <- read.csv('var.cat', header=F)
 colnames(raw) <- all.cols
-raw$opt.cov.mix1 <- raw$opt.rer.mix1 # there was a bug in the driver script
-
 num.table <- raw[apply(raw, 1, function(X){all(!is.na(X))}), -1]
 
 var.settings.names <- c('bln', Reduce(c, 
@@ -84,8 +82,8 @@ med = apply(err2.rat.table,2, median)
 write.csv(x=err2.rat.table, file = 'err2.csv')
 
 
-meth.to.plot <- 'fpc.add.ue.zr.half'
-abe.to.plot <- 'fpc.add'
+meth.to.plot <- 'fpc.max.mix1'
+abe.to.plot <- 'fpc.max'
 
 err2.table <- data.frame(
 method = c(rep('bln',nrow(num.table)), 
@@ -104,7 +102,8 @@ boxplot(err2 ~ power, data = err2.table,
 boxplot(err2 ~ power, data = err2.table, add = TRUE,
         boxwex = 0.25, at = 1:21 - 0.2,
         subset = method == meth.to.plot, col = "orange")
-legend(x = 'top', c(meth.to.plot, "Unbiased Baseline (Paramsweran 2013)"),
+legend(x = 'top', c('Using the "Positive Expectations" Estimator', 
+       "Unbiased Baseline (Paramsweran 2013)"),
  fill = c("orange", "yellow"))
 dev.off()
 
@@ -124,13 +123,13 @@ numbers.to.plot <- c(mean.err2.table$bln.err2,
 ylim <- c(min(numbers.to.plot), max(numbers.to.plot))
 plot(mean.err2.table$power, mean.err2.table[, paste(c(meth.to.plot, 'err2'), collapse = '.')], 
   col = 'blue', log = 'y', pch = 1, lwd = 3,
-  main = sprintf('Mean squred error compared over %d simulations', nrow(num.table)),
+  main = sprintf('Clonality mean squared error compared over %d simulations', nrow(num.table)),
   xlab = 'Underlying Clonal Distribution Zipf Power', 
   ylab = 'Clonality Mean Squared Error (Log Axis)',
   ylim = ylim)
 points(mean.err2.table$power, mean.err2.table$bln.err2, col = 'red', pch = 1, lwd = 3)
 legend(x = 'top', c("Unbiased Baseline (Paramsweran 2013)", 
-       sprintf('Low Variance Method [%s]', meth.to.plot)),
+       sprintf('Low Variance Method [%s]', 'Using the "Positive Expectations" Estimator')),
   col = c("red", "blue"), pch = 1)
 dev.off()
 
@@ -140,11 +139,13 @@ numbers.to.plot <- c(mean.err2.table$bln.abe2,
 ylim <- c(0, 1.2*max(numbers.to.plot))
 par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 plot(mean.err2.table$power, mean.err2.table[, paste(c(abe.to.plot, 'abe2'), collapse = '.')], 
-  col = 'blue', log = '', main = 'Abundance Squared Error Comparisons', pch = 2, ylim = ylim,
+  col = 'blue', log = '', 
+  main = sprintf('Abundance mean squared error compared over %d simulations', nrow(num.table)),
+  pch = 2, ylim = ylim,
   xlab = 'Underlying Clonal Distribution Zipf Power', ylab = 'Abundance Squared Error (Log Axis)',
   )
 points(mean.err2.table$power, mean.err2.table$bln.abe2, col = 'red', pch = 2)
-legend(x = 'top', c(abe.to.plot, "Baseline"),
+legend(x = 'top', c('Using the "Positive Expectations" Estimator', "Baseline"),
   col = c("blue", "red"), pch = 2)
 dev.off()
 
@@ -154,3 +155,22 @@ par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 pheatmap(log2(err2.rat.table), cluster_rows = F, display_numbers = T, fontsize_number=6)
 dev.off()
 
+
+postscript('err2.mix.heatmap.eps')
+par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
+err2.rat.subtable <- err2.rat.table[, grep('^[^o](ln.err2|.*mix.*)', colnames(err2.rat.table))]
+err2.mixcn <- colnames(err2.rat.subtable)
+names(err2.mixcn) <- err2.mixcn
+
+# figure friendly names
+err2.mixcn$bln.err2 <- 'Baseline (Paramesweran 2013)'
+err2.mixcn$fpc.add.mix1.err2 <- '"Spherical shells"'
+err2.mixcn$fpc.max.mix1.err2 <- '"Positive expectation"'
+err2.mixcn$mle.cov.mix1.err2 <- '"Raw empirical"'
+err2.mixcn$corpcor.mix1.err2 <- 'corpcor::cor.shrink'
+colnames(err2.rat.subtable) <- err2.mixcn
+rownames(err2.rat.subtable) <- sprintf('%.2f', mean.err2.table$power)
+pheatmap(t(log2(err2.rat.subtable)), cluster_cols = F, display_numbers = T, fontsize_number=6,
+  main = 'Log2 of the Clonality MSE improvement ratio, with varying Zipf Powers (8 Replicates)',
+  )
+dev.off()

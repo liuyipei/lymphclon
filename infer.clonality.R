@@ -48,6 +48,15 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.clonality <- sum(simple.precision.weights * rep.gram.matrix) / 
     sum(simple.precision.weights)
 }
+if (num.replicates < 3) # not enough replicates
+{
+  return(list(
+  internal.parameters = internal.parameters,
+  variance.method = variance.method,
+  simple.precision.clonality = simple.precision.clonality, 
+  lymphclon.clonality = "Too few replicates: at least 3 are needed. 6 is recommended."
+    ))
+}
 
 if (length(internal.parameters$num.clones.est) > 0) {
   num.clones.est <- internal.parameters$num.clones.est
@@ -76,7 +85,7 @@ if (length(internal.parameters$use.replicate.var.est) > 0) {
   use.replicate.var.est <- c()
 }
 
-compute.variances.d1jkn <- F
+compute.variances.d1jkn <- (num.replicates >= 4) # We need at least 4 to mix
 if (length(internal.parameters$compute.variances.d1jkn > 0)) {
   compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
 }
@@ -362,7 +371,9 @@ return.results <- list(
   simple.precision.clonality = simple.precision.clonality, 
   regularized.estimates = regularized.estimates,
   mixture.clonality = mixture.clonality,
-  lymphclon.clonality = mixture.clonality
+  lymphclon.clonality = ifelse(is.na(mixture.clonality), 
+    regularized.estimates['ue.zr.half'], 
+    mixture.clonality)
     )
 
 if (estimate.abundances) {
