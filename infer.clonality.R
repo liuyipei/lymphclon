@@ -22,15 +22,15 @@ take.pos <- function(x)
 if (length(internal.parameters$replicates > 0)) {
   replicates <- internal.parameters$replicates
 } else {
-  # normalize replicates, and get rep.grahm.matrix once
+  # normalize replicates, and get rep.gram.matrix once
   replicates <- as.matrix(read.count.matrix)
   replicates <- t(t(replicates) / colSums(replicates))
 }
 
-if (length(internal.parameters$rep.grahm.matrix) > 0) {
-  rep.grahm.matrix <- internal.parameters$rep.grahm.matrix
+if (length(internal.parameters$rep.gram.matrix) > 0) {
+  rep.gram.matrix <- internal.parameters$rep.gram.matrix
 } else {
-  rep.grahm.matrix <- t(replicates) %*% replicates
+  rep.gram.matrix <- t(replicates) %*% replicates
 }
 
 n <- nrow(replicates)
@@ -45,8 +45,17 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.weights <- matrix(reads.per.replicate, nrow = num.replicates) %*% 
     matrix(reads.per.replicate, ncol = num.replicates)
   simple.precision.weights <- lower.tri(simple.precision.weights) * simple.precision.weights
-  simple.precision.clonality <- sum(simple.precision.weights * rep.grahm.matrix) / 
+  simple.precision.clonality <- sum(simple.precision.weights * rep.gram.matrix) / 
     sum(simple.precision.weights)
+}
+if (num.replicates < 3) # not enough replicates
+{
+  return(list(
+  internal.parameters = internal.parameters,
+  variance.method = variance.method,
+  simple.precision.clonality = simple.precision.clonality, 
+  lymphclon.clonality = "Too few replicates: at least 3 are needed. 6 is recommended."
+    ))
 }
 
 if (length(internal.parameters$num.clones.est) > 0) {
@@ -76,7 +85,7 @@ if (length(internal.parameters$use.replicate.var.est) > 0) {
   use.replicate.var.est <- c()
 }
 
-compute.variances.d1jkn <- F
+compute.variances.d1jkn <- (num.replicates >= 4) # We need at least 4 to mix
 if (length(internal.parameters$compute.variances.d1jkn > 0)) {
   compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
 }
@@ -84,7 +93,7 @@ if (length(internal.parameters$compute.variances.d1jkn > 0)) {
 
 internal.parameters <- list(
   replicates = replicates,
-  rep.grahm.matrix = rep.grahm.matrix,
+  rep.gram.matrix = rep.gram.matrix,
   simple.precision.clonality = simple.precision.clonality,
   num.clones.est = num.clones.est, 
   use.squared.err.est = use.squared.err.est,
@@ -108,9 +117,9 @@ if (variance.method %in% c('fpc.add'))
 { # diagonal is the clonality score plus the abs difference of the self-inner products from it
   replicates.cov.diagonals <- 
     ifelse(
-      diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
-      diag(rep.grahm.matrix), 
-      2 * replicates.cov.off.diagonal.value - diag(rep.grahm.matrix))
+      diag(rep.gram.matrix) > replicates.cov.off.diagonal.value,
+      diag(rep.gram.matrix), 
+      2 * replicates.cov.off.diagonal.value - diag(rep.gram.matrix))
     + rep((1 / num.clones.est), num.replicates) 
     # regularize by smallest possible clonality, given number of clones seen  
 
@@ -119,8 +128,8 @@ if (variance.method %in% c('fpc.add'))
 { # diagonal is the max of clonality score, or the self-inner products
   replicates.cov.diagonals <- 
     ifelse(
-      diag(rep.grahm.matrix) > replicates.cov.off.diagonal.value,
-      diag(rep.grahm.matrix), 
+      diag(rep.gram.matrix) > replicates.cov.off.diagonal.value,
+      diag(rep.gram.matrix), 
       replicates.cov.off.diagonal.value)
     + rep((1 / num.clones.est), num.replicates)  
 
@@ -169,8 +178,8 @@ num.estimators <- num.replicates * (num.replicates - 1) / 2
 
 estimators.rownums <- diag(c(1:num.replicates)) %*% matrix(1, num.replicates, num.replicates)
 estimators.colnums <- t(estimators.rownums)
-lowtri.indx <- as.vector(lower.tri(rep.grahm.matrix))
-estimators.vec <- as.vector(rep.grahm.matrix)[lowtri.indx]
+lowtri.indx <- as.vector(lower.tri(rep.gram.matrix))
+estimators.vec <- as.vector(rep.gram.matrix)[lowtri.indx]
 rownums.vec <- as.vector(estimators.rownums)[lowtri.indx]
 colnums.vec <- as.vector(estimators.colnums)[lowtri.indx]
 
@@ -196,7 +205,7 @@ estimator.vec.forcov <- rep(0, num.pairs)
 for (r in 2:num.replicates) {
   for (c in 1:(r-1)) {
     curr.indx <- row.col.to.indx(r, c) 
-    estimator.vec.forcov[curr.indx] <- rep.grahm.matrix[r, c]
+    estimator.vec.forcov[curr.indx] <- rep.gram.matrix[r, c]
   }
 }
 
@@ -316,7 +325,7 @@ for (i in c(1:num.replicates)) {
 
   curr.subset.internal.parameters <- list(
     replicates = replicates[, -i],
-    rep.grahm.matrix = rep.grahm.matrix[-i, -i],
+    rep.gram.matrix = rep.gram.matrix[-i, -i],
     use.squared.err.est = use.squared.err.est[-i],
     use.replicate.var.est = use.replicate.var.est[-i],
     compute.variances.d1jkn = F)
@@ -362,7 +371,9 @@ return.results <- list(
   simple.precision.clonality = simple.precision.clonality, 
   regularized.estimates = regularized.estimates,
   mixture.clonality = mixture.clonality,
-  lymphclon.clonality = regularized.estimates['ue.zr.half']
+  lymphclon.clonality = ifelse(is.na(mixture.clonality), 
+    regularized.estimates['ue.zr.half'], 
+    mixture.clonality)
     )
 
 if (estimate.abundances) {

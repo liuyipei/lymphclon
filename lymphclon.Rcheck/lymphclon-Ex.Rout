@@ -89,8 +89,7 @@ Note: Method with signature "symmetricMatrix#missing" chosen for function "Schur
  "dsyMatrix#ANY" would also be valid
 > # a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
 > my.lymphclon.results$lymphclon.clonality 
-ue.zr.half 
- 0.1156857 
+[1] NA
 > 
 > 
 > 
@@ -137,7 +136,7 @@ ue.zr.half
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.961 0.036 3.009 0 0 
+Time elapsed:  2.979 0.037 3.041 0 0 
 > grDevices::dev.off()
 null device 
           1 

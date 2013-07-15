@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpifNBuc/Rd2pdf1098
-21a721af7/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
+b9ecec54/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -144,8 +144,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpifNBuc/Rd2pdf1098
-21a721af7/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
+b9ecec54/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -292,8 +292,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpifNBuc/Rd2pdf1098
-21a721af7/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
+b9ecec54/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -427,4 +427,4 @@ Output written on Rd2.pdf (6 pages, 83416 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpifNBuc/Rd2pdf109821a721af7'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpvhxGg3/Rd2pdf14d2b9ecec54'
