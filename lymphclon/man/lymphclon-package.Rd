@@ -17,8 +17,8 @@ The other function generates reasonable simulation data, for evaluation purposes
 \tabular{ll}{
 Package: \tab lymphclon\cr
 Type: \tab Package\cr
-Version: \tab 1.0.4\cr
-Date: \tab 2013-06-04\cr
+Version: \tab 1.2.0\cr
+Date: \tab 2013-07-15\cr
 License: \tab LGPL-2 \cr
 }
 }
@@ -26,15 +26,13 @@ License: \tab LGPL-2 \cr
 Author and Maintainer: Yi Liu <liuyipei@stanford.edu>
 }
 \references{
-~~ Literature or other references for background information ~~
+Accurate Estimation of Clonal Coincidences and Abundances from Biological Replicates: lymphclon. Manuscript submitted.
 }
 \keyword{ diversity, clonality score, clonality }
-\seealso{
-\code{\link[<vegan>:<vegan>-package]{<vegan>}}
-}
 \examples{
-my.data <- simulate.clonality.data(n=2e3) 
+my.data <- generate.clonal.data(n=2e3) 
 # n ~ 2e7 is more appropriate for a realistic B cell repertoire
 my.lymphclon.results <- infer.clonality(my.data$read.count.matrix)
-# a consistently improved estimate of clonality (the squared 2-norm of the underlying multinomial probabilistic distrubution vector)
+# a consistently improved estimate of clonality (the squared 
+# 2-norm of the underlying multinomial distribution)
 }

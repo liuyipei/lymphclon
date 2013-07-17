@@ -1,8 +1,12 @@
 #!/usr/bin/Rscript
 
-if (all(c('infer.clonality.R', 'simulate.clonality.data.R') %in% list.files())) {
+if (all(c('infer.clonality.R', 'generate.clonal.data.R') %in% list.files())) {
   write('using local source files', stderr())
-  source('simulate.clonality.data.R')
+  library(expm)
+  library(VGAM)
+  library(corpcor)
+  library(MASS)
+  source('generate.clonal.data.R')
   source('infer.clonality.R')
 } else {
   library(lymphclon) 
@@ -52,7 +56,7 @@ for (i in c(1:number.of.repeated.simulations)) {
 
 num.iterations <- 1 # refers to parameters for the fixed-point-clonality setting (fpc)
 
-sim.data <- simulate.clonality.data(
+sim.data <- generate.clonal.data(
   n = clones, 
   num.cells.taken.vector = num.cells.taken.vector,
   clonal.distribution.power = clonal.power)
