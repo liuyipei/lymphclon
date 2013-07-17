@@ -14,7 +14,12 @@ generate.clonal.data(
   n = 2e+07, 
   num.cells.taken.vector = c(2000, 5000, 10000, 20000, 50000, 50000), 
   read.count.per.replicate.vector = rep(20000, length(num.cells.taken.vector)), 
-  clonal.distribution.power = -sqrt(2))
+  clonal.distribution.power = -sqrt(2),
+  pcr.noise.type = 'pareto',
+  pcr.pareto.location = 1,
+  pcr.pareto.shape = 1,
+  pcr.lognormal.meanlog = 0,
+  pcr.lognormal.sdlog = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,6 +34,21 @@ A vector of the same length as num.cells.taken.vector, specifying the number of 
 }
   \item{clonal.distribution.power}{
 The true underlying clonal multinomial distribution is proportional to (1:n)^-clonal.distribution.power
+}
+  \item{pcr.noise.type}{
+A string denoting the type of PCR noise: either 'pareto' (default), or 'lognormal'. The package author Yi Liu has found anecdotally and empirically that pareto distributions model sequencing amplification bonanzas much better than lognormal distributions.
+}
+  \item{pcr.pareto.location}{
+The location parameter for the pareto distribution; matters only if the noise type is pareto.
+}
+  \item{pcr.pareto.shape}{
+The shape parameter for the pareto distribution; matters only if the noise type is pareto.
+}
+  \item{pcr.lognormal.meanlog}{
+The meanlog parameter for the lognormal distribution; matters only if the nosie type is lognormal
+}
+  \item{pcr.lognormal.sdlog}{
+The sdlog parameter for the lognormal distribution; matters only if the nosie type is lognormal
 }
 }
 \value{

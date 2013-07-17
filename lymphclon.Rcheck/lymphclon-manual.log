@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  17 JUL 2013 13:40
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  17 JUL 2013 16:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpj3yKMy/Rd2pdfc05
-c343021d0/Rd2.tex
+**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpsKloc1/Rd2pdfc79
+67c69f422/Rd2.tex
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpj3yKMy/Rd2pdfc05c
-343021d0/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpsKloc1/Rd2pdfc796
+7c69f422/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -722,28 +722,28 @@ File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
-) [2]
+) [2] [3]
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
-) [3]
-Overfull \hbox (32.9664pt too wide) in paragraph at lines 170--176
+) [4]
+Overfull \hbox (32.9664pt too wide) in paragraph at lines 190--196
 \T1/ptm/m/n/10 read.count.matrix. "rep.grahm.matrix" refers to t(replicates) "s
 im-ple.precision.clonality"
  []
 
-[4]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 203--204
+
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 223--224
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
  []
 
-
-Overfull \hbox (2.628pt too wide) in paragraph at lines 212--213
+[5]
+Overfull \hbox (2.628pt too wide) in paragraph at lines 232--233
 []\T1/ptm/m/n/10 There are sev-eral reg-u-lar-iza-tion schemes pos-si-ble on th
 e n-choose-2 by n-choose-
  []
 
-[5] (./Rd2.ind [6]
+(./Rd2.ind [6]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 3.
 
@@ -755,23 +755,23 @@ LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 235.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 235.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 255.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 255.
  (./Rd2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 235.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 235.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 255.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 255.
 Package rerunfilecheck Info: File `Rd2.out' has not changed.
 (rerunfilecheck)             Checksum: C1F62C4BC2C8F03F0CAB68E80D09638B;244.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 235.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 255.
  ) 
 Here is how much of TeX's memory you used:
  6209 strings out of 493488
  88994 string characters out of 3141326
- 170079 words of memory out of 3000000
+ 168079 words of memory out of 3000000
  9384 multiletter control sequences out of 15000+200000
  40684 words of font info for 49 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -785,7 +785,7 @@ xlive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on Rd2.pdf (7 pages, 83093 bytes).
+Output written on Rd2.pdf (7 pages, 83659 bytes).
 PDF statistics:
  130 PDF objects out of 1000 (max. 8388607)
  112 compressed objects within 2 object streams
