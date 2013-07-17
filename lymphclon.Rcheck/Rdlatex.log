@@ -4,8 +4,8 @@ This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
-b9ecec54/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpj3yKMy/Rd2pdfc05c
+343021d0/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -82,70 +82,50 @@ No file Rd2.aux.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2]
-Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
-[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
-ent use.squared.err.est
-
-Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
-, and "use.squared.err.est".
-
-Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
-clon-al-ity. "use.squared.err.est"
-[3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (32.9664pt too wide) in paragraph at lines 170--176
+\T1/ptm/m/n/10 read.count.matrix. "rep.grahm.matrix" refers to t(replicates) "s
+im-ple.precision.clonality"
+[4]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 203--204
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
-\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
- is best to use a num.iterations
-
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
+Overfull \hbox (2.628pt too wide) in paragraph at lines 212--213
+[]\T1/ptm/m/n/10 There are sev-eral reg-u-lar-iza-tion schemes pos-si-ble on th
+e n-choose-2 by n-choose-
+[5]
 No file Rd2.ind.
-[5] (./Rd2.aux)
+[6] (./Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
  )
-(see the transcript file for additional information)pdfTeX warning (dest): name
-{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
-/2012/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
-live/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/20
-12/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-d
-ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/
-type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/
-times/utmri8a.pfb>
-Output written on Rd2.pdf (5 pages, 71982 bytes).
+(see the transcript file for additional information){/usr/local/texlive/2012/te
+xmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2012/texmf-dist/fonts/
+enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive/2012/texmf-dist/fonts/type
+1/public/inconsolata/Inconsolata.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/u
+rw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/u
+tmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+</usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (6 pages, 72849 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
-Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
-Sorting entries....done (35 comparisons).
-Generating output file ./Rd2.ind....done (27 lines written, 0 warnings).
+Scanning input file ./Rd2.idx....done (9 entries accepted, 0 rejected).
+Sorting entries....done (27 comparisons).
+Generating output file ./Rd2.ind....done (26 lines written, 0 warnings).
 Output written in ./Rd2.ind.
 Transcript written in ./Rd2.ilg.
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
-b9ecec54/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpj3yKMy/Rd2pdfc05c
+343021d0/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -222,43 +202,25 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-[2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
-[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
-ent use.squared.err.est
-
-Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
-, and "use.squared.err.est".
-
-Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
-clon-al-ity. "use.squared.err.est"
-[3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2]
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (32.9664pt too wide) in paragraph at lines 170--176
+\T1/ptm/m/n/10 read.count.matrix. "rep.grahm.matrix" refers to t(replicates) "s
+im-ple.precision.clonality"
+[4]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 203--204
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
-\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
- is best to use a num.iterations
-
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-(./Rd2.ind [5]
+Overfull \hbox (2.628pt too wide) in paragraph at lines 212--213
+[]\T1/ptm/m/n/10 There are sev-eral reg-u-lar-iza-tion schemes pos-si-ble on th
+e n-choose-2 by n-choose-
+[5] (./Rd2.ind [6]
 
 LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
-(Font)              using `T1/fi4/m/n' instead on input line 19.
+(Font)              using `T1/fi4/m/n' instead on input line 22.
 
-[6]) (./Rd2.aux)
+[7]) (./Rd2.aux)
 
 Package rerunfilecheck Warning: File `Rd2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
@@ -268,32 +230,29 @@ Package rerunfilecheck Warning: File `Rd2.out' has changed.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  )
-(see the transcript file for additional information)pdfTeX warning (dest): name
-{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
-/2012/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
-live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
-ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
-2/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-di
-st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
-ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
-imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 83115 bytes).
+(see the transcript file for additional information){/usr/local/texlive/2012/te
+xmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2012/texmf-dist/fonts/
+enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive/2012/texmf-dist/fonts/type
+1/public/inconsolata/Inconsolata.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
+ype1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+/usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (7 pages, 82934 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
-Scanning input file ./Rd2.idx....done (10 entries accepted, 0 rejected).
-Sorting entries....done (35 comparisons).
-Generating output file ./Rd2.ind....done (27 lines written, 0 warnings).
+Scanning input file ./Rd2.idx....done (9 entries accepted, 0 rejected).
+Sorting entries....done (27 comparisons).
+Generating output file ./Rd2.ind....done (26 lines written, 0 warnings).
 Output written in ./Rd2.ind.
 Transcript written in ./Rd2.ilg.
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012)
  restricted \write18 enabled.
 entering extended mode
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpvhxGg3/Rd2pdf14d2
-b9ecec54/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/Rtmpj3yKMy/Rd2pdfc05c
+343021d0/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -370,61 +329,40 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc)
 (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [1{/usr/local/texl
 ive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 74--74
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-[2] (/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (0.2182pt too wide) in paragraph at lines 104--109
-[]\T1/ptm/m/n/10 The method is a code de-fault-ing to "fpc.add". usr.1: ar-gu-m
-ent use.squared.err.est
-
-Overfull \hbox (31.75679pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 "repli-cates", "rep.grahm.matrix", "sim-ple.precision.clonality"
-, and "use.squared.err.est".
-
-Overfull \hbox (28.90755pt too wide) in paragraph at lines 117--123
-\T1/ptm/m/n/10 the un-weighted av-er-ag-ing of all n-choose-2 es-ti-ma-tors of 
-clon-al-ity. "use.squared.err.est"
-[3]
-Overfull \hbox (34.77597pt too wide) in paragraph at lines 149--150
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [2]
+(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [3]
+Overfull \hbox (32.9664pt too wide) in paragraph at lines 170--176
+\T1/ptm/m/n/10 read.count.matrix. "rep.grahm.matrix" refers to t(replicates) "s
+im-ple.precision.clonality"
+[4]
+Overfull \hbox (34.77597pt too wide) in paragraph at lines 203--204
 []\T1/ptm/m/n/10 Specifies the in-ter-me-di-ate clon-al-ity score es-ti-mates a
 cross it-er-a-tions, when num.iterations
 
-Overfull \hbox (13.43655pt too wide) in paragraph at lines 149--150
-\T1/ptm/m/n/10 is greater than 1. Note that, in em-pir-i-cal sim-u-la-tions, it
- is best to use a num.iterations
-
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 162--162
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-(/usr/local/texlive/2012/texmf-dist/tex/latex/base/utf8.def) [4]
-Overfull \hbox (198.78088pt too wide) in paragraph at lines 221--221
- []\T1/fi4/m/n/9 # a consistently improved estimate of clonality (the squared 2
--norm of the underlying multinomial probabilistic distrubution vector)[] 
-(./Rd2.ind [5]
+Overfull \hbox (2.628pt too wide) in paragraph at lines 212--213
+[]\T1/ptm/m/n/10 There are sev-eral reg-u-lar-iza-tion schemes pos-si-ble on th
+e n-choose-2 by n-choose-
+[5] (./Rd2.ind [6]
 
 LaTeX Font Warning: Font shape `T1/fi4/m/it' undefined
-(Font)              using `T1/fi4/m/n' instead on input line 19.
+(Font)              using `T1/fi4/m/n' instead on input line 22.
 
-[6]) (./Rd2.aux)
+[7]) (./Rd2.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  )
-(see the transcript file for additional information)pdfTeX warning (dest): name
-{Rfn.<vegan>} has been referenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2012/texmf-dist/fonts/enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive
-/2012/texmf-dist/fonts/type1/public/inconsolata/Inconsolata.pfb></usr/local/tex
-live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
-ive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/201
-2/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2012/texmf-di
-st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
-ype1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/t
-imes/utmri8a.pfb>
-Output written on Rd2.pdf (6 pages, 83416 bytes).
+(see the transcript file for additional information){/usr/local/texlive/2012/te
+xmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2012/texmf-dist/fonts/
+enc/dvips/inconsolata/fi4-ec.enc}</usr/local/texlive/2012/texmf-dist/fonts/type
+1/public/inconsolata/Inconsolata.pfb></usr/local/texlive/2012/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/t
+ype1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+/usr/local/texlive/2012/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (7 pages, 83093 bytes).
 Transcript written on Rd2.log.
 Saving output to 'lymphclon-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//RtmpvhxGg3/Rd2pdf14d2b9ecec54'
+You may want to clean up by 'rm -rf /var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T//Rtmpj3yKMy/Rd2pdfc05c343021d0'

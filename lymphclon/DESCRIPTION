@@ -1,17 +1,14 @@
 Package: lymphclon
-Version: 1.1.4
-Date: 2013-07-01
-Title: Estimating the Clonality Score, a Measure of Conincidences with Replicated Abundances, with Applications in the Study of Lymphocytes
+Version: 1.2.1
+Date: 2013-07-17
+Title: Accurate Estimation of Clonal Coincidences and Abundances from Biological Replicates
 Authors@R: c(person("Yi Liu", "Author and Developer", role = c("aut", "cre"), email = "liuyipei@stanford.edu"),
              person("Richard Olshen", "Author", role = "aut", email = "olshen@stanford.edu"),
              person("Andrew Fire", "Author", role = "ctb", email = "afire@stanford.edu"),
              person("Scott Boyd", "Author", role = "ctb", email = "sboyd1@stanford.edu"))
 Author: Yi Liu, Richard Olshen, Andrew Fire, Scott Boyd
 Maintainer: Yi Liu <liuyipei@stanford.edu>
-Depends: R (>= 2.15.0), VGAM, MASS, expm, Matrix, corpcor
-Imports: VGAM, MASS, expm, Matrix, corpcor
-Suggests: VGAM, MASS, expm, Matrix, corpcor
+Depends: R (>= 2.15.0)
+Imports: VGAM, MASS, expm, corpcor
 Description: We provide a clonality score estimator that takes full advantage of the multi-biological-replicate structure of modern sequencing experiments; it specifically takes into account the reality that, typically, the clonal coverage is well below 0.1%.
 License: LGPL-2
-URL: http://www.r-project.org, http://www.another.url
-BugReports: http://pkgname.bugtracker.url

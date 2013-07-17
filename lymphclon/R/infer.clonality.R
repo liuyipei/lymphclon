@@ -1,13 +1,8 @@
 #!/usr/bin/Rscript
-library(expm)
-library(MASS)
-library(Matrix)
-library(VGAM)
-library(corpcor)
 
 infer.clonality <- function(
   read.count.matrix, 
-  variance.method = 'fpc.add',
+  variance.method = 'fpc.max',
   estimate.abundances = F,
   num.iterations = 1,
   internal.parameters = list()
@@ -48,6 +43,15 @@ if (length(internal.parameters$simple.precision.clonality) > 0) {
   simple.precision.clonality <- sum(simple.precision.weights * rep.gram.matrix) / 
     sum(simple.precision.weights)
 }
+if (num.replicates < 3) # not enough replicates
+{
+  return(list(
+  internal.parameters = internal.parameters,
+  variance.method = variance.method,
+  simple.precision.clonality = simple.precision.clonality, 
+  lymphclon.clonality = "Too few replicates: at least 3 are needed. 6 is recommended."
+    ))
+}
 
 if (length(internal.parameters$num.clones.est) > 0) {
   num.clones.est <- internal.parameters$num.clones.est
@@ -76,7 +80,7 @@ if (length(internal.parameters$use.replicate.var.est) > 0) {
   use.replicate.var.est <- c()
 }
 
-compute.variances.d1jkn <- F
+compute.variances.d1jkn <- (num.replicates >= 4) # We need at least 4 to mix
 if (length(internal.parameters$compute.variances.d1jkn > 0)) {
   compute.variances.d1jkn <- internal.parameters$compute.variances.d1jkn
 }
@@ -135,9 +139,10 @@ if (variance.method %in% c('fpc.add'))
 
 # usr.rer: internal.parameters$use.squared.err.est specifies conditional variances of replicates
 # usr.var internal.parameters$use.replicate.var.est specifies variances of replicates
-# fpc.add: fixed point covariance, based on an unbiased clonality and self inner products
-# mle.cov: use maximum likelihood estimate
-# corpcor: corpcor covvariance
+# fpc.max: fixed point covariance: average off diagonals: variances are set to their lower bound when empirically seen to be lower (labeled positive expectation in the paper)
+# fpc.add: fixed point covariance: average off diagonals: variances are set to their lower bound plus the empirical difference from that bound, when empirically seen to be lower (labeled concentric shells in the paper)
+# mle.cov: use the empirical variance on the read count matrix abundances, without any projections
+# corpcor: corpcor covariance, from the corpcor package
 
 Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
 ptinv.Lambda.matrix <- matrix(data = NA, nrow = num.replicates, ncol = num.replicates)
@@ -362,7 +367,9 @@ return.results <- list(
   simple.precision.clonality = simple.precision.clonality, 
   regularized.estimates = regularized.estimates,
   mixture.clonality = mixture.clonality,
-  lymphclon.clonality = mixture.clonality
+  lymphclon.clonality = ifelse(is.na(mixture.clonality), 
+    regularized.estimates['ue.zr.half'], 
+    mixture.clonality)
     )
 
 if (estimate.abundances) {

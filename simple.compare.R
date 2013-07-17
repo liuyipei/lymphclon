@@ -1,4 +1,4 @@
-source('simulate.clonality.data.R')
+source('generate.clonal.data.R')
 source('infer.clonality.R')
 
 num.replicates <- 8
@@ -7,7 +7,7 @@ read.count.per.replicate.vector <- c(5e2, 5e2, 5e2, 5e2, 5e2, 5e2, 5e2, 5e2)
 
 get.err.est <- function(x) {
 
-simulate.clonality.data(n = 1000, num.cells.taken.vector = num.cells.taken.vector,
+generate.clonal.data(n = 1000, num.cells.taken.vector = num.cells.taken.vector,
   read.count.per.replicate.vector = read.count.per.replicate.vector, 
   clonal.distribution.power = -0.7) -> sim.data
 

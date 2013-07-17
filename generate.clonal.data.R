@@ -1,11 +1,6 @@
 #!/usr/bin/Rscript
-library(expm)
-#library(sqldf)
-library(MASS)
-library(Matrix)
-library(VGAM)
 
-simulate.clonality.data <- function(
+generate.clonal.data <- function(
 n = 2e7, # typical number of B cell clones in an human -- typically 20 million
 num.cells.taken.vector = c(2e3, 5e3, 1e4, 2e4, 5e4, 5e4),
 read.count.per.replicate.vector = rep(2e4, length(num.cells.taken.vector)),
@@ -28,7 +23,8 @@ for (i in 1:num.replicates)
   sample.of.cells <- rmultinom(n = 1, size = num.cells.taken, prob = true.clone.prob)
   readcount.sdlog <- 1
   get.readcount.given.cellcount <- function(x) {
-    ifelse(x > 0, sum(abs(rpareto(n = x, location = 1, shape = 1))), 0)
+    #ifelse(x > 0, sum(abs(rpareto(n = x, location = 1, shape = 1))), 0)
+    ifelse(x > 0, sum(abs(rlnorm(n = x, meanlog = 0, sdlog = 1))), 0)
   }
   raw.sample.of.reads <- sapply(X = sample.of.cells, FUN = get.readcount.given.cellcount)
   sample.of.reads <- rpois(

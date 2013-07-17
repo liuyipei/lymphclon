@@ -1,14 +1,8 @@
 * installing *source* package ‘lymphclon’ ...
 ** R
 ** preparing package for lazy loading
-Warning: package ‘corpcor’ was built under R version 2.15.3
 ** help
 *** installing help indices
 ** building package indices
 ** testing if installed package can be loaded
-*** arch - i386
-Warning: package ‘corpcor’ was built under R version 2.15.3
-*** arch - x86_64
-Warning: package ‘corpcor’ was built under R version 2.15.3
-
 * DONE (lymphclon)
