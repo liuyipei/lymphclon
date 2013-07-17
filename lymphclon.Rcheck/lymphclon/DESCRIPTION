@@ -13,4 +13,4 @@ Depends: R (>= 2.15.0)
 Imports: VGAM, MASS, expm, corpcor
 Description: We provide a clonality score estimator that takes full advantage of the multi-biological-replicate structure of modern sequencing experiments; it specifically takes into account the reality that, typically, the clonal coverage is well below 0.1%.
 License: LGPL-2
-Built: R 3.0.1; ; 2013-07-17 20:39:27 UTC; unix
+Built: R 3.0.1; ; 2013-07-17 23:26:56 UTC; unix
