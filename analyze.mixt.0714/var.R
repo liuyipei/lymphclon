@@ -1,5 +1,5 @@
 library(plyr)
-
+# err2_mix_heatmap_4eq: 4 similar replicates under pareto; used in paper
 num.iterations <- 4
 meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling', 'chao2')
 bln.cols <- c('true', 'bln', 'bln.abe2') # abe2: abundance error 2-norm
@@ -96,7 +96,7 @@ par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 boxplot(err2 ~ power, data = err2.table, 
         boxwex = 0.25, at = 1:21 + 0.2,
         subset = method == "bln", col = "yellow", log = 'y',
-        main = "Simulated performance of baseline and our estimator",
+        main = "Simulated performance of baseline and our estimator (4 Similar Replicates)",
         xlab = "Underlying Zipf Power",
         ylab = "Empirical Estimator Squared Error (Log Axis)")
 boxplot(err2 ~ power, data = err2.table, add = TRUE,
@@ -123,7 +123,7 @@ numbers.to.plot <- c(mean.err2.table$bln.err2,
 ylim <- c(min(numbers.to.plot), max(numbers.to.plot))
 plot(mean.err2.table$power, mean.err2.table[, paste(c(meth.to.plot, 'err2'), collapse = '.')], 
   col = 'blue', log = 'y', pch = 1, lwd = 3,
-  main = sprintf('Clonality mean squared error compared over %d simulations', nrow(num.table)),
+  main = sprintf('Clonality mean squared error compared over %d simulations (4 Similar Replicates)', nrow(num.table)),
   xlab = 'Underlying Clonal Distribution Zipf Power', 
   ylab = 'Clonality Mean Squared Error (Log Axis)',
   ylim = ylim)
@@ -140,7 +140,7 @@ ylim <- c(0, 1.2*max(numbers.to.plot))
 par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 plot(mean.err2.table$power, mean.err2.table[, paste(c(abe.to.plot, 'abe2'), collapse = '.')], 
   col = 'blue', log = '', 
-  main = sprintf('Abundance mean squared error compared over %d simulations', nrow(num.table)),
+  main = sprintf('Abundance mean squared error compared over %d simulations (4 Similar Replicates)', nrow(num.table)),
   pch = 2, ylim = ylim,
   xlab = 'Underlying Clonal Distribution Zipf Power', ylab = 'Abundance Squared Error (Log Axis)',
   )
@@ -156,7 +156,7 @@ pheatmap(log2(err2.rat.table), cluster_rows = F, display_numbers = T, fontsize_n
 dev.off()
 
 
-postscript('err2.mix.heatmap.eps')
+postscript('err2_mix_heatmap_4eq.eps')
 par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 err2.rat.subtable <- err2.rat.table[, grep('^[^o](ln.err2|.*mix.*)', colnames(err2.rat.table))]
 err2.mixcn <- colnames(err2.rat.subtable)
@@ -170,7 +170,8 @@ err2.mixcn$mle.cov.mix1.err2 <- '"Raw empirical"'
 err2.mixcn$corpcor.mix1.err2 <- 'corpcor::cor.shrink'
 colnames(err2.rat.subtable) <- err2.mixcn
 rownames(err2.rat.subtable) <- sprintf('%.2f', mean.err2.table$power)
-pheatmap(t(log2(err2.rat.subtable)), cluster_cols = F, display_numbers = T, fontsize_number=6,
-  main = 'Log2 of the Clonality MSE improvement ratio, with varying Zipf Powers (4 Replicates)',
+pheatmap(t(log2(err2.rat.subtable)), cluster_cols = F, cluster_rows =F, display_numbers = T, fontsize_number = 10,
+  breaks = (0:100) / 20 - 1,
+  main = 'Log2 of the Clonality MSE improvement ratio, with varying Zipf Powers (4 Similar Replicates)',
   )
 dev.off()

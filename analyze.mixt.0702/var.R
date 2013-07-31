@@ -1,4 +1,5 @@
 library(plyr)
+# 8 dissimilar on pareto noise -- used in actual paper supplements
 
 num.iterations <- 4
 meta.cols <- c('power', 'replicates', 'clones', 'cells.scaling', 'chao2')
@@ -156,7 +157,7 @@ pheatmap(log2(err2.rat.table), cluster_rows = F, display_numbers = T, fontsize_n
 dev.off()
 
 
-postscript('err2.mix.heatmap.eps')
+postscript('err2_mix_heatmap.eps')
 par(mar=c(5,4,4,2)+2) #should alleviate the margin problem (default is +0.1)
 err2.rat.subtable <- err2.rat.table[, grep('^[^o](ln.err2|.*mix.*)', colnames(err2.rat.table))]
 err2.mixcn <- colnames(err2.rat.subtable)
@@ -170,7 +171,7 @@ err2.mixcn$mle.cov.mix1.err2 <- '"Raw empirical"'
 err2.mixcn$corpcor.mix1.err2 <- 'corpcor::cor.shrink'
 colnames(err2.rat.subtable) <- err2.mixcn
 rownames(err2.rat.subtable) <- sprintf('%.2f', mean.err2.table$power)
-pheatmap(t(log2(err2.rat.subtable)), cluster_cols = F, display_numbers = T, fontsize_number=6,
-  main = 'Log2 of the Clonality MSE improvement ratio, with varying Zipf Powers (8 Replicates)',
+pheatmap(t(log2(err2.rat.subtable)), cluster_cols = F, cluster_rows = F, display_numbers = T, fontsize_number = 10, breaks = (0:100) / 20 - 1,
+  main = 'Log2 of the Clonality MSE improvement ratio, with varying Zipf Powers (8 Dissimilar Replicates)',
   )
 dev.off()
