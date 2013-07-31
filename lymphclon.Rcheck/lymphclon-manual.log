@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  17 JUL 2013 16:27
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  17 JUL 2013 16:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpsKloc1/Rd2pdfc79
-67c69f422/Rd2.tex
+**/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpTpj4s3/Rd2pdfc99
+d352559b0/Rd2.tex
 
-(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpsKloc1/Rd2pdfc796
-7c69f422/Rd2.tex
+(/private/var/folders/s4/hvl5f2js3px19f7g6rwtkz9m0000gn/T/RtmpTpj4s3/Rd2pdfc99d
+352559b0/Rd2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
@@ -785,7 +785,7 @@ xlive/2012/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on Rd2.pdf (7 pages, 83659 bytes).
+Output written on Rd2.pdf (7 pages, 83662 bytes).
 PDF statistics:
  130 PDF objects out of 1000 (max. 8388607)
  112 compressed objects within 2 object streams

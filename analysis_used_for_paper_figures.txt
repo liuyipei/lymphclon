@@ -1,0 +1,3 @@
+0702 -- 8 pareto (dissimilar)
+0714 -- 4 pareto (similar)
+0717 -- 4 logn

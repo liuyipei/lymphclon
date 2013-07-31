@@ -235,9 +235,10 @@ cov.to.clonality <- function(target.matrix, reg.coefs) {
   target.term <- (target.matrix * reg.coefs)
   unreg.term <- (unreg.matrix * (1 - reg.coefs))
   linear.combo.matrix <- target.term + unreg.term
-  root.prec.matrix <- sqrtm(ginv(linear.combo.matrix))
-  numerator <- rep(1, num.pairs) %*% root.prec.matrix %*% estimator.vec.forcov
-  denominator <- rep(1, num.pairs) %*% root.prec.matrix %*% rep(1, num.pairs)
+  prec.matrix <- ginv(linear.combo.matrix)
+  root.prec.matrix <- sqrtm(prec.matrix)
+  numerator <- rep(1, num.pairs) %*% prec.matrix %*% estimator.vec.forcov
+  denominator <- rep(1, num.pairs) %*% prec.matrix %*% rep(1, num.pairs)
   return(abs(numerator / denominator)) # the clonality score
 } # cov.to.clonality
 
@@ -344,14 +345,15 @@ d1jkn.adjustment <-  # regularize the diagonal of the jackknifed covariance matr
   (-max(min(d1jkn.ev), 0)) + # negate the smallest eigenvalue, if it is negative
   (1e-4) * max(d1jkn.ev) +   # 1e-4 of the largest eigenvalue
   all(d1jkn.ev == 0) * .Machine$double.eps * 32 # if matrix was identically 0
-diag(d1jkn.covariance) <- diag(d1jkn.covariance) + d1jkn.adjustment
 
-mixture.clonality <- cov.to.clonality <- 
-  root.d1jkn.precision <- sqrtm(ginv(d1jkn.covariance))
-  numerator <- rep(1, nrow(root.d1jkn.precision)) %*% 
-    root.d1jkn.precision %*% mix.values
-  denominator <- rep(1, nrow(root.d1jkn.precision)) %*% 
-    root.d1jkn.precision %*% rep(1, nrow(root.d1jkn.precision))
+  diag(d1jkn.covariance) <- diag(d1jkn.covariance) + d1jkn.adjustment
+
+  d1jkn.precision <- ginv(d1jkn.covariance)
+  root.d1jkn.precision <- sqrtm(d1jkn.precision)
+  numerator <- rep(1, nrow(d1jkn.precision)) %*% 
+    d1jkn.precision %*% mix.values
+  denominator <- rep(1, nrow(d1jkn.precision)) %*% 
+    d1jkn.precision %*% rep(1, nrow(d1jkn.precision))
   mixture.clonality <- abs(numerator / denominator) # the clonality score
 } # if (compute.variances.d1jkn)
 
