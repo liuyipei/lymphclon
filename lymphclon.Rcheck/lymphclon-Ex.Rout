@@ -67,7 +67,7 @@ Note: method with signature ‘symmetricMatrix#missing’ chosen for function �
 > # 2-norm of the underlying multinomial distribution)
 > my.lymphclon.results$lymphclon.clonality 
           [,1]
-[1,] 0.1156178
+[1,] 0.1241385
 > 
 > 
 > 
@@ -96,7 +96,7 @@ Note: method with signature ‘symmetricMatrix#missing’ chosen for function �
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.198 0.057 4.262 0 0 
+Time elapsed:  4.038 0.053 4.116 0 0 
 > grDevices::dev.off()
 null device 
           1 
