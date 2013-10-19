@@ -70,11 +70,14 @@ This is a base line estimator of the clonality score based on simple modeling. B
 \item{regularized.estimates}{
 Under a variety of regularization settings on the n-choose-2 by n-choose-2 covariance matrix for the n-choose-2 individually unbiased clonality estimators, return the respectively weighted clonality measures for each regularization setting. 
 }
+\item{mixture.estimates}{
+There are several regularization schemes possible on the n-choose-2 by n-choose-2 covariance matrix between the n-choose pair-replicate comparisons. This estimate of clonality performs a jackknife to estimate the covariance bewteen estimates corresponding to each regularization scheme, and then performs a MLE averaging based on the covariance and the individual estimates. This is the best estimate of the clonality score provided by Lymphclon; however, it requires at least 4 replicates. There are several ways by which the selected regularized estimates can be averaged: by their jackknife covariance matrix, by their jackknife variances (ie. diagonal covariance), and simple equal weights.
+}
 \item{mixture.clonality}{
-There are several regularization schemes possible on the n-choose-2 by n-choose-2 covariance matrix between the n-choose pair-replicate comparisons. This estimate of clonality performs a jackknife to estimate the covariance bewteen estimates corresponding to each regularization scheme, and then performs a MLE averaging based on the covariance and the individual estimates. This is the best estimate of the clonality score provided by Lymphclon; however, it requires at least 4 replicates.
+This defaults to the matrix weighted mixture estimate, unless it falls outside the range of the contributing regularized estimates; in which case, this value defaults to the scalar jackknife precision weighted average.
 }
 \item{lymphclon.clonality}{
-This is an estimator is a weighted average of n-choose-2 individually unbiased estimators that arise from comparing the provided n biological replicates pairwise. The weighting is determined by the covariance between these estimators. This has much lower variance than the simple.precision.clonality. If there are at least 4 replicates, then this value returns the "mixture.clonality" value, which involves jackknifing multiple regularization schemes. If there are only 3 replicates, then infer.clonality returns the estimate provided by the "ue.zr.half" (diagonal elements are maintained, but off diagonals are divided by 2) regularization setting on the n-choose-2 by n-choose-2 between-comparison covariance matrix.
+This is the recommended clonality return value to use. This defaults to mixture.clonality;  if there are only 3 replicates, then defaults to the estimate provided by the "ue.zr.half" (diagonal elements are maintained, but off diagonals are divided by 2) regularization setting on the n-choose-2 by n-choose-2 between-comparison covariance matrix.
 }
 }
 \author{
