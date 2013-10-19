@@ -109,7 +109,9 @@ names(baseline.values) <- baseline.cols
 regularization.method.names <- 
   c('unregularized', 'ue.zr.full', 
   'eq.zr.half', 'ue.zr.half', 'eq.eq.half', 'ue.eq.half',
-  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1', 'mix1')
+  'ue.mn.half', 'ue.mn.full', 'ue.mn.js1', 
+  'matrix.mix', 'scalar.mix', 'equal.mix',
+  'mix1')
 var.meth.names <- c('opt.rer', 'opt.cov', 'fpc.add', 'fpc.max', 'mle.cov', 'corpcor')
 
 experiment.cols <- Reduce(c, 
@@ -124,6 +126,7 @@ get.experiment.values.from.answer <- function(answer)
 {
 return(c(
   answer$regularized.estimates, 
+  answer$mixture.estimates,
   answer$mixture.clonality,
   sum((as.numeric(answer$estimated.abundances) - sim.data$true.clone.prob) ^ 2)
   ))
