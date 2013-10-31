@@ -310,6 +310,7 @@ fpc.iter.estimates <- append(fpc.iter.estimates, curr.clonality.score.estimate)
 
 # jackknife related default values
 mixture.clonality <- NA
+mixture.estimates <- NA # the vector of different ways to average
 d1jkn.covariance <- NA
 if (compute.variances.d1jkn) { # use jackknife to estimate variance
 mix.regnames <- c('unregularized', 'ue.zr.half', 'ue.mn.half', 'eq.zr.half')
@@ -348,13 +349,30 @@ d1jkn.adjustment <-  # regularize the diagonal of the jackknifed covariance matr
 
   diag(d1jkn.covariance) <- diag(d1jkn.covariance) + d1jkn.adjustment
 
-  d1jkn.precision <- ginv(d1jkn.covariance)
-  root.d1jkn.precision <- sqrtm(d1jkn.precision)
-  numerator <- rep(1, nrow(d1jkn.precision)) %*% 
-    d1jkn.precision %*% mix.values
-  denominator <- rep(1, nrow(d1jkn.precision)) %*% 
-    d1jkn.precision %*% rep(1, nrow(d1jkn.precision))
-  mixture.clonality <- abs(numerator / denominator) # the clonality score
+  get.reweighted.clonality.given.covariance <- 
+    function(covariance.of.regularized.estimates, mix.values) {
+    precision <- ginv(covariance.of.regularized.estimates)
+    numerator <- rep(1, nrow(precision)) %*% 
+      precision %*% mix.values
+    denominator <- rep(1, nrow(precision)) %*% 
+      precision %*% rep(1, nrow(precision))
+    return(numerator / denominator) # the clonality score
+  }
+  
+  mixture.matrix.weight.clonality <- get.reweighted.clonality.given.covariance(d1jkn.covariance, mix.values)
+  mixture.scalar.weight.clonality <- get.reweighted.clonality.given.covariance(diag(diag(d1jkn.covariance)), mix.values)
+  mixture.equal.weight.clonality  <- get.reweighted.clonality.given.covariance(diag(rep(1, nrow(d1jkn.covariance))), mix.values)
+  mixture.estimates <- c(
+    matrix.mix = mixture.matrix.weight.clonality, 
+    scalar.mix = mixture.scalar.weight.clonality, 
+    equalw.mix = mixture.equal.weight.clonality)
+  
+  mixture.clonality <- mixture.matrix.weight.clonality
+  if (mixture.clonality < min(mix.values) || mixture.clonality > max(mix.values))
+  {
+    mixture.clonality <- mixture.scalar.weight.clonality
+  }
+  
 } # if (compute.variances.d1jkn)
 
 return.results <- list(
@@ -368,6 +386,7 @@ return.results <- list(
   fpc.iter.estimates = fpc.iter.estimates,
   simple.precision.clonality = simple.precision.clonality, 
   regularized.estimates = regularized.estimates,
+  mixture.estimates = mixture.estimates,
   mixture.clonality = mixture.clonality,
   lymphclon.clonality = ifelse(is.na(mixture.clonality), 
     regularized.estimates['ue.zr.half'], 

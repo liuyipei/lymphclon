@@ -362,7 +362,10 @@ d1jkn.adjustment <-  # regularize the diagonal of the jackknifed covariance matr
   mixture.matrix.weight.clonality <- get.reweighted.clonality.given.covariance(d1jkn.covariance, mix.values)
   mixture.scalar.weight.clonality <- get.reweighted.clonality.given.covariance(diag(diag(d1jkn.covariance)), mix.values)
   mixture.equal.weight.clonality  <- get.reweighted.clonality.given.covariance(diag(rep(1, nrow(d1jkn.covariance))), mix.values)
-  mixture.estimates <- c(mixture.matrix.weight.clonality, mixture.scalar.weight.clonality, mixture.equal.weight.clonality, mix.values)
+  mixture.estimates <- c(
+    matrix.mix = mixture.matrix.weight.clonality, 
+    scalar.mix = mixture.scalar.weight.clonality, 
+    equalw.mix = mixture.equal.weight.clonality)
   
   mixture.clonality <- mixture.matrix.weight.clonality
   if (mixture.clonality < min(mix.values) || mixture.clonality > max(mix.values))
