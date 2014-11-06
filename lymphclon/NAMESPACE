@@ -1,5 +1,4 @@
 exportPattern("^[[:alpha:]]+")
 importFrom(MASS, ginv)
-importFrom(VGAM, rpareto)
 importFrom(corpcor, invcov.shrink)
 importFrom(expm, sqrtm)

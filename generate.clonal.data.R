@@ -11,6 +11,13 @@ pcr.pareto.shape = 1,
 pcr.lognormal.meanlog = 0,
 pcr.lognormal.sdlog = 1)
 {
+pcr.rpareto.func <- function(n, location, shape) {
+  # taken from VGAM 0.92
+  ans <- location / runif(n)^(1/shape)
+  ans[location <= 0] <- NaN
+  ans[shape    <= 0] <- NaN
+  ans
+}
 unnorm.clone.prob <- (1:n) ^ clonal.distribution.power
 true.clone.prob <- unnorm.clone.prob / sum(unnorm.clone.prob)
 true.clonality <- sum(true.clone.prob * true.clone.prob)
@@ -21,7 +28,7 @@ replicate.squared.errs <- rep(NA, num.replicates)
 
 if (pcr.noise.type == 'pareto') {
   get.readcount.given.cellcount <- function(x) {
-    ifelse(x > 0, sum(abs(rpareto(n = x, location = pcr.pareto.location, shape = pcr.pareto.shape))), 0)
+    ifelse(x > 0, sum(abs(pcr.rpareto.func(n = x, location = pcr.pareto.location, shape = pcr.pareto.shape))), 0)
   }
 } else if (pcr.noise.type == 'lognormal') { # lognormal
   get.readcount.given.cellcount <- function(x) {
