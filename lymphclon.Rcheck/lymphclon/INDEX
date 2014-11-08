@@ -1,5 +1,0 @@
-generate.clonal.data    generate.clonal.data (part of lymphclon
-                        package)
-infer.clonality         infer.clonality (part of lymphclon package)
-lymphclon-package       Estimates the clonality score from replicate of
-                        abundances data

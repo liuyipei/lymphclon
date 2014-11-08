@@ -17,13 +17,13 @@ The other function generates reasonable simulation data, for evaluation purposes
 \tabular{ll}{
 Package: \tab lymphclon\cr
 Type: \tab Package\cr
-Version: \tab 1.2.3\cr
-Date: \tab 2013-09-30\cr
+Version: \tab 1.3.0\cr
+Date: \tab 2014-11-06\cr
 License: \tab LGPL-2 \cr
 }
 }
 \author{
-Author and Maintainer: Yi Liu <liuyipei@stanford.edu>
+Author and Maintainer: Yi Liu <liu.yi.pei@gmail.com>
 }
 \references{
 Accurate Estimation of Clonal Coincidences and Abundances from Biological Replicates: lymphclon. Manuscript submitted.
